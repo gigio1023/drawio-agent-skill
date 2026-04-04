@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file
+version: v1.25.0
+exclude:
+  code:
+    - README.md
+    - assets
+    - data
+    - references
+    - scripts/__pycache__
