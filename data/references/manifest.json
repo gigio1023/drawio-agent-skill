@@ -1,0 +1,131 @@
+{
+  "openai": [
+    {
+      "slug": "introducing-agentkit",
+      "url": "https://openai.com/index/introducing-agentkit/",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-agentkit/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-agentkit/image-1.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-agentkit/image-2.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-agentkit/image-3.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-agentkit/image-4.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-agentkit/image-5.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-agentkit/image-6.png"
+      ]
+    },
+    {
+      "slug": "introducing-4o-image-generation",
+      "url": "https://openai.com/index/introducing-4o-image-generation/",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-4o-image-generation/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-4o-image-generation/image-1.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-4o-image-generation/image-2.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-4o-image-generation/image-3.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-4o-image-generation/image-4.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-4o-image-generation/image-5.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/introducing-4o-image-generation/image-6.png"
+      ]
+    },
+    {
+      "slug": "practical-guide-to-building-agents",
+      "url": "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/openai/practical-guide-to-building-agents/source.pdf"
+      ]
+    }
+  ],
+  "anthropic": [
+    {
+      "slug": "mozilla-firefox-security",
+      "url": "https://www.anthropic.com/news/mozilla-firefox-security",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/mozilla-firefox-security/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/mozilla-firefox-security/image-1.svg"
+      ]
+    },
+    {
+      "slug": "building-agents-sdk",
+      "url": "https://claude.com/blog/building-agents-with-the-claude-agent-sdk",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/building-agents-sdk/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/building-agents-sdk/image-1.jpg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/building-agents-sdk/image-2.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/building-agents-sdk/image-3.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/building-agents-sdk/image-4.webp",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/building-agents-sdk/image-5.webp",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/building-agents-sdk/image-6.webp"
+      ]
+    },
+    {
+      "slug": "emotion-concepts-function",
+      "url": "https://www.anthropic.com/research/emotion-concepts-function",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/emotion-concepts-function/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/anthropic/emotion-concepts-function/image-1.png"
+      ]
+    }
+  ],
+  "vercel": [
+    {
+      "slug": "self-driving-infrastructure",
+      "url": "https://vercel.com/blog/self-driving-infrastructure",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/self-driving-infrastructure/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/self-driving-infrastructure/image-1.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/self-driving-infrastructure/image-2.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/self-driving-infrastructure/image-3.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/self-driving-infrastructure/image-4.jpg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/self-driving-infrastructure/image-5.jpg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/self-driving-infrastructure/image-6.jpg"
+      ]
+    },
+    {
+      "slug": "fluid-compute",
+      "url": "https://vercel.com/blog/fluid-how-we-built-serverless-servers",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/fluid-compute/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/fluid-compute/image-1.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/fluid-compute/image-2.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/fluid-compute/image-3.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/fluid-compute/image-4.jpg"
+      ]
+    },
+    {
+      "slug": "workflow-builder",
+      "url": "https://vercel.com/blog/workflow-builder-build-your-own-workflow-automation-platform",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/workflow-builder/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/workflow-builder/image-1.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/workflow-builder/image-2.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/workflow-builder/image-3.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/workflow-builder/image-4.jpg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/workflow-builder/image-5.jpg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/workflow-builder/image-6.jpg"
+      ]
+    },
+    {
+      "slug": "ai-gateway",
+      "url": "https://vercel.com/ai-gateway",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/ai-gateway/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/ai-gateway/image-1.png",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/ai-gateway/image-2.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/ai-gateway/image-3.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/ai-gateway/image-4.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/ai-gateway/image-5.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/ai-gateway/image-6.svg"
+      ]
+    },
+    {
+      "slug": "integration-image-guidelines",
+      "url": "https://vercel.com/docs/integrations/create-integration/integration-image-guidelines",
+      "files": [
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/integration-image-guidelines/source.html",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/integration-image-guidelines/image-1.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/integration-image-guidelines/image-2.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/integration-image-guidelines/image-3.svg",
+        "/Users/naem1023/git/drawio-agent-skill/data/references/vercel/integration-image-guidelines/image-4.svg"
+      ]
+    }
+  ]
+}
