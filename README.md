@@ -159,6 +159,13 @@ The point is to keep the first pass compact and editable instead of cramming eve
 - `Generate a .drawio file with clear arrows between these four components.`
 - `Make this system map editable in draw.io, then export PNG if possible.`
 
+## Inspiration and references
+
+This repo was also shaped by work from the official `jgraph/drawio-mcp` repository. I used it as a reference and a source of inspiration, especially around draw.io-native structure, MCP-oriented workflows, and the broader space of AI-assisted draw.io authoring.
+
+- Official reference repo: https://github.com/jgraph/drawio-mcp
+- This repo intentionally focuses on the skill/repo-authoring side: generating editable `.drawio` files with strong layout and readability defaults
+
 ## Repo layout
 
 ```text
