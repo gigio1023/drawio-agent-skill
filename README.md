@@ -52,6 +52,32 @@ Fetch and follow instructions from https://raw.githubusercontent.com/gigio1023/d
 
 Detailed docs: `docs/README.cursor.md`
 
+## What this skill improves
+
+Generic diagram generation usually fails in one of three ways:
+
+1. it produces non-native output like Mermaid or loose XML
+2. it crams too many concepts onto one canvas without page grammar
+3. it produces something that looks acceptable once, but is painful to edit later
+
+`drawio-diagram` exists to bias the agent toward native draw.io structure, obvious routing, and diagrams that a human can keep editing after the first pass.
+
+## Example: what generic output looks like
+
+**Weak output**
+
+- vague boxes with no clear page grammar
+- arrows that share the same corridor and cross unpredictably
+- no distinction between main path and secondary relationships
+- output format that is not actually a usable `.drawio` source of truth
+
+**What this skill pushes toward**
+
+- one explicit grammar like `flow-canvas` or `system-map`
+- 3-5 primary components on the first pass
+- one dominant arrow path with quieter secondary paths
+- native draw.io structure that can be reopened and revised cleanly
+
 ## What this skill is for
 
 Use it when the task is any of these:
