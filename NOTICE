@@ -1,0 +1,35 @@
+drawio-agent-skill
+Copyright (c) 2026 gigio1023
+
+This product includes content adapted from `jgraph/drawio-mcp`:
+  https://github.com/jgraph/drawio-mcp
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use those files except in compliance with the License. You may obtain a
+copy of the License at:
+
+  https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+## Files adapted from `jgraph/drawio-mcp` (Apache-2.0)
+
+Upstream commit: `2c4c3bf23c2723812bb94bf50601e93e3b162a20`
+Fetched: 2026-04-17
+
+| Upstream path | Local path | Notes |
+|---|---|---|
+| `shared/xml-reference.md` | `references/drawio-xml-reference.md` | Vendored in full with a local header. Unmodified body. |
+| `shared/style-reference.md` | `references/drawio-style-reference.md` | Vendored in full with a local header. Unmodified body. |
+| `skill-cli/README.md` | Integrated by excerpt into `README.md` and `SKILL.md` | Prerequisites, export-format table, "Why XML only?" rationale, CLI location table, export flag table, troubleshooting table, and XML well-formedness callout. |
+| `skill-cli/drawio/SKILL.md` | Integrated by excerpt into `SKILL.md` | The above, plus the `npx @drawio/postprocess` post-processing step and the per-OS "open result" commands. |
+
+## Deliberate divergences from upstream
+
+This skill keeps `.drawio` as the source of truth and does NOT delete the
+intermediate `.drawio` file after a PNG / SVG / PDF export, diverging from
+the upstream skill-cli step 4 ("then delete the source `.drawio` file").
+Retaining the source keeps the diagram round-trippable without decoding
+embedded XML from the exported image.

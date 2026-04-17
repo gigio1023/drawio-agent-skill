@@ -52,6 +52,34 @@ Fetch and follow instructions from https://raw.githubusercontent.com/gigio1023/d
 
 Detailed docs: `docs/README.cursor.md`
 
+## Prerequisites
+
+- **Authoring** `.drawio` source files needs nothing beyond the skill — it writes native mxGraphModel XML directly.
+- **Export** (PNG / SVG / PDF) needs the draw.io CLI:
+
+| Environment | CLI location |
+|---|---|
+| macOS | `/Applications/draw.io.app/Contents/MacOS/draw.io` |
+| Linux (native) | `drawio` on PATH (snap / apt / flatpak) |
+| Windows (native) | `"C:\Program Files\draw.io\draw.io.exe"` |
+| WSL2 | `` `/mnt/c/Program Files/draw.io/draw.io.exe` `` (detect via `grep -qi microsoft /proc/version`) |
+| Headless / CI | `npx --yes @hediet/drawio-export` (no prior install) |
+
+The skill tries `drawio` on PATH first, then falls back to the platform-specific path. `SKILL.md` has the full locator logic.
+
+## Export formats
+
+The skill writes `.drawio` by default. If the draw.io CLI is installed, it can also export to PNG / SVG / PDF with the diagram XML embedded in the exported file, so any of them can be reopened in draw.io and edited further.
+
+| Format | Extension | When to use |
+|--------|-----------|-------------|
+| (default) | `.drawio` | Native source of truth; always works, no CLI required |
+| `png` | `.drawio.png` | Embedding in READMEs / chat — viewable anywhere |
+| `svg` | `.drawio.svg` | Vector review, scales cleanly |
+| `pdf` | `.drawio.pdf` | Printable handoffs |
+
+Installing the skill itself is enough to author `.drawio` files. The draw.io CLI (bundled with [draw.io Desktop](https://github.com/jgraph/drawio-desktop/releases), or available through `npx --yes @hediet/drawio-export` on headless machines) is only needed when export is requested.
+
 ## What this skill improves
 
 Generic diagram generation usually fails in one of three ways:
@@ -134,12 +162,19 @@ The point is to keep the first pass compact and editable instead of cramming eve
 
 ### References
 
-- `references/upstream-drawio-rules.md` — required draw.io structure and export notes
+Local originals:
+
+- `references/upstream-drawio-rules.md` — tight opinionated digest of the rules this skill enforces (read first)
 - `references/figure-grammars.md` — page grammars and composition rules
 - `references/layout-safety.md` — overlap, routing, and corridor safety checks
 - `references/visual-patterns.md` — compact visual behaviors distilled from strong reference material
 - `references/reference-set.md` — provenance for the visual guidance
 - `references/community-lessons.md` — practical lessons from community and adjacent diagram systems
+
+Vendored from `jgraph/drawio-mcp` under Apache-2.0 (see [`NOTICE`](NOTICE) for the exact upstream commit and file mapping):
+
+- `references/drawio-xml-reference.md` — authoritative XML rules: edge routing priorities, fan-out bundling, containers, layers, tags, metadata, placeholders, dark mode, well-formedness
+- `references/drawio-style-reference.md` — comprehensive shape / style catalog
 
 ### Sample assets
 
@@ -152,6 +187,30 @@ The point is to keep the first pass compact and editable instead of cramming eve
 - `scripts/download_reference_set.py` — refreshes the curated official reference set
 - `data/references/manifest.json` — manifest for the local reference archive
 
+## Usage patterns
+
+The skill is invoked by description-matching, not a slash command. Ask naturally and the skill activates on phrases like "draw.io", "flowchart", "architecture diagram", "ER diagram", "sequence diagram", "class diagram", or when a file extension is mentioned (`.drawio`, `.drawio.png`, etc.).
+
+**Author `.drawio` only (default):**
+
+```text
+Make a draw.io architecture diagram for this ingestion pipeline.
+Turn this research section into a compact editorial figure.
+Generate a .drawio file with clear arrows between these four components.
+```
+
+**Author + export, via natural-language format hints:**
+
+```text
+Make a png architecture diagram for the deploy pipeline.      → deploy-pipeline.drawio + .drawio.png
+Generate a .drawio.svg of the auth sequence.                   → auth-sequence.drawio + .drawio.svg
+Compact pdf handoff for this system map.                       → <name>.drawio + .drawio.pdf
+```
+
+If no format is mentioned, the skill writes only the `.drawio` source; you can ask to export later. Export always carries the diagram XML embedded in the output (`-e` / `--embed-diagram`) so reopening the `.drawio.png` / `.drawio.svg` / `.drawio.pdf` in draw.io recovers the editable diagram.
+
+**Deliberate divergence from the upstream skill-cli:** we keep the `.drawio` source alongside the export, rather than deleting it. Source of truth stays visible.
+
 ## Example prompts
 
 - `Make a draw.io architecture diagram for this ingestion pipeline.`
@@ -161,18 +220,33 @@ The point is to keep the first pass compact and editable instead of cramming eve
 
 ## Inspiration and references
 
-This repo was also shaped by work from the official `jgraph/drawio-mcp` repository. I used it as a reference and a source of inspiration, especially around draw.io-native structure, MCP-oriented workflows, and the broader space of AI-assisted draw.io authoring.
+This repo vendors portions of the official [`jgraph/drawio-mcp`](https://github.com/jgraph/drawio-mcp) repository under **Apache-2.0**, and adapts ideas from its [`skill-cli/`](https://github.com/jgraph/drawio-mcp/tree/main/skill-cli) variant's README — the `.drawio.*` double-extension export convention, the explicit draw.io CLI prerequisite table, the "why native XML only?" rationale, the post-processing step via `npx @drawio/postprocess`, the export-flag semantics, the per-OS "open the result" commands, and the strict no-XML-comments rule. Those ideas are reflected in `SKILL.md` (see *Prerequisites*, *Export*, *XML well-formedness*, *Troubleshooting*) and in the vendored reference files.
 
-- Official reference repo: https://github.com/jgraph/drawio-mcp
-- This repo intentionally focuses on the skill/repo-authoring side: generating editable `.drawio` files with strong layout and readability defaults
+- Upstream repo: https://github.com/jgraph/drawio-mcp
+- Skill-CLI variant README: https://github.com/jgraph/drawio-mcp/blob/main/skill-cli/README.md
+- Upstream `shared/xml-reference.md` (vendored locally): https://github.com/jgraph/drawio-mcp/blob/main/shared/xml-reference.md
+- Upstream `shared/style-reference.md` (vendored locally): https://github.com/jgraph/drawio-mcp/blob/main/shared/style-reference.md
+- Full attribution, upstream commit, and file mapping: [`NOTICE`](NOTICE)
+- This repo's own license: [`LICENSE`](LICENSE) (MIT)
+
+Where this repo differs from upstream in intent:
+
+- Multi-harness focus (Claude Code, Codex, Gemini CLI, Cursor) instead of a single Claude Code target
+- Page-grammar discipline (`references/figure-grammars.md`) as a required pre-authoring step
+- Layout-safety preflight (`references/layout-safety.md`) separate from the XML rules
+- `.drawio` source is retained after export (upstream skill-cli deletes it)
 
 ## Repo layout
 
 ```text
 drawio-agent-skill/
-├── SKILL.md
-├── references/
-├── assets/
-├── scripts/
-└── data/
+├── SKILL.md                        # the drawio-diagram skill definition + authoring workflow
+├── README.md                       # this file
+├── LICENSE                         # MIT, this repo
+├── NOTICE                          # Apache-2.0 attribution for vendored upstream content
+├── docs/                           # per-harness install guides (Claude / Codex / Gemini / Cursor)
+├── references/                     # authoring references (local + vendored Apache-2.0 upstream)
+├── assets/                         # editable .drawio starter templates
+├── scripts/                        # download_reference_set.py for refreshing external references
+└── data/                           # references archive + manifest
 ```
