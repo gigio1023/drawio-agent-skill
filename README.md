@@ -52,6 +52,19 @@ Fetch and follow instructions from https://raw.githubusercontent.com/gigio1023/d
 
 Detailed docs: `docs/README.cursor.md`
 
+## Export formats
+
+The skill writes `.drawio` by default. If the draw.io CLI is installed, it can also export to PNG / SVG / PDF with the diagram XML embedded in the exported file, so any of them can be reopened in draw.io and edited further.
+
+| Format | Extension | When to use |
+|--------|-----------|-------------|
+| (default) | `.drawio` | Native source of truth; always works, no CLI required |
+| `png` | `.drawio.png` | Embedding in READMEs / chat — viewable anywhere |
+| `svg` | `.drawio.svg` | Vector review, scales cleanly |
+| `pdf` | `.drawio.pdf` | Printable handoffs |
+
+Installing the skill itself is enough to author `.drawio` files. The draw.io CLI (bundled with [draw.io Desktop](https://github.com/jgraph/drawio-desktop/releases), or available through `npx --yes @hediet/drawio-export` on headless machines) is only needed when export is requested.
+
 ## What this skill improves
 
 Generic diagram generation usually fails in one of three ways:
@@ -161,10 +174,11 @@ The point is to keep the first pass compact and editable instead of cramming eve
 
 ## Inspiration and references
 
-This repo was also shaped by work from the official `jgraph/drawio-mcp` repository. I used it as a reference and a source of inspiration, especially around draw.io-native structure, MCP-oriented workflows, and the broader space of AI-assisted draw.io authoring.
+This repo was shaped by work from the official `jgraph/drawio-mcp` repository — especially its [`skill-cli/`](https://github.com/jgraph/drawio-mcp/tree/main/skill-cli) variant, whose README documented the `.drawio.*` double-extension export convention, the explicit draw.io CLI prerequisite, and the "why native XML only" rationale. Those ideas are now reflected in this repo's SKILL.md under the *Prerequisites*, *Outputs*, and *Why native `.drawio` only?* sections.
 
 - Official reference repo: https://github.com/jgraph/drawio-mcp
-- This repo intentionally focuses on the skill/repo-authoring side: generating editable `.drawio` files with strong layout and readability defaults
+- Skill-CLI variant README (install-first, Claude Code-focused): https://github.com/jgraph/drawio-mcp/blob/main/skill-cli/README.md
+- This repo intentionally focuses on the skill/repo-authoring side: generating editable `.drawio` files with strong layout and readability defaults for multiple harnesses (Claude Code, Codex, Gemini, Cursor)
 
 ## Repo layout
 

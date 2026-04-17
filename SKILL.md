@@ -31,6 +31,14 @@ Default path:
 5. Run the preflight from `references/layout-safety.md`
 6. If the user wants an external review artifact, export `.drawio.png` or `.drawio.svg` when the draw.io CLI is available
 
+## Prerequisites
+
+- Authoring `.drawio` source files needs no tools beyond the agent — the skill writes native mxGraphModel XML directly.
+- Exporting to PNG / SVG / PDF requires the draw.io CLI:
+  - macOS / Windows / Linux desktop: install [draw.io Desktop](https://github.com/jgraph/drawio-desktop/releases) and use the bundled `drawio` binary.
+  - Headless / CI: `npx --yes @hediet/drawio-export` works with no prior install. Prefer this when the desktop app is not available.
+- draw.io Desktop is optional but recommended for interactive refinement after the skill finishes authoring.
+
 ## Runtime modes
 
 Use this order unless the user explicitly asks for something else:
@@ -185,13 +193,32 @@ If not, keep the `.drawio` file and report that the editable source is ready.
 
 ## Outputs
 
-- Primary: `.drawio`
-- Optional: `.drawio.png`, `.drawio.svg`, `.drawio.pdf`
+- Primary: `.drawio` — native mxGraphModel XML, source of truth. Editable in draw.io Desktop or diagrams.net.
+- Optional exports: `.drawio.png`, `.drawio.svg`, `.drawio.pdf`. The `.drawio.*` double extension signals that the export carries the source XML embedded in the file, so any of them can be reopened in draw.io and revised without rebuilding from scratch.
 
-Preferred export defaults when supported:
+| Format | Extension | Notes |
+|--------|-----------|-------|
+| (default) | `.drawio` | Native XML, no CLI required |
+| `png` | `.drawio.png` | Viewable everywhere, embedded XML, still editable in draw.io |
+| `svg` | `.drawio.svg` | Scalable, embedded XML, still editable in draw.io |
+| `pdf` | `.drawio.pdf` | Printable, embedded XML, still editable in draw.io |
+
+Preferred export defaults when the CLI is available:
 
 - `.drawio.png` for easy sharing with embedded XML
 - `.drawio.svg` for vector review
+
+If the CLI is unavailable, return the `.drawio` source and note that the editable authoring target is ready; exporting is a strictly optional second step.
+
+## Why native `.drawio` only?
+
+A `.drawio` file is literally mxGraphModel XML. Mermaid and CSV intents require the draw.io server-side converter and cannot be round-tripped as editable sources of truth. Generating XML directly means:
+
+- no server dependency
+- no conversion step
+- the file is immediately editable in draw.io Desktop or diagrams.net
+
+The `.drawio.*` double-extension exports are optional convenience artifacts; the `.drawio` file itself is always the authoring target.
 
 ## Scripts
 
