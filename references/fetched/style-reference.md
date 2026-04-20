@@ -1,19 +1,3 @@
-# draw.io style & shape reference
-
-> **Source:** Adapted from `jgraph/drawio-mcp` at [`shared/style-reference.md`](https://github.com/jgraph/drawio-mcp/blob/main/shared/style-reference.md).
->
-> **License:** Apache-2.0. See [`NOTICE`](../NOTICE) at repo root for attribution.
->
-> **Upstream commit:** `2c4c3bf23c2723812bb94bf50601e93e3b162a20` (fetched 2026-04-17).
->
-> Comprehensive catalog of draw.io shape/style properties, shape library paths,
-> color palettes, and HTML label semantics. Browse this when you need a
-> non-default shape or need to verify a style property spelling. Use the
-> smaller [`drawio-xml-reference.md`](drawio-xml-reference.md) first for
-> structural rules; come here for shape and style depth.
-
----
-
 # draw.io Style Reference for AI File Generation
 
 This document is a companion to [`mxfile.xsd`](https://github.com/jgraph/drawio-mcp/blob/main/shared/mxfile.xsd) and provides all information

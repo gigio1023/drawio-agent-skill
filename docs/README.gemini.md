@@ -43,11 +43,11 @@ Turn this analysis into a compact draw.io insight panel.
 | Problem | Fix |
 |---------|-----|
 | Missing CLI | Install draw.io Desktop or use `npx @hediet/drawio-export` |
-| XML validates but renders blank | Missing root cells `id="0"` / `id="1"`; see `references/drawio-xml-reference.md` |
-| Edges go through unrelated boxes | Add waypoints; see the orthogonal routing rules in `references/drawio-xml-reference.md` |
+| XML validates but renders blank | Missing root cells `id="0"` / `id="1"`; see `references/fetched/xml-reference.md` |
+| Edges go through unrelated boxes | Add waypoints; see the orthogonal routing rules in `references/fetched/xml-reference.md` |
 
 ## Deeper references
 
-- `SKILL.md` — authoring workflow.
-- `references/drawio-xml-reference.md` — vendored upstream XML reference (Apache-2.0).
-- `references/drawio-style-reference.md` — vendored upstream style/shape catalog.
+- `SKILL.md` - authoring workflow.
+- `references/fetched/xml-reference.md` - vendored upstream XML reference (Apache-2.0).
+- `references/fetched/style-reference.md` - vendored upstream style/shape catalog.

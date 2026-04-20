@@ -11,6 +11,7 @@ The goal is not maximum density. The goal is that the first human who opens the 
 ## Overlap rules
 
 - Primary components need roughly `200px` horizontal and `120px` vertical breathing room
+- Keep at least `16px` inner padding inside ordinary boxes
 - Keep at least `24px` padding from a panel border to its children
 - If labels are long, shorten the labels first before expanding the canvas
 
@@ -27,6 +28,7 @@ The goal is not maximum density. The goal is that the first human who opens the 
 
 - Labels should usually be title + one short line
 - Avoid paragraphs inside component boxes
+- Avoid vertical labels on the first pass
 - Move notes, sources, and captions to the bottom strip or side rail
 - For multilingual or wide-character text, widen early instead of accepting accidental breaks
 
@@ -45,3 +47,10 @@ Before finishing:
 5. No arrowhead sits on a bend
 6. The diagram is still understandable with no chat context
 7. No edge crosses a title, caption strip, or dense label cluster without a strong reason
+
+Then run:
+
+```bash
+python scripts/validate_drawio_xml.py path/to/file.drawio
+python scripts/validate_drawio_layout.py path/to/file.drawio
+```
