@@ -47,11 +47,11 @@ codex "Compact editorial figure in draw.io for the findings section."
 | Problem | Fix |
 |---------|-----|
 | CLI not found | Install draw.io Desktop or use `npx @hediet/drawio-export` |
-| Edges don't render | Each edge needs `<mxGeometry relative="1" as="geometry" />` — see `references/drawio-xml-reference.md` |
-| Crowded layout | Cap first pass at 3–5 primary components; see `references/figure-grammars.md` and `references/layout-safety.md` |
+| Edges don't render | Each edge needs `<mxGeometry relative="1" as="geometry" />` - see `references/fetched/xml-reference.md` |
+| Crowded layout | Cap first pass at 3-5 primary components; see `references/local/figure-grammars.md` and `references/local/layout-safety.md` |
 
 ## Deeper references
 
-- `SKILL.md` — authoring workflow.
-- `references/drawio-xml-reference.md` — vendored upstream XML reference (Apache-2.0).
-- `references/drawio-style-reference.md` — vendored upstream style/shape catalog.
+- `SKILL.md` - authoring workflow.
+- `references/fetched/xml-reference.md` - vendored upstream XML reference (Apache-2.0).
+- `references/fetched/style-reference.md` - vendored upstream style/shape catalog.

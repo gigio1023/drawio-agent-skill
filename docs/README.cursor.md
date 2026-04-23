@@ -43,11 +43,11 @@ Turn this design doc section into a compact editorial figure in draw.io.
 | Problem | Fix |
 |---------|-----|
 | CLI not found | Install draw.io Desktop or use `npx @hediet/drawio-export` |
-| Labels overflow shapes | Shorten labels before enlarging the canvas; see `references/layout-safety.md` |
-| Arrows tangle | Bundle fan-out / fan-in via a shared trunk; see `references/drawio-xml-reference.md` orthogonal routing section |
+| Labels overflow shapes | Shorten labels before enlarging the canvas; see `references/local/layout-safety.md` |
+| Arrows tangle | Bundle fan-out / fan-in via a shared trunk; see `references/fetched/xml-reference.md` orthogonal routing section |
 
 ## Deeper references
 
-- `SKILL.md` — authoring workflow.
-- `references/drawio-xml-reference.md` — vendored upstream XML reference (Apache-2.0).
-- `references/drawio-style-reference.md` — vendored upstream style/shape catalog.
+- `SKILL.md` - authoring workflow.
+- `references/fetched/xml-reference.md` - vendored upstream XML reference (Apache-2.0).
+- `references/fetched/style-reference.md` - vendored upstream style/shape catalog.

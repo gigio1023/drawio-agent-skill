@@ -1,12 +1,12 @@
 drawio-agent-skill
 Copyright (c) 2026 gigio1023
 
-This product includes content adapted from `jgraph/drawio-mcp`:
+This product includes content adapted from and vendored from `jgraph/drawio-mcp`:
   https://github.com/jgraph/drawio-mcp
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
-use those files except in compliance with the License. You may obtain a
-copy of the License at:
+use those files except in compliance with the License. You may obtain a copy of
+the License at:
 
   https://www.apache.org/licenses/LICENSE-2.0
 
@@ -14,22 +14,33 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-## Files adapted from `jgraph/drawio-mcp` (Apache-2.0)
+## Vendored upstream files from `jgraph/drawio-mcp` (Apache-2.0)
 
-Upstream commit: `2c4c3bf23c2723812bb94bf50601e93e3b162a20`
-Fetched: 2026-04-17
+Requested ref: `main`
+Resolved commit: `b3bcf98f0cfe49e431e4503ad3a8e6c59de9cd12`
+Fetched: 2026-04-20
 
 | Upstream path | Local path | Notes |
 |---|---|---|
-| `shared/xml-reference.md` | `references/drawio-xml-reference.md` | Vendored in full with a local header. Unmodified body. |
-| `shared/style-reference.md` | `references/drawio-style-reference.md` | Vendored in full with a local header. Unmodified body. |
-| `skill-cli/README.md` | Integrated by excerpt into `README.md` and `SKILL.md` | Prerequisites, export-format table, "Why XML only?" rationale, CLI location table, export flag table, troubleshooting table, and XML well-formedness callout. |
-| `skill-cli/drawio/SKILL.md` | Integrated by excerpt into `SKILL.md` | The above, plus the `npx @drawio/postprocess` post-processing step and the per-OS "open result" commands. |
+| `shared/xml-reference.md` | `references/fetched/xml-reference.md` | Fetched verbatim |
+| `shared/style-reference.md` | `references/fetched/style-reference.md` | Fetched verbatim |
+| `shared/mermaid-reference.md` | `references/fetched/mermaid-reference.md` | Fetched verbatim |
+| `shared/mxfile.xsd` | `references/fetched/mxfile.xsd` | Fetched verbatim |
+| `skill-cli/README.md` | `references/fetched/skill-cli-README.md` | Fetched verbatim |
+| `skill-cli/drawio/SKILL.md` | `references/fetched/skill-cli-drawio-SKILL.md` | Fetched verbatim |
 
-## Deliberate divergences from upstream
+The vendored fetch metadata is also recorded in:
 
-This skill keeps `.drawio` as the source of truth and does NOT delete the
-intermediate `.drawio` file after a PNG / SVG / PDF export, diverging from
-the upstream skill-cli step 4 ("then delete the source `.drawio` file").
-Retaining the source keeps the diagram round-trippable without decoding
-embedded XML from the exported image.
+- `references/fetched/vendor-manifest.json`
+
+## Local overlay and deliberate divergences
+
+This repo adds local files under `references/local/` and scripts under `scripts/`
+to improve authoring quality on top of the upstream reference set.
+
+Deliberate differences from upstream `skill-cli`:
+
+- Keep `.drawio` as the visible source of truth after export
+- Add layout and quality gate documents derived from real diagram failures
+- Add deterministic XML and layout validators
+- Support multiple agent harnesses with dedicated install docs
