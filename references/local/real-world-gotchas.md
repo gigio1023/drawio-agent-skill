@@ -36,6 +36,8 @@ These come from repeated iteration failures in real diagram sessions.
 
 - Auto-routing alone is not enough when multiple edges want the same corridor.
 - If a dominant path and a secondary path compete, give the secondary path a different corridor or explicit waypoints.
+- A tidy XML route can still be visually bad if it rides over a component label, boundary title, or edge label.
+- Reserve corridors while placing boxes. Retrofitting corridors after the canvas is tight usually causes worse bends.
 
 ## Straight path opportunities
 
@@ -46,3 +48,10 @@ These come from repeated iteration failures in real diagram sessions.
 
 - PNG is useful for README embedding, but SVG is the better review artifact when fine text matters.
 - For high-resolution PNG review on 4K displays, export with `--width 3840` or an equivalent scale.
+- Inspect the exported artifact. Do not assume the draw.io XML view and the rasterized PNG have the same text sharpness or framing.
+
+## Footer explanation trap
+
+- A large bottom legend or footer often means the diagram did not communicate the main idea visually.
+- Use short semantic labels, side rails, or a second page instead of explaining the whole figure at the bottom.
+- Keep sources and tiny provenance notes outside the main geometry whenever possible.

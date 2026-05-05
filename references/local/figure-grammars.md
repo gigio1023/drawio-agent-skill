@@ -15,7 +15,7 @@ Structure:
 - top title stack
 - one main swimlane
 - optional right rail
-- optional bottom strip
+- optional bottom strip for terse source/takeaway only, not a legend that explains the whole diagram
 - 3-5 primary components in left-to-right order
 
 ## 2. report-split
@@ -30,7 +30,7 @@ Structure:
 - top title stack
 - left narrative panel
 - right evidence panel
-- bottom takeaway/source strip
+- bottom takeaway/source strip only when it stays compact; otherwise move explanation outside the diagram
 
 ## 3. system-map
 
@@ -89,4 +89,4 @@ Structure:
 - one dominant chart card
 - one or more inset callout cards
 - optional compact legend or direct labels
-- bottom takeaway/source strip
+- bottom takeaway/source strip only for terse provenance or one-line takeaway

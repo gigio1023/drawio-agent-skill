@@ -18,18 +18,21 @@ The goal is not maximum density. The goal is that the first human who opens the 
 ## Routing rules
 
 - Use one dominant path through the center of the page
-- Secondary arrows should use a separate corridor
-- Long return loops should use a bottom corridor
+- Reserve dedicated corridors for arrows before tightening component spacing
+- Secondary arrows should use a separate corridor from the dominant path
+- Long return loops should use a bottom or outer corridor, not cut through component labels
 - If 2 edges want the same corridor, add waypoints
 - If a node has multiple outgoing edges, vary ports with `exitX/exitY`
 - Keep arrows visually outside label-heavy regions whenever possible
+- Do not route arrows over component bodies, title bands, boundary labels, or edge labels
 
 ## Text rules
 
 - Labels should usually be title + one short line
 - Avoid paragraphs inside component boxes
 - Avoid vertical labels on the first pass
-- Move notes, sources, and captions to the bottom strip or side rail
+- Move short notes and sources to a side rail or external caption when needed
+- Avoid bottom legends or footer explanations inside the diagram; use semantic labels or split the page instead
 - For multilingual or wide-character text, widen early instead of accepting accidental breaks
 
 ## Human-editability rule
@@ -47,6 +50,7 @@ Before finishing:
 5. No arrowhead sits on a bend
 6. The diagram is still understandable with no chat context
 7. No edge crosses a title, caption strip, or dense label cluster without a strong reason
+8. Arrow corridors remain clear after any layout tightening
 
 Then run:
 

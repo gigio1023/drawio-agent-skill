@@ -22,6 +22,7 @@ Default path:
 3. If the request is dense or polish-sensitive, also read:
    - `references/local/quality-gates.md`
    - `references/local/real-world-gotchas.md`
+   - `references/local/review-loop.md`
 4. Generate native draw.io XML with real draw.io structure
 5. Validate the result:
    - `python scripts/validate_drawio_xml.py <file>.drawio`
@@ -46,6 +47,7 @@ Default path:
 | `references/local/layout-safety.md` | Before finishing | Overlap, padding, routing, and readability checks |
 | `references/local/quality-gates.md` | When quality matters | Hard finishing gates for meaning, layout, text, arrows, and shape consistency |
 | `references/local/real-world-gotchas.md` | When diagrams keep breaking in review | Repeated failure modes from real sessions |
+| `references/local/review-loop.md` | When exporting or after visual review feedback | Export inspection loop, arrow-corridor audit, and artifact-format choices |
 | `references/local/visual-patterns.md` | When compact editorial polish matters | Layout behaviors distilled from strong official references |
 | `references/local/reference-set.md` | When you need provenance | Which official references informed the local visual guidance |
 | `references/local/community-lessons.md` | When evolving the skill | Lessons from adjacent draw.io and diagram ecosystems |
@@ -141,6 +143,7 @@ Examples:
 - Straighten request/response pairs when alignment makes that possible
 - If two edges want the same corridor, add explicit waypoints
 - Do not let arrows sit on top of dense text regions
+- For review-sensitive diagrams, reserve dedicated arrow corridors before tightening the layout
 
 ### 7. Keep the file editable
 
@@ -158,6 +161,7 @@ Before finishing, read:
 - `references/local/layout-safety.md`
 - `references/local/quality-gates.md`
 - `references/local/real-world-gotchas.md`
+- `references/local/review-loop.md` if exporting or responding to visual review feedback
 
 Then run:
 
@@ -167,6 +171,8 @@ python scripts/validate_drawio_layout.py <path>.drawio
 ```
 
 Do not claim the diagram is done without passing the XML validator. If the layout validator warns about overlap, border-hugging text, or inconsistent corners, fix the diagram unless there is a clear reason not to.
+
+For exported review artifacts, inspect the exported SVG or PNG before finishing. Validators catch structural problems, not every visual collision.
 
 ## Exports
 
@@ -213,6 +219,7 @@ WSL2 example:
 ```
 
 Use SVG when text sharpness matters more than README convenience.
+If SVG is not practical, export a normalized high-resolution PNG and inspect it for fuzzy text, clipped edges, and route collisions.
 
 ### Open the result
 
