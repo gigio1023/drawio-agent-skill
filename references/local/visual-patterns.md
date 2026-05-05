@@ -13,6 +13,7 @@ This file summarizes the reusable visual lessons taken from recent official Open
 - In strong examples, each panel answers one question, not many at once
 - Small inset legends, metric chips, and annotation strips help compactness without clutter
 - The best figures separate `workflow`, `evidence`, and `takeaway` instead of mixing all three in one box
+- Strong diagrams do not rely on a bottom footer to explain the figure; the visual hierarchy and labels carry the idea
 
 ## OpenAI-leaning patterns
 
@@ -54,7 +55,7 @@ This file summarizes the reusable visual lessons taken from recent official Open
 - short labels
 - visible narrative flow
 - annotation outside the busiest geometry
-- small legends and chips that help scanning
+- small legends and chips that help scanning, not large explanatory footers
 - one central organizing frame per figure
 - charts with direct labeling instead of forcing the reader to bounce between plot and legend
 

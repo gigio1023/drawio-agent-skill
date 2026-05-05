@@ -108,6 +108,7 @@ Key files:
 - `layout-safety.md` - overlap, padding, and corridor checks
 - `quality-gates.md` - hard finishing gates for meaning, layout, text, arrows, and corner consistency
 - `real-world-gotchas.md` - repeated failure modes from real sessions
+- `review-loop.md` - exported-artifact QA, arrow-corridor audit, and SVG/PNG review guidance
 - `visual-patterns.md` - compact visual behaviors from selected official references
 - `reference-set.md` - provenance for those references
 - `community-lessons.md` - lessons from adjacent ecosystems
@@ -134,6 +135,10 @@ What they catch:
 - inconsistent rounded-rectangle settings
 
 They are not a replacement for opening the diagram, but they close the gap between "XML is valid" and "diagram is still broken."
+
+For review handoffs, the skill now also points agents to inspect the exported SVG
+or normalized high-resolution PNG. That catches visual issues validators cannot
+see, especially arrows crossing labels or components.
 
 ## Export behavior
 
