@@ -7,6 +7,9 @@ description: >
   component-to-component arrows, or export to PNG/SVG/PDF. Prefer this over
   ad-hoc XML when editability, routing clarity, and human revision quality
   matter.
+version: 0.1.0
+author: gigio1023
+license: MIT
 ---
 
 # Draw.io Diagram
