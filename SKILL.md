@@ -15,8 +15,8 @@ artifact stays editable. Export is optional and should happen only when requeste
 
 ## Quick Start
 
-1. Confirm the message, required components/arrows, page constraint, and requested
-   source/export artifacts.
+1. Confirm the message, components/arrows, page constraint, and artifacts. Only
+   semantic nodes may receive connectors; supporting text may not.
 2. Read `references/local/upstream-drawio-rules.md` and
    `references/local/edge-routing.md`. Read
    `references/local/figure-grammars.md` when choosing or changing composition.
@@ -98,10 +98,13 @@ invisible grouping, `container=1;pointerEvents=0;` for decorative containers, an
 - Make one path visually dominant and keep secondary paths quieter. Assign
   colors by semantic role from one palette (`references/local/color-palettes.md`).
 - Own every route: draw.io does not route around other shapes. Align connected
-  boxes so main edges run straight; when a shape has 2+ edges or a corridor is
-  occupied, pin sides with `exitX/exitY/entryX/entryY` and add waypoints
+  boxes so main edges run straight. Add waypoints only for an obstacle, a
+  separate edge lane, or an outer corridor; never dogleg aligned terminals.
+  For 2+ edges or an occupied corridor, pin sides and add waypoints
   (`references/local/edge-routing.md` has the recipes).
-- Put edge labels on straight segments and keep arrows out of text/title regions.
+- Put edge labels on straight segments, give each an opaque
+  `labelBackgroundColor` matching its canvas or panel, and keep arrows out of
+  text/title regions.
 - Include every requested component even if a human may later fine-tune placement.
 
 ### 5. Validate and inspect
@@ -115,7 +118,8 @@ python3 scripts/validate_drawio_layout.py <path>.drawio
 
 XML failure is blocking. The layout validator also audits edges: dangling
 terminals fail; probable component crossings, ports facing away from their
-target, and overlapping floating edge pairs warn. Treat layout warnings as
+target, overlapping floating edge pairs, uncovered edge labels, and unnecessary
+aligned-terminal doglegs warn. Treat layout warnings as
 evidence to inspect and fix; accept one only when the source remains readable
 and the tradeoff is explicit. Validators do not catch every visual collision.
 When an export is part of the deliverable, inspect the actual artifact for

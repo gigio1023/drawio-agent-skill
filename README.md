@@ -142,6 +142,8 @@ What they catch:
 - edge routes that likely cross unrelated components
 - fixed connection points facing away from the other terminal
 - floating edge pairs between the same two shapes (they render overlapped)
+- edge labels without an opaque background
+- one/two-waypoint doglegs between aligned terminals when the direct corridor is clear
 
 They are not a replacement for opening the diagram, but they close the gap between "XML is valid" and "diagram is still broken."
 

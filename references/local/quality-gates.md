@@ -19,6 +19,9 @@ This file turns repeated review pain into hard finishing gates.
 - Tight layout is acceptable only after arrows have dedicated corridors and labels still breathe.
 - If a layout feels crowded, split the page or shorten labels before widening the canvas.
 - Avoid bottom legends or explanatory footers that restate the diagram. Prefer semantic labels, a side rail, or a second page.
+- Remove decorative keyword garlands. If a top/bottom band is meaningful, state
+  whether it is a caption, legend, constraint, ownership boundary, or semantic
+  rail and align it to the content it governs.
 
 ## Text
 
@@ -33,7 +36,10 @@ This file turns repeated review pain into hard finishing gates.
 - There must be one visually dominant path.
 - Secondary arrows should use a quieter corridor.
 - Put edge labels on straight segments, not on bends.
+- Give every edge label an opaque background matching the surface behind it.
 - If the orchestrator and interface can be aligned for a straight request/response pair, do that.
+- If fixed terminals already align and the straight corridor is clear, remove
+  waypoints that introduce a dogleg.
 - Do not let arrows or arrowheads sit on top of labels, component bodies, titles, boundary names, or box borders.
 - If auto-routing crosses text or components, add waypoints or move boxes before accepting the route.
 

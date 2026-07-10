@@ -35,19 +35,19 @@
           <mxGeometry x="300" y="430" width="240" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="e-client-gateway" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;" edge="1" parent="1" source="client" target="gateway">
+        <mxCell id="e-client-gateway" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="client" target="gateway">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e-gateway-service" value="route" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;" edge="1" parent="1" source="gateway" target="service">
+        <mxCell id="e-gateway-service" value="route" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="gateway" target="service">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e-service-db" value="read" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.25;entryX=0;entryY=0.25;fontSize=10;fontColor=#4338CA;" edge="1" parent="1" source="service" target="database">
+        <mxCell id="e-service-db" value="read" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.25;entryX=0;entryY=0.25;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="service" target="database">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e-db-service" value="rows" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=0;exitY=0.75;entryX=1;entryY=0.75;fontSize=10;fontColor=#64748B;" edge="1" parent="1" source="database" target="service">
+        <mxCell id="e-db-service" value="rows" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=0;exitY=0.75;entryX=1;entryY=0.75;fontSize=10;fontColor=#64748B;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="database" target="service">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e-skip-cache" value="cache hit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=0;fontSize=10;fontColor=#64748B;" edge="1" parent="1" source="client" target="service">
+        <mxCell id="e-skip-cache" value="cache hit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=0;fontSize=10;fontColor=#64748B;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="client" target="service">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="160" y="170"/>
@@ -55,7 +55,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e-return-loop" value="response" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=0.25;exitY=1;entryX=0.5;entryY=1;jumpStyle=arc;jumpSize=6;fontSize=10;fontColor=#64748B;" edge="1" parent="1" source="database" target="client">
+        <mxCell id="e-return-loop" value="response" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=0.25;exitY=1;entryX=0.5;entryY=1;jumpStyle=arc;jumpSize=6;fontSize=10;fontColor=#64748B;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="database" target="client">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="960" y="460"/>
@@ -63,7 +63,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e-service-queue" value="events" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=1.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;fontColor=#4338CA;" edge="1" parent="1" source="service" target="queue">
+        <mxCell id="e-service-queue" value="events" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;orthogonalLoop=1;html=1;strokeColor=#6366F1;strokeWidth=1.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="service" target="queue">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
       </root>

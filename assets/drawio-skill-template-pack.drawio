@@ -84,16 +84,16 @@
             <mxGeometry x="620" y="28" width="700" height="54" as="geometry"/>
           </mxCell>
         </UserObject>
-        <mxCell id="e1" value="plan" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;" edge="1" parent="hero" source="input" target="planner">
+        <mxCell id="e1" value="plan" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;labelBackgroundColor=#F8FAFD;" edge="1" parent="hero" source="input" target="planner">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e2" value="route" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;" edge="1" parent="hero" source="planner" target="router">
+        <mxCell id="e2" value="route" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;labelBackgroundColor=#F8FAFD;" edge="1" parent="hero" source="planner" target="router">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e3" value="verify" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;" edge="1" parent="hero" source="router" target="verifier">
+        <mxCell id="e3" value="verify" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;labelBackgroundColor=#F8FAFD;" edge="1" parent="hero" source="router" target="verifier">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e4" value="ship" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;" edge="1" parent="hero" source="verifier" target="output">
+        <mxCell id="e4" value="ship" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6E8BFF;strokeWidth=2.25;endArrow=block;endFill=1;fontSize=10;fontColor=#3853A4;labelBackgroundColor=#F8FAFD;" edge="1" parent="hero" source="verifier" target="output">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#C5CCDA;strokeWidth=1.25;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" edge="1" parent="1" source="planner" target="g2">

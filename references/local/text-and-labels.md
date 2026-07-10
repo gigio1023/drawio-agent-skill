@@ -1,5 +1,15 @@
 # Text and labels
 
+## Contents
+
+- Line breaks and escaping
+- Wrapping and fit
+- Positioning keys
+- Edge labels
+- Titles, captions, and bottom strips
+- Detail vs compactness
+- Fonts
+
 ## Line breaks: the #1 text mistake
 
 A literal `\n` inside a `value` attribute is two characters, backslash and n.
@@ -53,8 +63,8 @@ is written `&amp;lt;&amp;lt;abstract&amp;gt;&amp;gt;` in the attribute.
 Set `value` on the edge cell. Position with the edge geometry:
 
 ```xml
-<mxCell id="e1" value="ack" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" parent="1" source="a" target="b">
-  <mxGeometry x="-0.4" y="10" relative="1" as="geometry">
+<mxCell id="e1" value="ack" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="a" target="b">
+  <mxGeometry x="-0.4" y="-10" relative="1" as="geometry">
     <mxPoint as="offset" />
   </mxGeometry>
 </mxCell>
@@ -63,10 +73,37 @@ Set `value` on the edge cell. Position with the edge geometry:
 - `x` in -1..1 slides the label along the edge (-1 source, 0 center, 1 target).
 - `y` offsets perpendicular to the edge in pixels; use it to lift a label off
   the line.
+- Every edge label needs an opaque `labelBackgroundColor` matching the canvas or
+  containing panel (`#FFFFFF` above). Omitted, `none`, and transparent
+  backgrounds let the connector show through the glyphs. Offset still helps
+  placement, but it does not replace the background.
 - Put labels on a straight segment of the route, never on a bend, and keep
   them out of other shapes' space. On short edges prefer no label and let a
   clearer shape label carry the meaning.
 - Keep edge labels to 1-3 words (`ack`, `on failure`, `HTTP 429`).
+
+## Titles, captions, and bottom strips
+
+Give every free-standing text block exactly one role before placing it:
+
+- **Title/subtitle:** frames the whole page; no connector.
+- **Caption/callout:** explains a nearby region; align it to that region and do
+  not connect it as though it were a component.
+- **Semantic node/rail:** participates in the model; give it a precise noun or
+  claim and connect only the relationship the diagram actually asserts.
+- **Decoration:** delete it.
+
+Do not fill the top or bottom with a dot-separated keyword garland merely to
+balance whitespace. A list belongs there only when its items form a named set,
+sequence, legend, or constraint that the reader needs. Write that relationship
+explicitly instead of relying on proximity.
+
+Center a page-level title on the page's actual content frame. Center a shared
+bottom strip beneath the components it governs; if it belongs to one component,
+size and align it under that component. A semantic center-to-center relation
+should use a straight centerline connector. Do not attach a connector at the far
+left or right and add a cosmetic dogleg, which makes the composition look
+off-center even when the boxes are numerically aligned.
 
 ## Detail vs compactness: pick a level deliberately
 

@@ -65,20 +65,14 @@
           </mxCell>
         </object>
 
-        <mxCell id="bandChip1" value="3 primary nodes" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E0E7FF;strokeColor=none;fontColor=#3730A3;fontSize=12;fontStyle=1;spacing=10;" vertex="1" parent="footer">
-          <mxGeometry x="30" y="34" width="150" height="42" as="geometry"/>
-        </mxCell>
-        <mxCell id="bandChip2" value="1 active path" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=none;fontColor=#166534;fontSize=12;fontStyle=1;spacing=10;" vertex="1" parent="footer">
-          <mxGeometry x="200" y="34" width="140" height="42" as="geometry"/>
-        </mxCell>
-        <mxCell id="bandText" value="Use this sample as the default starting point when readability matters more than visual ambition. Add complexity only after this baseline stays clean." style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=12;fontColor=#4B5563;" vertex="1" parent="footer">
-          <mxGeometry x="380" y="28" width="920" height="52" as="geometry"/>
+        <mxCell id="bandText" value="&lt;b&gt;Usage rule&lt;/b&gt;&lt;br&gt;Start from this overlap-safe grammar; add complexity only after the baseline remains readable." style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=12;fontColor=#4B5563;whiteSpace=wrap;" vertex="1" parent="footer">
+          <mxGeometry x="30" y="24" width="1300" height="62" as="geometry"/>
         </mxCell>
 
-        <mxCell id="e12" value="shape" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;" edge="1" parent="main" source="n1" target="n2">
+        <mxCell id="e12" value="shape" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#EEF2FF;" edge="1" parent="main" source="n1" target="n2">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e23" value="check" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;" edge="1" parent="main" source="n2" target="n3">
+        <mxCell id="e23" value="check" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#6366F1;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#EEF2FF;" edge="1" parent="main" source="n2" target="n3">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="e2r" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#94A3B8;strokeWidth=1.2;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;exitX=1;exitY=0.2;entryX=0;entryY=0.5;" edge="1" parent="1" source="n2" target="rail2">

@@ -165,6 +165,83 @@ class ValidateDrawioLayoutEdgeTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertNotIn("are all floating", result.stderr)
 
+    def test_edge_label_without_opaque_background_warns(self) -> None:
+        edge = """\
+        <mxCell id="e1" value="review" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="mid" target="b">
+          <mxGeometry x="0" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+"""
+        result = run_validator(edge)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("label has no opaque background", result.stderr)
+
+    def test_edge_label_with_opaque_background_is_clean(self) -> None:
+        edge = """\
+        <mxCell id="e1" value="review" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="mid" target="b">
+          <mxGeometry x="0" y="-10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+"""
+        result = run_validator(edge)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("label has no opaque background", result.stderr)
+
+    def test_edge_label_with_transparent_background_warns(self) -> None:
+        for background in ("none", "transparent"):
+            with self.subTest(background=background):
+                edge = f"""\
+        <mxCell id="e1" value="review" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor={background};exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="mid" target="b">
+          <mxGeometry x="0" y="-10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+"""
+                result = run_validator(edge)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn("label has no opaque background", result.stderr)
+
+    def test_unnecessary_dogleg_between_aligned_terminals_warns(self) -> None:
+        shapes_and_edge = """\
+        <mxCell id="below" value="Below" style="rounded=1;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="a" target="below">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="300" />
+              <mxPoint x="140" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+"""
+        result = run_validator(shapes_and_edge)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("adds a dogleg although its terminals align", result.stderr)
+
+    def test_dogleg_around_blocking_component_is_clean(self) -> None:
+        shapes_and_edge = """\
+        <mxCell id="blocker" value="Blocker" style="rounded=1;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="330" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="below" value="Below" style="rounded=1;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="a" target="below">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="300" />
+              <mxPoint x="200" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+"""
+        result = run_validator(shapes_and_edge)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("adds a dogleg although its terminals align", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

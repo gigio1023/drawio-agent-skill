@@ -29,6 +29,7 @@ class Box:
 @dataclass(frozen=True)
 class Edge:
     cell_id: str
+    value: str
     source_id: str | None
     target_id: str | None
     style: dict[str, str]
@@ -142,6 +143,9 @@ def parse_edges(root: ET.Element) -> list[Edge]:
         cell_id = cell.get("id") or (
             wrapper.get("id", "") if is_object_wrapper else ""
         )
+        value = cell.get("value", "")
+        if is_object_wrapper and not value:
+            value = wrapper.get("label", wrapper.get("value", ""))
         geometry = next(
             (child for child in cell if local_name(child.tag) == "mxGeometry"),
             None,
@@ -165,6 +169,7 @@ def parse_edges(root: ET.Element) -> list[Edge]:
         edges.append(
             Edge(
                 cell_id=cell_id,
+                value=value,
                 source_id=cell.get("source"),
                 target_id=cell.get("target"),
                 style=parse_style(cell.get("style", "")),
@@ -327,6 +332,38 @@ def ancestor_ids(cell_id: str | None, boxes: dict[str, Box]) -> set[str]:
     return result
 
 
+def route_adds_clear_axis_dogleg(
+    start: tuple[float, float],
+    end: tuple[float, float],
+    waypoints: tuple[tuple[float, float], ...],
+    obstacles: list[Box],
+    boxes: dict[str, Box],
+    skip_ids: set[str],
+    tolerance: float = 1.0,
+) -> bool:
+    """True when a one/two-waypoint detour replaces a clear straight route."""
+    if not 1 <= len(waypoints) <= 2:
+        return False
+    vertical = abs(start[0] - end[0]) <= tolerance
+    horizontal = abs(start[1] - end[1]) <= tolerance
+    if not vertical and not horizontal:
+        return False
+    if any(
+        obstacle.cell_id not in skip_ids
+        and segment_intersects_rect(
+            start,
+            end,
+            absolute_box(obstacle, boxes),
+            inset=-1.0,
+        )
+        for obstacle in obstacles
+    ):
+        return False
+    if vertical:
+        return any(abs(point[0] - start[0]) > tolerance for point in waypoints)
+    return any(abs(point[1] - start[1]) > tolerance for point in waypoints)
+
+
 def audit_edges(
     prefix: str,
     boxes: dict[str, Box],
@@ -336,9 +373,23 @@ def audit_edges(
 ) -> None:
     obstacles = [box for box in boxes.values() if box.is_overlap_candidate]
     pair_count: dict[frozenset[str], list[Edge]] = {}
+    for edge in edges:
+        if edge.source_id in boxes and edge.target_id in boxes:
+            key = frozenset({edge.source_id, edge.target_id})
+            if len(key) == 2:
+                pair_count.setdefault(key, []).append(edge)
 
     for edge in edges:
         label = edge.cell_id or "<no id>"
+        edge_label = strip_label(edge.value)
+        label_background = edge.style.get("labelBackgroundColor", "").lower()
+        if edge_label and label_background in {"", "none", "transparent"}:
+            warnings.append(
+                prefix
+                + f"edge {label} label has no opaque background; set"
+                " labelBackgroundColor to the canvas/panel fill so the line cannot"
+                " show through the text",
+            )
         if edge.source_id is None and edge.source_point is None:
             errors.append(
                 prefix + f"edge {label} has no source and no explicit sourcePoint",
@@ -362,22 +413,19 @@ def audit_edges(
 
         start: tuple[float, float] | None = None
         end: tuple[float, float] | None = None
+        start_is_fixed = edge.source_point is not None
+        end_is_fixed = edge.target_point is not None
         if source_box is not None:
-            start, _ = anchor_point(source_box, boxes, edge.style, "exit")
+            start, start_is_fixed = anchor_point(source_box, boxes, edge.style, "exit")
         elif edge.source_point is not None:
             start = edge.source_point
         if target_box is not None:
-            end, _ = anchor_point(target_box, boxes, edge.style, "entry")
+            end, end_is_fixed = anchor_point(target_box, boxes, edge.style, "entry")
         elif edge.target_point is not None:
             end = edge.target_point
 
         if start is None or end is None:
             continue
-
-        if source_box is not None and target_box is not None:
-            key = frozenset({source_box.cell_id, target_box.cell_id})
-            if len(key) == 2:
-                pair_count.setdefault(key, []).append(edge)
 
         mismatch = facing_mismatch(edge.style, "exit", start, end)
         if mismatch and not edge.waypoints:
@@ -395,6 +443,26 @@ def audit_edges(
             )
 
         skip_ids = ancestor_ids(edge.source_id, boxes) | ancestor_ids(edge.target_id, boxes)
+        terminal_pair = frozenset({edge.source_id, edge.target_id})
+        has_parallel_edge = len(terminal_pair) == 2 and len(pair_count.get(terminal_pair, [])) > 1
+        if (
+            start_is_fixed
+            and end_is_fixed
+            and not has_parallel_edge
+            and route_adds_clear_axis_dogleg(
+                start,
+                end,
+                edge.waypoints,
+                obstacles,
+                boxes,
+                skip_ids,
+            )
+        ):
+            warnings.append(
+                prefix
+                + f"edge {label} adds a dogleg although its terminals align and"
+                " the straight corridor is clear; remove the waypoints",
+            )
         polyline = [start, *edge.waypoints, end]
         is_orthogonal = "edgeStyle" in edge.style
         crossed: list[str] = []

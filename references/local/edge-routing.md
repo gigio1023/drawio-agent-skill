@@ -1,5 +1,16 @@
 # Edge routing and connections
 
+## Contents
+
+- The mental model
+- Every edge, always
+- Floating vs fixed terminals
+- Recipes
+- Waypoints
+- Crossings and z-order
+- Terminal hygiene
+- Verify
+
 Edges are the most common failure in generated diagrams: lines crossing
 component bodies, wrapping around shapes, overlapping each other, or starting
 and ending on the wrong sides. All of these come from one wrong assumption.
@@ -119,6 +130,19 @@ through. Place them:
 - axis-aligned with the terminals where possible - each extra bend costs
   readability.
 
+Before keeping any waypoint, compare the route with the no-waypoint route. If
+fixed source and target anchors already share an X or Y coordinate and the
+straight corridor is clear, remove the waypoints. A short sideways excursion
+that immediately returns to the same axis is a dogleg, not useful routing.
+Waypoints earn their place only by avoiding a component, separating parallel
+edges, or occupying a deliberate outer/return corridor.
+
+When connecting a component to a wide semantic strip, decide what the edge
+means. A relationship to the strip as a whole should be centered on both ends.
+A relationship to one part of the strip should attach near that part and the
+strip should be sized/aligned to make the ownership legible. Never use a
+far-edge attachment plus two bends merely to fill whitespace.
+
 If a route needs more than 3-4 waypoints, the placement is wrong; move boxes
 until corridors open up.
 
@@ -152,6 +176,7 @@ reference beats prose.
 `python3 scripts/validate_drawio_layout.py <file>.drawio` checks: dangling
 terminals (error), edges whose approximate route crosses an unrelated
 component, fixed ports facing away from the other terminal, and same-pair
-floating edges that will overlap. Treat each warning as a route to fix; then
+floating edges that will overlap. It also warns when fixed aligned terminals
+take a clear one/two-waypoint dogleg. Treat each warning as a route to fix; then
 confirm on the rendered artifact, because static checks approximate the real
 router.
