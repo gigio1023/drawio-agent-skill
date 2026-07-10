@@ -3,7 +3,7 @@
 ## Preferred
 
 ```bash
-npx skills add gigio1023/drawio-agent-skill@drawio-diagram
+npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent codex
 ```
 
 ## Manual install
@@ -11,14 +11,15 @@ npx skills add gigio1023/drawio-agent-skill@drawio-diagram
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/gigio1023/drawio-agent-skill.git ~/.codex/drawio-agent-skill
+mkdir -p ~/.local/share
+git clone https://github.com/gigio1023/drawio-agent-skill.git ~/.local/share/drawio-agent-skill
 ```
 
-2. Copy the repo contents into a Codex skill directory:
+2. Symlink the installable repo root into the Codex skill directory:
 
 ```bash
-mkdir -p ~/.codex/skills/drawio-diagram
-cp -R ~/.codex/drawio-agent-skill/. ~/.codex/skills/drawio-diagram/
+mkdir -p ~/.agents/skills
+ln -s ~/.local/share/drawio-agent-skill ~/.agents/skills/drawio-diagram
 ```
 
 3. Restart Codex.

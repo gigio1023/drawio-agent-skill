@@ -55,6 +55,6 @@ Before finishing:
 Then run:
 
 ```bash
-python scripts/validate_drawio_xml.py path/to/file.drawio
-python scripts/validate_drawio_layout.py path/to/file.drawio
+python3 scripts/validate_drawio_xml.py path/to/file.drawio
+python3 scripts/validate_drawio_layout.py path/to/file.drawio
 ```
