@@ -9,6 +9,14 @@ layout judgment, model prompting, and verification, this local overlay and
 `SKILL.md` win; do not inherit rigid grids, reasoning narration, or skipped
 verification from older vendored agent instructions.
 
+**Known upstream trap:** the "Automatic edge routing" section of the vendored
+`references/fetched/xml-reference.md` says an ELK pass cleans up edges after
+render and that you can "write edges naively". That pass exists only in the
+drawio-mcp viewer pipeline. The `.drawio` files this skill writes are opened in
+draw.io desktop or app.diagrams.net, where **no cleanup pass runs** - the same
+upstream file admits the built-in router has "no awareness of other shapes".
+Route edges yourself per `references/local/edge-routing.md`.
+
 ## Required XML structure
 
 - Use native `.drawio` XML
@@ -23,6 +31,9 @@ verification from older vendored agent instructions.
 ## Edge rules
 
 - Every edge `mxCell` must contain `<mxGeometry relative="1" as="geometry" />` as a child element - never self-closing
+- Emit all vertices before the edges that reference them
+- Edges whose terminals sit in different containers must use `parent="1"` or they clip inside one container
+- Connection sides, fixed vs floating terminals, and routing recipes: `references/local/edge-routing.md`
 - Use `edgeStyle=orthogonalEdgeStyle` for complex routing with 2+ bends
 - Use `edgeStyle=elbowEdgeStyle;elbow=vertical;` for simple 0-1 bend connections
 - Use one consistent edge style per diagram type (all orthogonal, all straight, all curved - never mixed)

@@ -17,7 +17,8 @@ artifact stays editable. Export is optional and should happen only when requeste
 
 1. Confirm the message, required components/arrows, page constraint, and requested
    source/export artifacts.
-2. Read `references/local/upstream-drawio-rules.md`. Read
+2. Read `references/local/upstream-drawio-rules.md` and
+   `references/local/edge-routing.md`. Read
    `references/local/figure-grammars.md` when choosing or changing composition.
 3. Generate native `.drawio` XML using the repo's established structure.
 4. Read `references/local/layout-safety.md`, then run:
@@ -31,19 +32,25 @@ artifact stays editable. Export is optional and should happen only when requeste
 | Need | Read |
 |---|---|
 | XML structure and validation baseline | `references/local/upstream-drawio-rules.md` |
+| Edge connections, ports, waypoints, crossings | `references/local/edge-routing.md` |
+| Labels, line breaks, escaping, detail-vs-compact | `references/local/text-and-labels.md` |
+| Color scheme selection and dark mode | `references/local/color-palettes.md` |
 | Page composition and starting budgets | `references/local/figure-grammars.md` |
 | Overlap, padding, routing, and preflight | `references/local/layout-safety.md` |
 | Publication or review-quality finishing | `references/local/quality-gates.md` |
 | A validator/reviewer exposes a repeated failure | `references/local/real-world-gotchas.md` |
 | Export or visual-review iteration | `references/local/review-loop.md` |
 | Compact editorial styling | `references/local/visual-patterns.md` |
+| Official docs/examples for deep lookup | `references/local/upstream-docs-map.md` |
 | Provenance or skill maintenance | `references/local/reference-set.md`, `references/local/community-lessons.md` |
 | XML/style detail beyond the local digest | Search factual definitions under `references/fetched/`; do not adopt its legacy agent workflow wholesale |
 
 Read only the rows needed for the task. Files under `references/fetched/` are
 vendored verbatim for provenance and technical lookup; some contain older model
 scaffolding. Use them for exact XML/style facts, while this SKILL and the local
-overlay control workflow, layout judgment, and verification.
+overlay control workflow, layout judgment, and verification. In particular,
+ignore the vendored claim that a viewer ELK pass will clean up edge routing -
+it does not apply to files this skill writes.
 
 ## Workflow
 
@@ -85,11 +92,16 @@ invisible grouping, `container=1;pointerEvents=0;` for decorative containers, an
 ### 4. Make meaning and routes explicit
 
 - Prefer one or two lines per component and no paragraphs or vertical main labels.
+  Line breaks are `&lt;br&gt;` or `&#xa;` in the value attribute - a literal
+  `\n` renders as visible backslash-n text.
 - Use precise ownership/protocol labels; rename ambiguity instead of decorating it.
-- Make one path visually dominant and keep secondary paths quieter.
+- Make one path visually dominant and keep secondary paths quieter. Assign
+  colors by semantic role from one palette (`references/local/color-palettes.md`).
+- Own every route: draw.io does not route around other shapes. Align connected
+  boxes so main edges run straight; when a shape has 2+ edges or a corridor is
+  occupied, pin sides with `exitX/exitY/entryX/entryY` and add waypoints
+  (`references/local/edge-routing.md` has the recipes).
 - Put edge labels on straight segments and keep arrows out of text/title regions.
-- Align request/response pairs when possible; add explicit waypoints when edges
-  compete for a corridor.
 - Include every requested component even if a human may later fine-tune placement.
 
 ### 5. Validate and inspect
@@ -101,11 +113,14 @@ python3 scripts/validate_drawio_xml.py <path>.drawio
 python3 scripts/validate_drawio_layout.py <path>.drawio
 ```
 
-XML failure is blocking. Treat layout warnings as evidence to inspect and fix;
-accept one only when the source remains readable and the tradeoff is explicit.
-Validators do not catch every visual collision. When an export is part of the
-deliverable, inspect the actual artifact for clipped text, fuzzy type, route
-collisions, framing, and arrowheads on bends or borders.
+XML failure is blocking. The layout validator also audits edges: dangling
+terminals fail; probable component crossings, ports facing away from their
+target, and overlapping floating edge pairs warn. Treat layout warnings as
+evidence to inspect and fix; accept one only when the source remains readable
+and the tradeoff is explicit. Validators do not catch every visual collision.
+When an export is part of the deliverable, inspect the actual artifact for
+clipped text, fuzzy type, route collisions, framing, and arrowheads on bends
+or borders.
 
 ## Exports
 
@@ -134,7 +149,10 @@ Naming: source `<name>.drawio`; exports `<name>.drawio.png`,
 ## Gotchas
 
 - Passing validators does not prove the exported diagram is readable.
-- A tidy auto-route can still cross a component label; use the rendered artifact.
+- No routing pass will fix edges later: the built-in router ignores every shape
+  except the two terminals, and the vendored "ELK cleanup" note applies only to
+  the drawio-mcp viewer, not to files opened in draw.io.
+- `\n` in a value attribute renders as literal text; use `&lt;br&gt;` or `&#xa;`.
 - Page budgets guide composition but never authorize dropping required content.
 - Keep implementation choices and external dependencies semantically separate.
 - Do not add tools, formats, pages, or a diagram-wide restyle outside the request.

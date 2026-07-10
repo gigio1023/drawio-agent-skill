@@ -6,59 +6,37 @@ This repo packages the `drawio-diagram` skill. Its job is not just to produce va
 
 ## Install
 
-Preferred:
+Install through the Skills CLI. The `--agent` value selects the target
+harness; manual paths and restart behavior stay in the corresponding install
+guide.
 
-```bash
-npx skills add gigio1023/drawio-agent-skill@drawio-diagram
-```
+| Target | Install | Manual guide |
+| --- | --- | --- |
+| Claude Code | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent claude-code` | [Claude Code](.claude/INSTALL.md) |
+| Codex | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent codex` | [Codex](.codex/INSTALL.md) |
+| Cursor | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent cursor` | [Cursor](.cursor/INSTALL.md) |
+| Gemini CLI | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent gemini-cli` | [Gemini CLI](.gemini/INSTALL.md) |
 
-### Codex
+## Usage
 
-Tell Codex:
-
-```text
-Fetch and follow instructions from https://raw.githubusercontent.com/gigio1023/drawio-agent-skill/refs/heads/main/.codex/INSTALL.md
-```
-
-Detailed docs: `docs/README.codex.md`
-
-### Claude Code
-
-Tell Claude Code:
+Ask naturally for a native draw.io artifact. Claude Code can invoke the skill
+explicitly as `/drawio-diagram`; Codex uses `$drawio-diagram`. Explicit syntax
+is optional when the request clearly asks for draw.io output.
 
 ```text
-Fetch and follow instructions from https://raw.githubusercontent.com/gigio1023/drawio-agent-skill/refs/heads/main/.claude/INSTALL.md
+Make a draw.io architecture diagram for this ingestion pipeline.
+Generate a .drawio.svg of the deploy pipeline with clear fan-out edges.
+Turn this research section into a compact editorial figure in draw.io.
 ```
-
-Detailed docs: `docs/README.claude.md`
-
-### Gemini CLI
-
-Tell Gemini CLI:
-
-```text
-Fetch and follow instructions from https://raw.githubusercontent.com/gigio1023/drawio-agent-skill/refs/heads/main/.gemini/INSTALL.md
-```
-
-Detailed docs: `docs/README.gemini.md`
-
-### Cursor
-
-Tell Cursor:
-
-```text
-Fetch and follow instructions from https://raw.githubusercontent.com/gigio1023/drawio-agent-skill/refs/heads/main/.cursor/INSTALL.md
-```
-
-Detailed docs: `docs/README.cursor.md`
 
 ## What changed in this repo
 
-This skill now has three explicit layers:
+This skill now has four explicit layers:
 
-1. fetched upstream copies
-2. local overlay
-3. deterministic validators
+1. fetched upstream copies (committed digests)
+2. optional local clones of official docs and examples (gitignored)
+3. local overlay
+4. deterministic validators
 
 The fetched upstream layer keeps verbatim `jgraph/drawio-mcp` content inside
 this repo at stable local paths for provenance and technical lookup. It is not
@@ -108,14 +86,36 @@ references/local/
 Key files:
 
 - `upstream-drawio-rules.md` - local digest of the structural rules that always apply
+- `edge-routing.md` - connection contract, fixed vs floating terminals, waypoint
+  recipes, and why draw.io never routes around other shapes
+- `text-and-labels.md` - line breaks (`\n` renders literally), escaping, label
+  positioning, and detail-vs-compact representation levels
+- `color-palettes.md` - ready-made palettes (draw.io standard pairs and an
+  editorial neutral scheme) plus dark-mode rules
 - `figure-grammars.md` - one-grammar-per-page layout discipline
 - `layout-safety.md` - overlap, padding, and corridor checks
 - `quality-gates.md` - hard finishing gates for meaning, layout, text, arrows, and corner consistency
 - `real-world-gotchas.md` - repeated failure modes from real sessions
 - `review-loop.md` - exported-artifact QA, arrow-corridor audit, and SVG/PNG review guidance
 - `visual-patterns.md` - compact visual behaviors from selected official references
+- `upstream-docs-map.md` - map of the official docs/example clones and what the
+  official diagrams actually do with edges
 - `reference-set.md` - provenance for those references
 - `community-lessons.md` - lessons from adjacent ecosystems
+
+## Official docs and examples (optional local clones)
+
+For deep lookup beyond the vendored digests, clone the official sources into
+`references/upstream/` (gitignored, never committed):
+
+```bash
+bash scripts/fetch_upstream_docs.sh                    # drawio-mcp + drawio-diagrams (~30MB)
+bash scripts/fetch_upstream_docs.sh --with-mxgraph     # + archived mxGraph docs
+bash scripts/fetch_upstream_docs.sh --with-app-templates  # + app templates (CC BY 4.0)
+```
+
+`references/local/upstream-docs-map.md` maps questions to locations in the
+clones and lists the equivalent online URLs when clones are absent.
 
 ## Validators
 
@@ -124,7 +124,7 @@ Two validators now ship with the skill:
 ```bash
 python3 scripts/validate_drawio_xml.py path/to/file.drawio
 python3 scripts/validate_drawio_layout.py path/to/file.drawio
-python3 -m unittest scripts/test_validate_drawio_xml.py
+python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
 
 What they catch:
@@ -138,6 +138,10 @@ What they catch:
 - child overflow from parent containers
 - border-hugging text risk
 - inconsistent rounded-rectangle settings
+- dangling edges (no source/target and no explicit end point)
+- edge routes that likely cross unrelated components
+- fixed connection points facing away from the other terminal
+- floating edge pairs between the same two shapes (they render overlapped)
 
 They are not a replacement for opening the diagram, but they close the gap between "XML is valid" and "diagram is still broken."
 
@@ -165,6 +169,16 @@ drawio -x -f png -e -b 10 --width 3840 -o diagram.drawio.png diagram.drawio
 
 Prefer SVG when text crispness matters more than bitmap convenience.
 
+## Troubleshooting
+
+| Problem | Fix |
+| --- | --- |
+| draw.io CLI not found | Install draw.io Desktop or use `npx --yes @hediet/drawio-export`; source-only `.drawio` authoring needs no exporter. |
+| Export is blank or edges are missing | Every edge needs `<mxGeometry relative="1" as="geometry" />`; see `references/local/upstream-drawio-rules.md`. |
+| Layout is crowded or overlapping | Reduce the first-pass component count and reopen corridors; see `references/local/figure-grammars.md` and `references/local/layout-safety.md`. |
+| Edges cross unrelated boxes | Pin connection sides and add corridor waypoints; see `references/local/edge-routing.md`. |
+| `\n` appears as literal text | Use `&lt;br&gt;` or `&#xa;` in the value attribute; see `references/local/text-and-labels.md`. |
+
 ## Why this skill exists
 
 Generic diagram generation usually fails in one of these ways:
@@ -182,11 +196,11 @@ This skill exists to bias the agent toward native draw.io structure, compact pag
 - `SKILL.md`
 - `README.md`
 - `NOTICE`
-- `docs/`
 - `assets/`
 - `data/`
 - `references/local/`
 - `references/fetched/`
+- `references/upstream/` (gitignored; created by `scripts/fetch_upstream_docs.sh`)
 - `scripts/`
 
 ## Attribution
