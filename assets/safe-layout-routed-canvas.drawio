@@ -46,37 +46,28 @@
           <mxGeometry x="30" y="200" width="280" height="86" as="geometry"/>
         </mxCell>
 
-        <mxCell id="chip1" value="4 components" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E0E7FF;strokeColor=none;fontColor=#3730A3;fontSize=12;fontStyle=1;spacing=10;" vertex="1" parent="footer">
-          <mxGeometry x="30" y="34" width="130" height="42" as="geometry"/>
-        </mxCell>
-        <mxCell id="chip2" value="3 visible arrows" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=none;fontColor=#1D4ED8;fontSize=12;fontStyle=1;spacing=10;" vertex="1" parent="footer">
-          <mxGeometry x="180" y="34" width="148" height="42" as="geometry"/>
-        </mxCell>
-        <mxCell id="chip3" value="1 feedback loop" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=none;fontColor=#166534;fontSize=12;fontStyle=1;spacing=10;" vertex="1" parent="footer">
-          <mxGeometry x="348" y="34" width="150" height="42" as="geometry"/>
-        </mxCell>
-        <mxCell id="footerText" value="This version prioritizes obvious component-to-component arrows. The main path stays in the center, the side link goes through a top corridor, and the feedback loop returns below the components." style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=12;fontColor=#4B5563;" vertex="1" parent="footer">
-          <mxGeometry x="530" y="28" width="800" height="52" as="geometry"/>
+        <mxCell id="footerText" value="&lt;b&gt;Routing rule&lt;/b&gt;&lt;br&gt;Keep the main path straight; reserve the top corridor for side checks and the bottom corridor for feedback." style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=12;fontColor=#4B5563;whiteSpace=wrap;" vertex="1" parent="footer">
+          <mxGeometry x="30" y="24" width="1300" height="62" as="geometry"/>
         </mxCell>
 
-        <mxCell id="e12" value="define" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#4F46E5;strokeWidth=2.3;endArrow=block;endFill=1;endSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;" edge="1" parent="main" source="n1" target="n2">
+        <mxCell id="e12" value="define" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#4F46E5;strokeWidth=2.3;endArrow=block;endFill=1;endSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#EEF2FF;" edge="1" parent="main" source="n1" target="n2">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e23" value="build" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#4F46E5;strokeWidth=2.3;endArrow=block;endFill=1;endSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;" edge="1" parent="main" source="n2" target="n3">
+        <mxCell id="e23" value="build" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#4F46E5;strokeWidth=2.3;endArrow=block;endFill=1;endSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#EEF2FF;" edge="1" parent="main" source="n2" target="n3">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e34" value="verify" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#4F46E5;strokeWidth=2.3;endArrow=block;endFill=1;endSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;" edge="1" parent="main" source="n3" target="n4">
+        <mxCell id="e34" value="verify" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#4F46E5;strokeWidth=2.3;endArrow=block;endFill=1;endSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontColor=#4338CA;labelBackgroundColor=#EEF2FF;" edge="1" parent="main" source="n3" target="n4">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <mxCell id="e2r" value="rule" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#94A3B8;strokeWidth=1.4;dashed=1;dashPattern=6 4;endArrow=block;endFill=0;endSize=8;exitX=1;exitY=0.2;entryX=0;entryY=0.5;fontSize=10;fontColor=#64748B;" edge="1" parent="1" source="n2" target="r1">
+        <mxCell id="e2r" value="rule" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#94A3B8;strokeWidth=1.4;dashed=1;dashPattern=6 4;endArrow=block;endFill=0;endSize=8;exitX=1;exitY=0.2;entryX=0;entryY=0.5;fontSize=10;fontColor=#64748B;labelBackgroundColor=#EEF2FF;" edge="1" parent="1" source="n2" target="r1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1030" y="250"/>
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e42" value="revise" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#0F766E;strokeWidth=1.9;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=1;fontSize=10;fontColor=#0F766E;" edge="1" parent="main" source="n4" target="n2">
+        <mxCell id="e42" value="revise" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=auto;html=1;strokeColor=#0F766E;strokeWidth=1.9;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=1;fontSize=10;fontColor=#0F766E;labelBackgroundColor=#EEF2FF;" edge="1" parent="main" source="n4" target="n2">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="895" y="330"/>

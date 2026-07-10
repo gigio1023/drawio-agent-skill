@@ -35,6 +35,21 @@ The goal is not maximum density. The goal is that the first human who opens the 
 - Avoid bottom legends or footer explanations inside the diagram; use semantic labels or split the page instead
 - For multilingual or wide-character text, widen early instead of accepting accidental breaks
 
+## Supporting-band rules
+
+- A title/subtitle frames the page, a caption explains a region, and a semantic
+  rail participates in the model. Choose one role; do not connect supporting
+  prose as though it were a component.
+- Delete top/bottom keyword lists whose removal would not change the reader's
+  interpretation. If the list is a real legend, sequence, ownership boundary,
+  or constraint set, name that role explicitly.
+- Align page-level supporting text to the full content frame. Align region-level
+  text to its region. Shared bottom rails sit centered beneath the components
+  they govern, not shifted toward whichever component happened to connect last.
+- Prefer a straight centerline for a whole-strip relationship. A far-edge
+  attachment with a shallow two-bend dogleg is both harder to read and visually
+  unbalanced.
+
 ## Human-editability rule
 
 If the AI cannot make the layout perfect, it must still include the intended components cleanly enough that a human can rearrange them in draw.io without guessing what was omitted.
@@ -51,6 +66,8 @@ Before finishing:
 6. The diagram is still understandable with no chat context
 7. No edge crosses a title, caption strip, or dense label cluster without a strong reason
 8. Arrow corridors remain clear after any layout tightening
+9. Every top/bottom text band has a named information role or has been removed
+10. Edge labels have opaque backgrounds matching the surface behind them
 
 Then run:
 
