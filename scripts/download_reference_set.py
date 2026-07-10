@@ -11,7 +11,8 @@ from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
-ROOT = Path(__file__).resolve().parents[1] / "data" / "references"
+REPO_ROOT = Path(__file__).resolve().parents[1]
+ROOT = REPO_ROOT / "data" / "references"
 USER_AGENT = "Mozilla/5.0 (compatible; drawio-diagram-skill/1.0)"
 
 REFERENCE_SET = {
@@ -90,6 +91,10 @@ def write_bytes(path: Path, data: bytes) -> None:
     path.write_bytes(data)
 
 
+def manifest_path(path: Path) -> str:
+    return path.relative_to(REPO_ROOT).as_posix()
+
+
 def main() -> int:
     manifest: dict[str, list[dict[str, object]]] = {}
 
@@ -108,7 +113,7 @@ def main() -> int:
                 suffix = ".pdf" if url.lower().endswith(".pdf") else ".html"
                 main_path = item_root / f"source{suffix}"
                 write_bytes(main_path, raw)
-                record["files"].append(str(main_path))
+                record["files"].append(manifest_path(main_path))
 
                 if suffix == ".html":
                     html_text = raw.decode("utf-8", errors="ignore")
@@ -120,7 +125,7 @@ def main() -> int:
                             ext = Path(urlparse(image_url).path).suffix or ".img"
                             image_path = item_root / f"image-{i}{ext}"
                             write_bytes(image_path, image_raw)
-                            downloaded_images.append(str(image_path))
+                            downloaded_images.append(manifest_path(image_path))
                         except Exception as image_exc:  # noqa: BLE001
                             downloaded_images.append(f"ERROR:{image_url}:{image_exc}")
                     record["files"].extend(downloaded_images)
@@ -129,9 +134,9 @@ def main() -> int:
 
             manifest[vendor].append(record)
 
-    manifest_path = ROOT / "manifest.json"
-    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(manifest_path)
+    manifest_file = ROOT / "manifest.json"
+    manifest_file.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(manifest_file)
     return 0
 
 

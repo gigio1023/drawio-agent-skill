@@ -48,8 +48,8 @@ This file turns repeated review pain into hard finishing gates.
 Before finishing, run:
 
 ```bash
-python scripts/validate_drawio_xml.py path/to/file.drawio
-python scripts/validate_drawio_layout.py path/to/file.drawio
+python3 scripts/validate_drawio_xml.py path/to/file.drawio
+python3 scripts/validate_drawio_layout.py path/to/file.drawio
 ```
 
 If either validator complains, fix the diagram or explicitly accept the tradeoff in the final response.

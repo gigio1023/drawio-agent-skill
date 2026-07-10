@@ -1,11 +1,13 @@
 # Upstream draw.io rules (local digest)
 
-This file is a tight, opinionated digest of the rules this skill enforces. For the authoritative long-form references vendored directly from `jgraph/drawio-mcp` (Apache-2.0), read:
+This file is the workflow-facing digest the skill enforces. Technical XML and
+style references from `jgraph/drawio-mcp` (Apache-2.0) remain vendored verbatim
+under `references/fetched/` for provenance and exact syntax lookup.
 
-- [`../fetched/xml-reference.md`](../fetched/xml-reference.md) - complete XML rules: styles, edge routing, containers, layers, tags, metadata, placeholders, dark mode, well-formedness.
-- [`../fetched/style-reference.md`](../fetched/style-reference.md) - comprehensive shape/style catalog.
-
-When this digest and the vendored references disagree, the vendored references win - they're the upstream source of truth.
+For an exact XML/style definition, upstream technical facts win. For workflow,
+layout judgment, model prompting, and verification, this local overlay and
+`SKILL.md` win; do not inherit rigid grids, reasoning narration, or skipped
+verification from older vendored agent instructions.
 
 ## Required XML structure
 
@@ -52,6 +54,6 @@ When this digest and the vendored references disagree, the vendored references w
 
 ## Validation rules
 
-- Run `python scripts/validate_drawio_xml.py <file.drawio>` before claiming the XML is valid
-- Run `python scripts/validate_drawio_layout.py <file.drawio>` before claiming the layout is clean
+- Run `python3 scripts/validate_drawio_xml.py <file.drawio>` before claiming the XML is valid
+- Run `python3 scripts/validate_drawio_layout.py <file.drawio>` before claiming the layout is clean
 - When the validators and the eye test disagree, trust the failure mode and fix it instead of arguing with it

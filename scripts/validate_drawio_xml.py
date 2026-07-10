@@ -52,7 +52,7 @@ def main() -> int:
                 errors.append(prefix + "missing <mxGraphModel> child under <diagram>")
                 continue
             if graph_model.get("adaptiveColors") != "auto":
-                warnings.append(prefix + 'mxGraphModel should set adaptiveColors="auto"')
+                errors.append(prefix + 'mxGraphModel must set adaptiveColors="auto"')
             root_elem = next(
                 (elem for elem in graph_model if local_name(elem.tag) == "root"),
                 None,
@@ -79,7 +79,7 @@ def main() -> int:
                 style = cell.get("style")
                 if style:
                     if "html=1" not in style:
-                        warnings.append(prefix + f"mxCell {cell_id} style should include html=1")
+                        errors.append(prefix + f"mxCell {cell_id} style must include html=1")
                     if not style.endswith(";"):
                         warnings.append(
                             prefix + f"mxCell {cell_id} style should end with a semicolon",

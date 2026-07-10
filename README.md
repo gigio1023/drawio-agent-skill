@@ -60,7 +60,11 @@ This skill now has three explicit layers:
 2. local overlay
 3. deterministic validators
 
-The fetched upstream layer keeps canonical `jgraph/drawio-mcp` content inside this repo at stable local paths. The local overlay adds the opinionated rules that emerged from real diagram failures. The validators turn repeated visual bugs into checks the agent can run before claiming success.
+The fetched upstream layer keeps verbatim `jgraph/drawio-mcp` content inside
+this repo at stable local paths for provenance and technical lookup. It is not
+loaded wholesale as agent policy: the local overlay controls workflow, layout
+judgment, and verification. The validators turn repeated visual bugs into
+checks the agent can run before claiming success.
 
 ## Fetched upstream copies
 
@@ -82,7 +86,7 @@ Included today:
 Refresh them with:
 
 ```bash
-python scripts/vendor_jgraph_drawio_mcp.py
+python3 scripts/vendor_jgraph_drawio_mcp.py
 ```
 
 The resolved commit and fetch timestamp are recorded in:
@@ -118,8 +122,9 @@ Key files:
 Two validators now ship with the skill:
 
 ```bash
-python scripts/validate_drawio_xml.py path/to/file.drawio
-python scripts/validate_drawio_layout.py path/to/file.drawio
+python3 scripts/validate_drawio_xml.py path/to/file.drawio
+python3 scripts/validate_drawio_layout.py path/to/file.drawio
+python3 -m unittest scripts/test_validate_drawio_xml.py
 ```
 
 What they catch:

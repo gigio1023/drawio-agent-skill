@@ -1,6 +1,7 @@
 # drawio-diagram for Codex
 
-Native `.drawio` authoring for Codex CLI. The Codex harness loads the skill via AGENTS.md integration.
+Native `.drawio` authoring for Codex. Codex discovers the installed skill from
+its skill directory and can invoke it explicitly or from the description match.
 
 ## Install
 
@@ -29,7 +30,8 @@ Manual install is documented in `.codex/INSTALL.md`.
 
 ## Usage
 
-Ask Codex naturally. Include a format word (`png`, `svg`, `pdf`) when you want an exported artifact alongside the `.drawio` source.
+Ask Codex naturally or invoke `$drawio-diagram`. Include a format word (`png`,
+`svg`, `pdf`) when you want an exported artifact alongside the `.drawio` source.
 
 ```text
 codex "Make a draw.io architecture diagram for this ingestion pipeline."
@@ -47,11 +49,11 @@ codex "Compact editorial figure in draw.io for the findings section."
 | Problem | Fix |
 |---------|-----|
 | CLI not found | Install draw.io Desktop or use `npx @hediet/drawio-export` |
-| Edges don't render | Each edge needs `<mxGeometry relative="1" as="geometry" />` - see `references/fetched/xml-reference.md` |
+| Edges don't render | Each edge needs `<mxGeometry relative="1" as="geometry" />` - see `references/local/upstream-drawio-rules.md` |
 | Crowded layout | Cap first pass at 3-5 primary components; see `references/local/figure-grammars.md` and `references/local/layout-safety.md` |
 
 ## Deeper references
 
 - `SKILL.md` - authoring workflow.
-- `references/fetched/xml-reference.md` - vendored upstream XML reference (Apache-2.0).
-- `references/fetched/style-reference.md` - vendored upstream style/shape catalog.
+- `references/local/upstream-drawio-rules.md` - runtime XML and validation rules.
+- `references/fetched/` - vendored upstream material for factual lookup only.
