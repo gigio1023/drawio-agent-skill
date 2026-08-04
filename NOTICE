@@ -22,20 +22,20 @@ Fetched: 2026-04-20
 
 | Upstream path | Local path | Notes |
 |---|---|---|
-| `shared/xml-reference.md` | `references/fetched/xml-reference.md` | Fetched verbatim |
-| `shared/style-reference.md` | `references/fetched/style-reference.md` | Fetched verbatim |
-| `shared/mermaid-reference.md` | `references/fetched/mermaid-reference.md` | Fetched verbatim |
-| `shared/mxfile.xsd` | `references/fetched/mxfile.xsd` | Fetched verbatim |
-| `skill-cli/README.md` | `references/fetched/skill-cli-README.md` | Fetched verbatim |
-| `skill-cli/drawio/SKILL.md` | `references/fetched/skill-cli-drawio-SKILL.md` | Fetched verbatim |
+| `shared/xml-reference.md` | `skills/drawio-diagram/references/fetched/xml-reference.md` | Fetched verbatim |
+| `shared/style-reference.md` | `skills/drawio-diagram/references/fetched/style-reference.md` | Fetched verbatim |
+| `shared/mermaid-reference.md` | `skills/drawio-diagram/references/fetched/mermaid-reference.md` | Fetched verbatim |
+| `shared/mxfile.xsd` | `skills/drawio-diagram/references/fetched/mxfile.xsd` | Fetched verbatim |
+| `skill-cli/README.md` | `skills/drawio-diagram/references/fetched/skill-cli-README.md` | Fetched verbatim |
+| `skill-cli/drawio/SKILL.md` | `skills/drawio-diagram/references/fetched/skill-cli-drawio-SKILL.md` | Fetched verbatim |
 
 The vendored fetch metadata is also recorded in:
 
-- `references/fetched/vendor-manifest.json`
+- `skills/drawio-diagram/references/fetched/vendor-manifest.json`
 
 ## Local overlay and deliberate divergences
 
-This repo adds local files under `references/local/` and scripts under `scripts/`
+This repo adds local files under `skills/drawio-diagram/references/local/` and scripts under `skills/drawio-diagram/scripts/`
 to improve authoring quality on top of the upstream reference set.
 
 Deliberate differences from upstream `skill-cli`:
