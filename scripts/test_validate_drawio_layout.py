@@ -104,6 +104,16 @@ class ValidateDrawioLayoutEdgeTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertNotIn("inconsistent rounded-rectangle", result.stderr)
 
+    def test_ellipse_peer_is_exempt_from_corner_consistency(self) -> None:
+        shapes = """\
+        <mxCell id="chip" value="" style="ellipse;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="12" height="12" as="geometry" />
+        </mxCell>
+"""
+        result = run_validator(shapes)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("inconsistent rounded-rectangle", result.stderr)
+
     def test_edge_through_obstacle_warns(self) -> None:
         edge = """\
         <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" parent="1" source="a" target="b">

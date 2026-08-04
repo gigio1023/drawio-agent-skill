@@ -43,7 +43,7 @@ artifact stays editable. Export is optional and should happen only when requeste
 | Publication or review-quality finishing | `references/local/quality-gates.md` |
 | A validator/reviewer exposes a repeated failure | `references/local/real-world-gotchas.md` |
 | Export or visual-review iteration | `references/local/review-loop.md` |
-| Compact editorial styling | `references/local/visual-patterns.md` |
+| Cross-vendor visual pattern notes (background, not the default style) | `references/local/visual-patterns.md` |
 | Official docs/examples for deep lookup | `references/local/upstream-docs-map.md` |
 | Provenance or skill maintenance | `references/local/reference-set.md`, `references/local/community-lessons.md` |
 | XML/style detail beyond the local digest | Search factual definitions under `references/fetched/`; do not adopt its legacy agent workflow wholesale |
@@ -98,9 +98,11 @@ invisible grouping, `container=1;pointerEvents=0;` for decorative containers, an
   Line breaks are `&lt;br&gt;` or `&#xa;` in the value attribute - a literal
   `\n` renders as visible backslash-n text.
 - Use precise ownership/protocol labels; rename ambiguity instead of decorating it.
-- Style per `references/local/editorial-default-style.md` (seed:
-  `assets/editorial-default-template.drawio`); alternatives on request in
-  `references/local/color-palettes.md`.
+- Style NEW figures per `references/local/editorial-default-style.md` (seed:
+  `assets/editorial-default-template.drawio`) unless the user names another
+  style; alternatives on request in `references/local/color-palettes.md`.
+  When editing an existing diagram, match its established style - the default
+  never authorizes a restyle beyond the request.
 - Make one path visually dominant and keep secondary paths quieter. Assign
   colors by semantic role from one palette; never mix schemes on a page.
 - Own every route: draw.io does not route around other shapes. Align connected

@@ -85,13 +85,17 @@ references/local/
 
 Key files:
 
+- `editorial-default-style.md` - the default visual style (measured from
+  post-2025 openai.com editorial figures); applies whenever the user names no
+  style, seeded by `assets/editorial-default-template.drawio`
 - `upstream-drawio-rules.md` - local digest of the structural rules that always apply
 - `edge-routing.md` - connection contract, fixed vs floating terminals, waypoint
   recipes, and why draw.io never routes around other shapes
 - `text-and-labels.md` - line breaks (`\n` renders literally), escaping, label
   positioning, and detail-vs-compact representation levels
-- `color-palettes.md` - ready-made palettes (draw.io standard pairs and an
-  editorial neutral scheme) plus dark-mode rules
+- `color-palettes.md` - alternative palettes used on request (draw.io standard
+  pairs and an indigo report scheme) plus dark-mode rules; the default palette
+  lives in `editorial-default-style.md`
 - `figure-grammars.md` - one-grammar-per-page layout discipline
 - `layout-safety.md` - overlap, padding, and corridor checks
 - `quality-gates.md` - hard finishing gates for meaning, layout, text, arrows, and corner consistency

@@ -21,11 +21,13 @@ Measured from post-Feb-2025 editorial figures (the SVG sources, not
 impressions). This language is codified as this skill's default in
 `editorial-default-style.md`; the notes here are for recognizing it.
 
-- White canvas, zero shadows, zero gradients; near-black ink (`#0D0D0D`)
+- White canvas, zero shadows, effectively zero gradients; pure-black ink in
+  the sources (this skill standardizes on `#0D0D0D`, visually identical)
 - Header pattern: bold sans title top-left, then a legend chip row, then canvas
 - Two text voices: monospace entity labels (UPPERCASE roles, mixed-case product
   names), sans mixed-case support text
-- Thin uniform strokes (~1.2px) and small open V arrowheads, never filled triangles
+- Thin uniform strokes (1.0 at the sources' 596pt artboards; this skill uses
+  1.2 at its page scale) and small open V arrowheads, never filled triangles
 - One accent family per figure (blue, green, or coral) as light fills, family
   strokes, and dotted zone textures; everything else stays white
 - Node names are short and operational; one active logic path is emphasized

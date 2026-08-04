@@ -26,9 +26,11 @@ from it when convenient.
 
 ## Non-negotiables
 
-1. White canvas, no shadows, no gradients anywhere (`shadow=0`).
-2. Ink is near-black `#0D0D0D`, never pure `#000000` and never gray for
-   primary strokes or text.
+1. White canvas, no shadows, no gradients (`shadow=0`). (A style rule: 2 of
+   the 65 corpus sources do contain a gradient; this skill still never adds one.)
+2. Ink is `#0D0D0D`, never gray for primary strokes or text. The corpus
+   sources actually emit pure `#000000`; the two are visually identical, and
+   this skill standardizes on `#0D0D0D` so every figure carries one value.
 3. Pick ONE accent family per page (blue is the default; green and coral are
    alternatives). A second family appears only to contrast two systems, and
    coral may additionally mark a single "hot" element on a blue or green page.
@@ -49,6 +51,7 @@ Neutrals, always available:
 | canvas | `#FFFFFF` | page background, ordinary node fill |
 | gray-fill | `#EEEEEE` | muted/inactive surface |
 | gray-line | `#CCCCCC` | hairlines, inactive strokes |
+| gray-text | `#929591` | secondary/annotation text on white |
 
 Accent families - use one per page (light fill / chip / mid / deep):
 
@@ -69,12 +72,17 @@ Rules:
 - Coral as "hot element" appears 0-1 times. A page with no coral is normal.
 - Dark mode: keep `adaptiveColors="auto"` and let draw.io derive it; these
   light-mode tokens are the single source of truth. (OpenAI's own dark
-  variants keep the chip/light colors and swap surfaces to `#333333` -
-  automatic derivation approximates this well.)
-- Textured zone: originals use a fine dot-grid fill for zones and highlighted
-  actors. `fillStyle=dots;` on the family light fill reproduces this and
-  survives desktop-CLI export (verified; `sketch=1` is not required). Use it
-  sparingly - the pale fill alone already carries the role.
+  variants keep the chip/light colors and swap surfaces to near-black darks -
+  `#171717` and `#333333` both occur - so automatic derivation approximates
+  this well.)
+- Textured zone: the corpus uses a fine dot-grid fill as a first-class surface
+  treatment (39 of 58 measured files). `fillStyle=dots;` on the family light
+  fill reproduces it and survives desktop-CLI export (verified; `sketch=1` is
+  not required - `sketch=1` turns it into hachure). Use it on zones and
+  highlighted actors freely; the pale fill alone also carries the role.
+- A family mid value (`#5477C4`, `#71B436`, `#FF9365`) may fill one small
+  emphasized node; give it ink or white text, whichever passes contrast.
+  Large containers never take saturated fills.
 
 ## Tokens: typography
 
@@ -85,14 +93,21 @@ Rules:
 | sans-body | `Inter, Helvetica Neue, Helvetica, sans-serif` | Mixed, regular | node sublines, captions, annotations |
 
 Sizes on a ~1200px-wide page: title 30-32 bold; mono-label 13-14; sans-body
-13-14; legend 12. Three sizes per page is still the ceiling.
+12-13; legend 12. Three sizes per page is still the ceiling.
+
+Precedence: while this style is active, its header rules (top-left title,
+these sizes, the corner radius below) override the generic defaults in
+`text-and-labels.md` and `quality-gates.md`. Those files still govern
+mechanics - escaping, wrapping, padding, edge-label backgrounds.
 
 Mechanics:
 
-- Set the stack via `fontFamily=IBM Plex Mono, Menlo;` - the comma list is
-  passed through to CSS, so Menlo covers macOS when Plex Mono is absent.
-  A single font name with that font missing falls back to the default sans
-  and silently loses the mono voice (verified in desktop-CLI export).
+- Set the stack via `fontFamily=IBM Plex Mono, Menlo, monospace;` - the comma
+  list is passed through to CSS, and the generic keyword guarantees a real
+  monospace on hosts without Plex Mono or Menlo (verified in desktop-CLI
+  export). Sans text likewise ends in `sans-serif`. A single font name with
+  that font missing falls back to a serif default and silently loses the
+  voice (measured).
 - Uppercase is authored in the text itself (`MEDIA FRONTEND`), not via CSS.
 - Letterspacing for mono-label: wrap the label
   `&lt;span style=&quot;letter-spacing:1px&quot;&gt;...&lt;/span&gt;`. Skip it
@@ -105,11 +120,13 @@ Mechanics:
 
 | Property | Value |
 | --- | --- |
-| node corner radius | `rounded=1;absoluteArcSize=1;arcSize=8;` |
-| chip/legend radius | full pill: `rounded=1;arcSize=50;` on a short box |
-| stroke width, all shapes | `strokeWidth=1.2` (do not vary for emphasis) |
+| node corner radius | `rounded=1;absoluteArcSize=1;arcSize=32;` (draw.io renders absolute arcSize at half its value, so this is a ~16px radius - the corpus median) |
+| inner sub-box radius | `rounded=1;absoluteArcSize=1;arcSize=8;` |
+| legend chip | `ellipse;` 10-12px (see Node recipes; do not use a rounded-rect pill for chips - it trips the peer-radius layout check) |
+| state/terminal pill | `rounded=1;arcSize=50;` stadium, reserved for start/end/state nodes; the resulting peer-radius layout warning against process rects is a documented, accepted tradeoff |
+| stroke width, all shapes | `strokeWidth=1.2` (corpus sources are 1.0 at their 596pt artboard; 1.2 matches that rendered weight at this page scale - do not vary for emphasis) |
 | edge stroke | `strokeWidth=1.2` solid ink |
-| dashed (async/return) edge | `dashed=1;dashPattern=2 3;` |
+| dashed (async/return) edge | `dashed=1;dashPattern=2 2;` (the corpus's dominant dash) |
 | arrowhead | `endArrow=open;endFill=0;endSize=5;` |
 | no start decoration | `startArrow=none;` |
 
@@ -129,17 +146,20 @@ Every figure page carries the same header, left-aligned to the content frame:
 3. **Canvas**: nodes on a loose grid below. First node row starts at least
    60px under the legend.
 
-No logo, no footer strip, no caption band. Provenance/source lines belong in
-the document that embeds the figure, not inside it.
+No logo, no footer strip, no caption band by default. Exception: when the
+chosen grammar in `figure-grammars.md` calls for a terse source/takeaway
+strip and the user's content requires one, the grammar wins - style it in
+this page's voices. Otherwise provenance belongs in the document that embeds
+the figure.
 
 ## Node recipes
 
 Ordinary component:
 
 ```text
-rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;
+rounded=1;absoluteArcSize=1;arcSize=32;whiteSpace=wrap;html=1;
 fillColor=#FFFFFF;strokeColor=#0D0D0D;strokeWidth=1.2;fontColor=#0D0D0D;
-fontFamily=IBM Plex Mono, Menlo;fontSize=13;align=center;spacing=10;shadow=0;
+fontFamily=IBM Plex Mono, Menlo, monospace;fontSize=13;align=center;spacing=10;shadow=0;
 ```
 
 Emphasized component (role-based, e.g. every async-path box):
@@ -149,7 +169,7 @@ Highlighted region (at most one per page):
 same as ordinary plus `fillColor=#FFEDDE;`.
 
 Inner sub-box (tools list, snapshot inside a server):
-same as ordinary with `arcSize=4;fontSize=12;` inside a parent container.
+same as ordinary with `arcSize=8;fontSize=12;` inside a parent container.
 
 Legend chip: `ellipse;fillColor=#FFFFFF;strokeColor=#0D0D0D;strokeWidth=1.2;`
 10-12px, with an adjacent borderless mono-label text cell — or blue-chip
@@ -163,17 +183,22 @@ above the label. Skip icons entirely rather than mixing icon styles.
 Primary flow:
 
 ```text
-edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0D0D0D;
+edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0D0D0D;
 strokeWidth=1.2;endArrow=open;endFill=0;endSize=5;startArrow=none;
 ```
 
-Async / return / delegation path: primary flow plus `dashed=1;dashPattern=2 3;`.
+(`rounded=1` gives bends the small curve the corpus uses and matches the
+canonical edge form in `edge-routing.md`.)
+
+Async / return / delegation path: primary flow plus `dashed=1;dashPattern=2 2;`.
 
 Coral-highlighted path (0-1 per page): primary flow with
 `strokeColor=#FF9365;`.
 
-Edge labels are mono-label UPPERCASE, 1-3 words (`USER AUDIO`,
-`DELEGATION REQUEST`), placed above a straight segment with
+Edge labels naming systems or protocols are mono-label UPPERCASE, 1-3 words
+(`USER AUDIO`, `DELEGATION REQUEST`); labels phrasing a human action or
+qualifier may be sans mixed-case (`Pre-processed offline`) - the corpus uses
+both by that role split. Place labels above a straight segment with
 `labelBackgroundColor=#FFFFFF;fontSize=12;`. The general edge-routing and
 label-background rules in `edge-routing.md` and `text-and-labels.md` apply
 unchanged.
@@ -182,8 +207,12 @@ unchanged.
 
 When the figure is a chart (drawn natively in draw.io), keep the identical
 header pattern and voices: title sans bold, legend chips + mono labels, axis
-labels mono uppercase, series in coral / coral-ink, gridless or minimal ink
-axes with `strokeWidth=1.2`. Do not switch to a different "chart theme".
+labels mono uppercase, gridless or minimal ink axes with `strokeWidth=1.2`.
+Series colors come from the page's accent family ramp; the corpus also uses
+purpose-built palettes for special forms (perceptual scales on heatmaps), so
+multi-hue series are allowed when the data demands them. What must not
+change is the header, voices, and axis treatment - there is no separate
+"chart theme".
 
 ## Boundaries (brand safety)
 
