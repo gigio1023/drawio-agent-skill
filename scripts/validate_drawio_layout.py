@@ -505,8 +505,6 @@ def audit_edges(
 def corner_signature(box: Box) -> str | None:
     if not box.is_framed:
         return None
-    if box.style.get("rounded") != "1":
-        return "square"
     if any(
         token in box.style
         for token in ("ellipse", "rhombus", "hexagon", "cylinder", "cloud")
@@ -515,6 +513,8 @@ def corner_signature(box: Box) -> str | None:
     shape = box.style.get("shape", "")
     if shape and shape not in {"label", "rectangle", ""}:
         return None
+    if box.style.get("rounded") != "1":
+        return "square"
     if box.style.get("absoluteArcSize") == "1":
         return f'rounded:absolute:{box.style.get("arcSize", "default")}'
     return f'rounded:default:{box.style.get("arcSize", "default")}'
