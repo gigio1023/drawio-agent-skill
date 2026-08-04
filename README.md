@@ -1,54 +1,66 @@
-# drawio-agent-skill
+# gigio-figures
 
-Native draw.io authoring guidance for coding agents.
+Editorial figure skills for coding agents: diagrams and data charts that share
+one visual language.
 
-This repo packages the `drawio-diagram` skill. Its job is not just to produce valid XML, but to produce native `.drawio` files that stay readable, editable, and structurally intact under review. Figures come out in a clean editorial default style (see below) unless you ask for another look.
+This repo packages two skills under `skills/`:
+
+| Skill | Draws | Tool |
+| --- | --- | --- |
+| [`drawio-diagram`](skills/drawio-diagram/SKILL.md) | Structure: boxes, arrows, layers, flowcharts, schematics | native `.drawio` XML, editable after the first pass |
+| [`data-chart`](skills/data-chart/SKILL.md) | Measured data: line, bar, scatter, dot-plot charts | matplotlib → SVG (text preserved) + PNG |
+
+The routing rule between them: if the figure's content is *measured data*
+(real numbers, many points, true scales), it is a chart; if it is *structure*,
+it is a diagram. Both render the same editorial style, so a document that
+mixes diagrams and charts still reads as one system.
 
 ## Install
 
 Install through the Skills CLI. The `--agent` value selects the target
 harness; manual paths and restart behavior stay in the corresponding install
-guide.
+guide ([Claude Code](.claude/INSTALL.md), [Codex](.codex/INSTALL.md),
+[Cursor](.cursor/INSTALL.md), [Gemini CLI](.gemini/INSTALL.md)).
 
-| Target | Install | Manual guide |
-| --- | --- | --- |
-| Claude Code | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent claude-code` | [Claude Code](.claude/INSTALL.md) |
-| Codex | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent codex` | [Codex](.codex/INSTALL.md) |
-| Cursor | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent cursor` | [Cursor](.cursor/INSTALL.md) |
-| Gemini CLI | `npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent gemini-cli` | [Gemini CLI](.gemini/INSTALL.md) |
+```bash
+npx skills add gigio1023/gigio-figures@drawio-diagram --agent claude-code
+npx skills add gigio1023/gigio-figures@data-chart --agent claude-code
+```
+
+Swap `--agent` for `codex`, `cursor`, or `gemini-cli` as needed. Install only
+the skills you want; each command is independent.
 
 ## Usage
 
-Ask naturally for a native draw.io artifact. Claude Code can invoke the skill
-explicitly as `/drawio-diagram`; Codex uses `$drawio-diagram`. Explicit syntax
-is optional when the request clearly asks for draw.io output.
+Ask naturally; explicit invocation (`/drawio-diagram`, `/data-chart` in
+Claude Code, `$`-prefixed in Codex) is optional when the request is clear.
 
 ```text
 Make a draw.io architecture diagram for this ingestion pipeline.
-Generate a .drawio.svg of the deploy pipeline with clear fan-out edges.
 Turn this research section into a compact editorial figure in draw.io.
+Plot these benchmark scores as an editorial-style bar chart.
+Chart success rate vs step budget (log x) from results.csv.
 ```
 
-## Default visual style
+## The shared visual style
 
-When you do not name a style, figures use the editorial default:
+![Editorial default style sample](skills/drawio-diagram/assets/editorial-default-template.drawio.png)
 
-![Editorial default style sample](assets/editorial-default-template.drawio.png)
+White canvas, near-black ink, one accent color family per page, and two text
+voices (monospace entity labels, sans titles and commentary). Diagrams add
+soft ~16px corners and thin open arrowheads; charts add gridless ink axes,
+chip legends, and mono numerals. Token sets:
+[`editorial-default-style.md`](skills/drawio-diagram/references/local/editorial-default-style.md)
+for diagrams,
+[`chart-language.md`](skills/data-chart/references/chart-language.md)
+for charts. Alternative palettes remain available on request
+([`color-palettes.md`](skills/drawio-diagram/references/local/color-palettes.md)).
 
-White canvas, near-black ink, soft ~16px corners, thin open arrowheads, one
-accent color family per page, and two text voices (monospace entity labels,
-sans titles and commentary). The full token set and copy-paste recipes live in
-[`references/local/editorial-default-style.md`](references/local/editorial-default-style.md);
-[`assets/editorial-default-template.drawio`](assets/editorial-default-template.drawio)
-is the editable seed shown above. The stock draw.io palette and an indigo
-report scheme remain available on request
-([`references/local/color-palettes.md`](references/local/color-palettes.md)).
-
-**Style attribution.** This default is deliberately modeled on the editorial
+**Style attribution.** This style is deliberately modeled on the editorial
 figure language used in OpenAI's blog posts since their February 2025 rebrand
 (openai.com engineering and research posts); its tokens were measured from 65
 published figure SVGs (provenance:
-[`references/local/reference-set.md`](references/local/reference-set.md)).
+[`reference-set.md`](skills/drawio-diagram/references/local/reference-set.md)).
 It is an independent re-implementation of generic design elements - palette
 values, spacing, stroke and corner geometry, typographic structure. It
 intentionally excludes OpenAI's identity: no OpenAI logo, blossom mark, or
@@ -56,9 +68,14 @@ wordmark ever appears in output, and the proprietary OpenAI Sans typeface is
 replaced with Inter and IBM Plex Mono stacks. This project is not affiliated
 with or endorsed by OpenAI, and figures produced with it must not claim to be.
 
-## What changed in this repo
+# drawio-diagram
 
-This skill now has four explicit layers:
+Native draw.io authoring guidance. Its job is not just to produce valid XML,
+but native `.drawio` files that stay readable, editable, and structurally
+intact under review. All paths below are relative to
+[`skills/drawio-diagram/`](skills/drawio-diagram/).
+
+The skill has four explicit layers:
 
 1. fetched upstream copies (committed digests)
 2. optional local clones of official docs and examples (gitignored)
@@ -73,13 +90,7 @@ checks the agent can run before claiming success.
 
 ## Fetched upstream copies
 
-Fetched files live under:
-
-```text
-references/fetched/
-```
-
-Included today:
+Fetched files live under `references/fetched/`:
 
 - `xml-reference.md`
 - `style-reference.md`
@@ -94,35 +105,25 @@ Refresh them with:
 python3 scripts/vendor_jgraph_drawio_mcp.py
 ```
 
-The resolved commit and fetch timestamp are recorded in:
-
-```text
-references/fetched/vendor-manifest.json
-```
-
-The local repo layout does not mirror the upstream folder tree. The fetch script copies upstream files into stable local filenames, so local references do not churn just because the upstream directory layout changes.
+The resolved commit and fetch timestamp are recorded in
+`references/fetched/vendor-manifest.json`. The local repo layout does not
+mirror the upstream folder tree. The fetch script copies upstream files into
+stable local filenames, so local references do not churn just because the
+upstream directory layout changes.
 
 ## Local overlay
 
-Local guidance lives under:
+Local guidance lives under `references/local/`. Key files:
 
-```text
-references/local/
-```
-
-Key files:
-
-- `editorial-default-style.md` - the default visual style (measured from
-  post-2025 openai.com editorial figures); applies whenever the user names no
-  style, seeded by `assets/editorial-default-template.drawio`
+- `editorial-default-style.md` - the default visual style; applies whenever
+  the user names no style, seeded by `assets/editorial-default-template.drawio`
 - `upstream-drawio-rules.md` - local digest of the structural rules that always apply
 - `edge-routing.md` - connection contract, fixed vs floating terminals, waypoint
   recipes, and why draw.io never routes around other shapes
 - `text-and-labels.md` - line breaks (`\n` renders literally), escaping, label
   positioning, and detail-vs-compact representation levels
-- `color-palettes.md` - alternative palettes used on request (draw.io standard
-  pairs and an indigo report scheme) plus dark-mode rules; the default palette
-  lives in `editorial-default-style.md`
+- `color-palettes.md` - alternative palettes used on request plus dark-mode
+  rules; the default palette lives in `editorial-default-style.md`
 - `figure-grammars.md` - one-grammar-per-page layout discipline
 - `layout-safety.md` - overlap, padding, and corridor checks
 - `quality-gates.md` - hard finishing gates for meaning, layout, text, arrows, and corner consistency
@@ -150,7 +151,7 @@ clones and lists the equivalent online URLs when clones are absent.
 
 ## Validators
 
-Two validators now ship with the skill:
+Two validators ship with the skill (run inside `skills/drawio-diagram/`):
 
 ```bash
 python3 scripts/validate_drawio_xml.py path/to/file.drawio
@@ -176,23 +177,16 @@ What they catch:
 - edge labels without an opaque background
 - one/two-waypoint doglegs between aligned terminals when the direct corridor is clear
 
-They are not a replacement for opening the diagram, but they close the gap between "XML is valid" and "diagram is still broken."
-
-For review handoffs, the skill now also points agents to inspect the exported SVG
-or normalized high-resolution PNG. That catches visual issues validators cannot
-see, especially arrows crossing labels or components.
+They are not a replacement for opening the diagram, but they close the gap
+between "XML is valid" and "diagram is still broken." For review handoffs, the
+skill also points agents to inspect the exported SVG or normalized
+high-resolution PNG.
 
 ## Export behavior
 
-The skill writes `.drawio` by default.
-
-If the draw.io CLI is available, it can also export:
-
-- `.drawio.png`
-- `.drawio.svg`
-- `.drawio.pdf`
-
-Unlike upstream `skill-cli`, this repo keeps the `.drawio` source after export. The exported file may contain embedded XML, but the standalone source file remains the easiest thing for a human to edit and diff.
+The skill writes `.drawio` by default. If the draw.io CLI is available, it can
+also export `.drawio.png`, `.drawio.svg`, and `.drawio.pdf`. Unlike upstream
+`skill-cli`, this repo keeps the `.drawio` source after export.
 
 For 4K review PNGs:
 
@@ -212,7 +206,32 @@ Prefer SVG when text crispness matters more than bitmap convenience.
 | Edges cross unrelated boxes | Pin connection sides and add corridor waypoints; see `references/local/edge-routing.md`. |
 | `\n` appears as literal text | Use `&lt;br&gt;` or `&#xa;` in the value attribute; see `references/local/text-and-labels.md`. |
 
-## Why this skill exists
+# data-chart
+
+Programmatic data charts in the same editorial language. OpenAI's own blog
+charts are design-tool exports, not plotting-library output; this skill
+re-implements that chart language with matplotlib so measured data renders
+accurately (true scales, log axes, many points) and regenerates when the data
+changes. Paths relative to [`skills/data-chart/`](skills/data-chart/):
+
+- `references/chart-language.md` - page anatomy, tokens, marks, dark mode,
+  and what the corpus never does
+- `scripts/editorial_mpl.py` - the style module (rcParams, header/chip legend,
+  mono ticks, direct labels, SVG+PNG save)
+- `scripts/example_chart.py` - working line + grouped-bar reference; also the
+  smoke test
+
+Try it:
+
+```bash
+cd skills/data-chart/scripts && uv run --with matplotlib python example_chart.py
+```
+
+SVG output keeps text as text (`svg.fonttype: none`), so the Inter / IBM Plex
+Mono stacks travel with the file and fall back cleanly (Helvetica Neue /
+Menlo) where those fonts are missing.
+
+## Why these skills exist
 
 Generic diagram generation usually fails in one of these ways:
 
@@ -222,20 +241,23 @@ Generic diagram generation usually fails in one of these ways:
 4. arrows are routed without ownership of the corridor
 5. the first exported image is usable once but painful to edit later
 
-This skill exists to bias the agent toward native draw.io structure, compact page grammar, explicit quality gates, and files that stay editable after the first pass.
+And generic chart generation fails differently: library-default themes
+(gridlines, boxed legends, cycled colors) that read as machine output, or
+hand-drawn "charts" whose values do not survive scrutiny. These skills bias
+the agent toward native structure, one shared visual language, explicit
+quality gates, and artifacts that stay editable and regenerable.
 
 ## Repo layout
 
-- `SKILL.md`
-- `README.md`
-- `NOTICE`
-- `assets/`
-- `data/`
-- `references/local/`
-- `references/fetched/`
-- `references/upstream/` (gitignored; created by `scripts/fetch_upstream_docs.sh`)
-- `scripts/`
+- `README.md`, `LICENSE`, `NOTICE`
+- `skills/drawio-diagram/` - `SKILL.md`, `assets/`, `data/`,
+  `references/local/`, `references/fetched/`, `references/upstream/`
+  (gitignored), `scripts/`
+- `skills/data-chart/` - `SKILL.md`, `references/`, `scripts/`
+- `.claude/`, `.codex/`, `.cursor/`, `.gemini/` - per-harness install guides
 
 ## Attribution
 
-This repo vendors upstream files from `jgraph/drawio-mcp` under Apache-2.0 and layers local guidance on top. Exact file mapping and the current vendored commit are recorded in [`NOTICE`](NOTICE).
+This repo vendors upstream files from `jgraph/drawio-mcp` under Apache-2.0 and
+layers local guidance on top. Exact file mapping and the current vendored
+commit are recorded in [`NOTICE`](NOTICE).

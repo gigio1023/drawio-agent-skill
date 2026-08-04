@@ -2,5 +2,5 @@ __pycache__/
 *.pyc
 
 # Local clones of official draw.io docs and examples; fetched on demand by
-# scripts/fetch_upstream_docs.sh, never committed.
-references/upstream/
+# skills/drawio-diagram/scripts/fetch_upstream_docs.sh, never committed.
+skills/drawio-diagram/references/upstream/

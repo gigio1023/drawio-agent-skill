@@ -13,6 +13,12 @@ description: >
 Native `.drawio` XML is the source of truth. Keep it after every export so the
 artifact stays editable. Export is optional and should happen only when requested.
 
+Routing boundary: this skill draws *structure* - boxes, arrows, layers,
+schematics, including illustrative chart-shaped sketches inside them. A figure
+whose content is *measured data* (real numbers, many points, true scales)
+belongs to the sibling `data-chart` skill, which renders the same visual
+language programmatically with matplotlib.
+
 ## Quick Start
 
 1. Confirm the message, components/arrows, page constraint, and artifacts. Only
