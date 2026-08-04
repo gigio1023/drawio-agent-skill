@@ -17,14 +17,23 @@ This file summarizes the reusable visual lessons taken from recent official Open
 
 ## OpenAI-leaning patterns
 
-- Product-canvas feel
-- Node names are short and operational
-- One active logic path is emphasized
-- UI-like sidebars or rails support the main canvas
-- Good for workflows, orchestration, and tooling surfaces
-- White or very light canvases with soft shadows and restrained accent nodes
-- Flow-builder screenshots suggest that component boxes should feel like product primitives, not generic flowchart boxes
-- Good OpenAI-style compactness comes from whitespace plus strong alignment, not from squeezing more labels into the page
+Measured from post-Feb-2025 editorial figures (the SVG sources, not
+impressions). This language is codified as this skill's default in
+`editorial-default-style.md`; the notes here are for recognizing it.
+
+- White canvas, zero shadows, effectively zero gradients; pure-black ink in
+  the sources (this skill standardizes on `#0D0D0D`, visually identical)
+- Header pattern: bold sans title top-left, then a legend chip row, then canvas
+- Two text voices: monospace entity labels (UPPERCASE roles, mixed-case product
+  names), sans mixed-case support text
+- Thin uniform strokes (1.0 at the sources' 596pt artboards; this skill uses
+  1.2 at its page scale) and small open V arrowheads, never filled triangles
+- One accent family per figure (blue, green, or coral) as light fills, family
+  strokes, and dotted zone textures; everything else stays white
+- Node names are short and operational; one active logic path is emphasized
+- Compactness comes from whitespace plus strong alignment, not from squeezing
+  more labels into the page
+- Even data charts keep the same header, legend chips, and mono axis labels
 
 ## Anthropic-leaning patterns
 
@@ -62,5 +71,10 @@ This file summarizes the reusable visual lessons taken from recent official Open
 ## What not to borrow
 
 - logos, trademarks, product screenshots, and proprietary brand marks
-- exact branded palettes or proprietary illustration systems
+- proprietary typefaces (OpenAI Sans, Styrene); use the substitute stacks in
+  `editorial-default-style.md`
+- proprietary illustration systems and mascot/spot-art styles
 - decorative complexity that hides the main message
+
+Palette values and geometric conventions are fair to reuse; identity marks and
+font files are not.

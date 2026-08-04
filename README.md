@@ -2,7 +2,7 @@
 
 Native draw.io authoring guidance for coding agents.
 
-This repo packages the `drawio-diagram` skill. Its job is not just to produce valid XML, but to produce native `.drawio` files that stay readable, editable, and structurally intact under review.
+This repo packages the `drawio-diagram` skill. Its job is not just to produce valid XML, but to produce native `.drawio` files that stay readable, editable, and structurally intact under review. Figures come out in a clean editorial default style (see below) unless you ask for another look.
 
 ## Install
 
@@ -28,6 +28,33 @@ Make a draw.io architecture diagram for this ingestion pipeline.
 Generate a .drawio.svg of the deploy pipeline with clear fan-out edges.
 Turn this research section into a compact editorial figure in draw.io.
 ```
+
+## Default visual style
+
+When you do not name a style, figures use the editorial default:
+
+![Editorial default style sample](assets/editorial-default-template.drawio.png)
+
+White canvas, near-black ink, soft ~16px corners, thin open arrowheads, one
+accent color family per page, and two text voices (monospace entity labels,
+sans titles and commentary). The full token set and copy-paste recipes live in
+[`references/local/editorial-default-style.md`](references/local/editorial-default-style.md);
+[`assets/editorial-default-template.drawio`](assets/editorial-default-template.drawio)
+is the editable seed shown above. The stock draw.io palette and an indigo
+report scheme remain available on request
+([`references/local/color-palettes.md`](references/local/color-palettes.md)).
+
+**Style attribution.** This default is deliberately modeled on the editorial
+figure language used in OpenAI's blog posts since their February 2025 rebrand
+(openai.com engineering and research posts); its tokens were measured from 65
+published figure SVGs (provenance:
+[`references/local/reference-set.md`](references/local/reference-set.md)).
+It is an independent re-implementation of generic design elements - palette
+values, spacing, stroke and corner geometry, typographic structure. It
+intentionally excludes OpenAI's identity: no OpenAI logo, blossom mark, or
+wordmark ever appears in output, and the proprietary OpenAI Sans typeface is
+replaced with Inter and IBM Plex Mono stacks. This project is not affiliated
+with or endorsed by OpenAI, and figures produced with it must not claim to be.
 
 ## What changed in this repo
 
@@ -85,13 +112,17 @@ references/local/
 
 Key files:
 
+- `editorial-default-style.md` - the default visual style (measured from
+  post-2025 openai.com editorial figures); applies whenever the user names no
+  style, seeded by `assets/editorial-default-template.drawio`
 - `upstream-drawio-rules.md` - local digest of the structural rules that always apply
 - `edge-routing.md` - connection contract, fixed vs floating terminals, waypoint
   recipes, and why draw.io never routes around other shapes
 - `text-and-labels.md` - line breaks (`\n` renders literally), escaping, label
   positioning, and detail-vs-compact representation levels
-- `color-palettes.md` - ready-made palettes (draw.io standard pairs and an
-  editorial neutral scheme) plus dark-mode rules
+- `color-palettes.md` - alternative palettes used on request (draw.io standard
+  pairs and an indigo report scheme) plus dark-mode rules; the default palette
+  lives in `editorial-default-style.md`
 - `figure-grammars.md` - one-grammar-per-page layout discipline
 - `layout-safety.md` - overlap, padding, and corridor checks
 - `quality-gates.md` - hard finishing gates for meaning, layout, text, arrows, and corner consistency

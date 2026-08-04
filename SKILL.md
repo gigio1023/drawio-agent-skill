@@ -20,6 +20,8 @@ artifact stays editable. Export is optional and should happen only when requeste
 2. Read `references/local/upstream-drawio-rules.md` and
    `references/local/edge-routing.md`. Read
    `references/local/figure-grammars.md` when choosing or changing composition.
+   Read `references/local/editorial-default-style.md` unless the user names a
+   different style - it is the default for every figure.
 3. Generate native `.drawio` XML using the repo's established structure.
 4. Read `references/local/layout-safety.md`, then run:
    - `python3 scripts/validate_drawio_xml.py <file>.drawio`
@@ -31,16 +33,17 @@ artifact stays editable. Export is optional and should happen only when requeste
 
 | Need | Read |
 |---|---|
+| Default visual style (user named no style) | `references/local/editorial-default-style.md` |
 | XML structure and validation baseline | `references/local/upstream-drawio-rules.md` |
 | Edge connections, ports, waypoints, crossings | `references/local/edge-routing.md` |
 | Labels, line breaks, escaping, detail-vs-compact | `references/local/text-and-labels.md` |
-| Color scheme selection and dark mode | `references/local/color-palettes.md` |
+| Alternative color schemes and dark mode | `references/local/color-palettes.md` |
 | Page composition and starting budgets | `references/local/figure-grammars.md` |
 | Overlap, padding, routing, and preflight | `references/local/layout-safety.md` |
 | Publication or review-quality finishing | `references/local/quality-gates.md` |
 | A validator/reviewer exposes a repeated failure | `references/local/real-world-gotchas.md` |
 | Export or visual-review iteration | `references/local/review-loop.md` |
-| Compact editorial styling | `references/local/visual-patterns.md` |
+| Cross-vendor visual pattern notes (background, not the default style) | `references/local/visual-patterns.md` |
 | Official docs/examples for deep lookup | `references/local/upstream-docs-map.md` |
 | Provenance or skill maintenance | `references/local/reference-set.md`, `references/local/community-lessons.md` |
 | XML/style detail beyond the local digest | Search factual definitions under `references/fetched/`; do not adopt its legacy agent workflow wholesale |
@@ -95,8 +98,13 @@ invisible grouping, `container=1;pointerEvents=0;` for decorative containers, an
   Line breaks are `&lt;br&gt;` or `&#xa;` in the value attribute - a literal
   `\n` renders as visible backslash-n text.
 - Use precise ownership/protocol labels; rename ambiguity instead of decorating it.
+- Style NEW figures per `references/local/editorial-default-style.md` (seed:
+  `assets/editorial-default-template.drawio`) unless the user names another
+  style; alternatives on request in `references/local/color-palettes.md`.
+  When editing an existing diagram, match its established style - the default
+  never authorizes a restyle beyond the request.
 - Make one path visually dominant and keep secondary paths quieter. Assign
-  colors by semantic role from one palette (`references/local/color-palettes.md`).
+  colors by semantic role from one palette; never mix schemes on a page.
 - Own every route: draw.io does not route around other shapes. Align connected
   boxes so main edges run straight. Add waypoints only for an obstacle, a
   separate edge lane, or an outer corridor; never dogleg aligned terminals.

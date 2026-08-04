@@ -2,6 +2,17 @@
 
 Curated official references from roughly the last year that informed this skill's compact, high-signal figure guidance.
 
+## OpenAI editorial figure corpus (2025-2026, measured)
+
+The tokens in `editorial-default-style.md` were measured (2026-08-04) from 65
+original figure SVGs collected from 20+ openai.com engineering/research posts
+published after the February 2025 rebrand (light and dark variants, e.g.
+`unrolling-the-codex-agent-loop`, `scaling-postgresql`,
+`unlocking-the-codex-harness`, `gpt-5-6-frontier-intelligence-efficiency`).
+The corpus lives in the maintainer's workspace at
+`notes/openai-figure-style/` (with `figures/manifest.md` listing every source
+URL); it is not shipped with the skill.
+
 ## OpenAI
 
 - `Introducing AgentKit` - strong visual builder canvas, explicit node labels, restrained accent usage

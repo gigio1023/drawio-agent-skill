@@ -1,10 +1,16 @@
 # Color palettes
 
+The default styling for this skill, including its palette, lives in
+`editorial-default-style.md` and applies whenever the user does not name a
+style. The schemes below are alternatives to use on request - for example
+when the user wants the stock draw.io look their team already edits, or an
+indigo report scheme. Never mix two schemes on one page.
+
 Readability beats decoration. Pick one scheme per page, assign colors by
 semantic role, and keep most of the page neutral so the one accent color can
 carry meaning.
 
-## Scheme A: draw.io standard pairs (safe default)
+## Scheme A: draw.io standard pairs (stock draw.io look, on request)
 
 These are the stock draw.io UI pairs. Always use fill and stroke together as a
 pair; never mix a fill from one row with a stroke from another.
