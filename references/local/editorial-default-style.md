@@ -72,9 +72,9 @@ Rules:
   variants keep the chip/light colors and swap surfaces to `#333333` -
   automatic derivation approximates this well.)
 - Textured zone: originals use a fine dot-grid fill for zones and highlighted
-  actors. draw.io cannot draw that grid; approximate with
-  `sketch=1;fillStyle=hachure;jiggle=0;` on the family light fill, or omit
-  the texture - the pale fill alone carries the role.
+  actors. `fillStyle=dots;` on the family light fill reproduces this and
+  survives desktop-CLI export (verified; `sketch=1` is not required). Use it
+  sparingly - the pale fill alone already carries the role.
 
 ## Tokens: typography
 
@@ -89,8 +89,10 @@ Sizes on a ~1200px-wide page: title 30-32 bold; mono-label 13-14; sans-body
 
 Mechanics:
 
-- Set the stack via `fontFamily=IBM Plex Mono;` (draw.io uses the first
-  installed match; Menlo covers macOS when Plex Mono is absent).
+- Set the stack via `fontFamily=IBM Plex Mono, Menlo;` - the comma list is
+  passed through to CSS, so Menlo covers macOS when Plex Mono is absent.
+  A single font name with that font missing falls back to the default sans
+  and silently loses the mono voice (verified in desktop-CLI export).
 - Uppercase is authored in the text itself (`MEDIA FRONTEND`), not via CSS.
 - Letterspacing for mono-label: wrap the label
   `&lt;span style=&quot;letter-spacing:1px&quot;&gt;...&lt;/span&gt;`. Skip it
@@ -137,7 +139,7 @@ Ordinary component:
 ```text
 rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;
 fillColor=#FFFFFF;strokeColor=#0D0D0D;strokeWidth=1.2;fontColor=#0D0D0D;
-fontFamily=IBM Plex Mono;fontSize=13;align=center;spacing=10;shadow=0;
+fontFamily=IBM Plex Mono, Menlo;fontSize=13;align=center;spacing=10;shadow=0;
 ```
 
 Emphasized component (role-based, e.g. every async-path box):
