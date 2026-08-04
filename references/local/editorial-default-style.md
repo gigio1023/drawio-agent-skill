@@ -175,6 +175,13 @@ Legend chip: `ellipse;fillColor=#FFFFFF;strokeColor=#0D0D0D;strokeWidth=1.2;`
 10-12px, with an adjacent borderless mono-label text cell — or blue-chip
 `fillColor=#A3BEFA;strokeColor=none;` for the accent entry.
 
+Titled zone (system-map grammars): a `container=1;pointerEvents=0;` region
+with the ordinary-component style, `fillColor=none` or the family light fill,
+and a sans bold zone name at top-left inside
+(`verticalAlign=top;align=left;spacingLeft=14;spacingTop=10;fontFamily=Inter,
+Helvetica Neue, Helvetica, sans-serif;fontStyle=1;`). Zones never take
+saturated fills.
+
 Icon use stays minimal: at most one small line-art glyph per node, ink-colored,
 above the label. Skip icons entirely rather than mixing icon styles.
 

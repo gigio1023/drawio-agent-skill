@@ -46,7 +46,10 @@ This file turns repeated review pain into hard finishing gates.
 ## Shape consistency
 
 - Use one rounded-rectangle recipe per page.
-- For small-radius rounded boxes, prefer `rounded=1;absoluteArcSize=1;arcSize=12;`.
+- Under the editorial default style, the node recipe is
+  `rounded=1;absoluteArcSize=1;arcSize=32;` (absolute arcSize renders at half
+  its value). For other styles' small-radius boxes, prefer
+  `rounded=1;absoluteArcSize=1;arcSize=12;`.
 - Do not mix heavily rounded boxes with lightly rounded boxes unless the distinction carries meaning.
 
 ## Verification
@@ -61,3 +64,8 @@ python3 scripts/validate_drawio_layout.py path/to/file.drawio
 If either validator complains, fix the diagram or explicitly accept the tradeoff in the final response.
 
 When an export is part of the deliverable, inspect the exported SVG or high-resolution PNG before finishing. The validators are necessary but not sufficient for visual quality.
+
+When the editorial default style is active, also spot-check the export against
+its tokens: soft ~16px corners, two text voices, thin open arrowheads, one
+accent family, no shadows. Style drift is a finishing defect even when every
+validator passes.
