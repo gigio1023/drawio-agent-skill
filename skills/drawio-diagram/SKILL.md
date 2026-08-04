@@ -16,7 +16,7 @@ artifact stays editable. Export is optional and should happen only when requeste
 Routing boundary: this skill draws *structure* - boxes, arrows, layers,
 schematics, including illustrative chart-shaped sketches inside them. A figure
 whose content is *measured data* (real numbers, many points, true scales)
-belongs to the sibling `editorial-chart` skill, which renders the same visual
+belongs to the sibling `data-chart` skill, which renders the same visual
 language programmatically with matplotlib.
 
 ## Quick Start

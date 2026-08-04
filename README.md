@@ -1,4 +1,4 @@
-# drawio-agent-skill
+# gigio-figures
 
 Editorial figure skills for coding agents: diagrams and data charts that share
 one visual language.
@@ -8,7 +8,7 @@ This repo packages two skills under `skills/`:
 | Skill | Draws | Tool |
 | --- | --- | --- |
 | [`drawio-diagram`](skills/drawio-diagram/SKILL.md) | Structure: boxes, arrows, layers, flowcharts, schematics | native `.drawio` XML, editable after the first pass |
-| [`editorial-chart`](skills/editorial-chart/SKILL.md) | Measured data: line, bar, scatter, dot-plot charts | matplotlib → SVG (text preserved) + PNG |
+| [`data-chart`](skills/data-chart/SKILL.md) | Measured data: line, bar, scatter, dot-plot charts | matplotlib → SVG (text preserved) + PNG |
 
 The routing rule between them: if the figure's content is *measured data*
 (real numbers, many points, true scales), it is a chart; if it is *structure*,
@@ -23,8 +23,8 @@ guide ([Claude Code](.claude/INSTALL.md), [Codex](.codex/INSTALL.md),
 [Cursor](.cursor/INSTALL.md), [Gemini CLI](.gemini/INSTALL.md)).
 
 ```bash
-npx skills add gigio1023/drawio-agent-skill@drawio-diagram --agent claude-code
-npx skills add gigio1023/drawio-agent-skill@editorial-chart --agent claude-code
+npx skills add gigio1023/gigio-figures@drawio-diagram --agent claude-code
+npx skills add gigio1023/gigio-figures@data-chart --agent claude-code
 ```
 
 Swap `--agent` for `codex`, `cursor`, or `gemini-cli` as needed. Install only
@@ -32,7 +32,7 @@ the skills you want; each command is independent.
 
 ## Usage
 
-Ask naturally; explicit invocation (`/drawio-diagram`, `/editorial-chart` in
+Ask naturally; explicit invocation (`/drawio-diagram`, `/data-chart` in
 Claude Code, `$`-prefixed in Codex) is optional when the request is clear.
 
 ```text
@@ -52,7 +52,7 @@ soft ~16px corners and thin open arrowheads; charts add gridless ink axes,
 chip legends, and mono numerals. Token sets:
 [`editorial-default-style.md`](skills/drawio-diagram/references/local/editorial-default-style.md)
 for diagrams,
-[`chart-language.md`](skills/editorial-chart/references/chart-language.md)
+[`chart-language.md`](skills/data-chart/references/chart-language.md)
 for charts. Alternative palettes remain available on request
 ([`color-palettes.md`](skills/drawio-diagram/references/local/color-palettes.md)).
 
@@ -206,13 +206,13 @@ Prefer SVG when text crispness matters more than bitmap convenience.
 | Edges cross unrelated boxes | Pin connection sides and add corridor waypoints; see `references/local/edge-routing.md`. |
 | `\n` appears as literal text | Use `&lt;br&gt;` or `&#xa;` in the value attribute; see `references/local/text-and-labels.md`. |
 
-# editorial-chart
+# data-chart
 
 Programmatic data charts in the same editorial language. OpenAI's own blog
 charts are design-tool exports, not plotting-library output; this skill
 re-implements that chart language with matplotlib so measured data renders
 accurately (true scales, log axes, many points) and regenerates when the data
-changes. Paths relative to [`skills/editorial-chart/`](skills/editorial-chart/):
+changes. Paths relative to [`skills/data-chart/`](skills/data-chart/):
 
 - `references/chart-language.md` - page anatomy, tokens, marks, dark mode,
   and what the corpus never does
@@ -224,7 +224,7 @@ changes. Paths relative to [`skills/editorial-chart/`](skills/editorial-chart/):
 Try it:
 
 ```bash
-cd skills/editorial-chart/scripts && uv run --with matplotlib python example_chart.py
+cd skills/data-chart/scripts && uv run --with matplotlib python example_chart.py
 ```
 
 SVG output keeps text as text (`svg.fonttype: none`), so the Inter / IBM Plex
@@ -253,7 +253,7 @@ quality gates, and artifacts that stay editable and regenerable.
 - `skills/drawio-diagram/` - `SKILL.md`, `assets/`, `data/`,
   `references/local/`, `references/fetched/`, `references/upstream/`
   (gitignored), `scripts/`
-- `skills/editorial-chart/` - `SKILL.md`, `references/`, `scripts/`
+- `skills/data-chart/` - `SKILL.md`, `references/`, `scripts/`
 - `.claude/`, `.codex/`, `.cursor/`, `.gemini/` - per-harness install guides
 
 ## Attribution

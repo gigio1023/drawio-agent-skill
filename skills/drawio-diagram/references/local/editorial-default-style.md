@@ -224,7 +224,7 @@ change is the header, voices, and axis treatment - there is no separate
 Native draw.io charts are for *schematic* charts only - a few illustrative
 bars or a sketched trend inside a larger figure. A chart of measured data
 (real values, many points, log or true scales) belongs to the sibling
-`editorial-chart` skill, which renders this same language with matplotlib.
+`data-chart` skill, which renders this same language with matplotlib.
 
 ## Boundaries (brand safety)
 

@@ -1,5 +1,5 @@
 ---
-name: editorial-chart
+name: data-chart
 description: >
   Use when the user wants a data chart, graph, or plot in the clean editorial
   blog-figure look: line, bar, scatter, or dot-plot renderings of measured
@@ -10,7 +10,7 @@ description: >
   interactive dashboards or web-embedded live charts.
 ---
 
-# Editorial Chart
+# Data Chart
 
 Render measured data as static charts in the editorial figure language: bold
 sans title top-left, chip legend with uppercase mono labels, gridless ink
