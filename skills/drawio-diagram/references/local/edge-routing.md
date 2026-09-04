@@ -17,18 +17,17 @@ and ending on the wrong sides. All of these come from one wrong assumption.
 
 ## The mental model
 
-**draw.io does not route around obstacles.** The official generation reference
-says it plainly: the built-in router draws "a straight line or a simple
-right-angle path between source and target, with no awareness of other shapes -
-a wire will run straight across any box that sits between its endpoints."
-`orthogonalEdgeStyle` negotiates only the two terminal shapes.
+**A saved edge style does not route around obstacles by itself.** The ordinary
+built-in router draws a straight or simple right-angle path with awareness of
+the two terminals, not unrelated shapes. An explicit authoring-time layout such
+as `orthogonalEdge` can calculate an obstacle-aware route, but no cleanup pass
+runs merely because the finished `.drawio` file is later opened.
 
-Consequence: the author owns the route. Pick connection sides so the natural
-corridor is empty, and add waypoints when it is not. The "automatic ELK edge
-cleanup" section in `references/fetched/xml-reference.md` describes the
-drawio-mcp viewer pipeline only - a `.drawio` file opened in draw.io desktop or
-app.diagrams.net gets **no** cleanup pass. Never write edges "naively" expecting
-a later fix. Official example diagrams confirm the practice: measured across
+Consequence: the author owns the saved result. Apply
+`references/local/auto-layout.md` first. For a route that still fails, pick
+connection sides so the natural corridor is empty and add waypoints only when
+it is not. Never write edges naively expecting a later viewer fix. Official
+example diagrams confirm the manual fallback: measured across
 133 plain-XML diagrams in `jgraph/drawio-diagrams`, roughly a quarter of edges
 pin terminals with `exitX/entryX` and 29% carry explicit waypoints.
 

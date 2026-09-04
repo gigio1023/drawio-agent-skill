@@ -1,10 +1,9 @@
 # The editorial chart language
 
 Measured from data charts in post-2025 openai.com editorial figures (line
-charts, dot plots, bar charts; the same corpus that grounds the sibling
-drawio-diagram skill's `editorial-default-style.md`). The originals are Figma
-exports, not library output - the look is a design language, and these are its
-rules restated for programmatic rendering.
+charts, dot plots, and bar charts). The canonical values are vendored in
+`assets/editorial-tokens.json`; the originals are Figma exports, not library
+output, so these rules translate the design language for programmatic rendering.
 
 ## Contents
 
@@ -16,17 +15,18 @@ rules restated for programmatic rendering.
 - Dark mode
 - What the corpus never does
 
-## Page anatomy
+## Content-led anatomy
 
-1. **Title** top-left, bold sans, sentence case, states the chart's claim
-   (`Success rate scales with agent budget`), never centered.
-2. **Legend** directly under the title when 2+ series need naming: small
-   filled circles (chips) followed by UPPERCASE mono labels, one horizontal
-   row, no boxed panel. A single series gets no legend - the title names it.
-3. **Plot area** below with generous whitespace. Left and bottom spines only,
+1. **Title, optional:** use a top-left bold sans title only when the chart must
+   stand alone and its subject or claim is not clear from the embedding
+   document. Never center it or add a subtitle by default.
+2. **Legend, optional:** prefer direct labels. When multiple series still need
+   a key, use small filled circles followed by UPPERCASE mono labels in one
+   horizontal row with no boxed panel. A single series gets no legend.
+3. **Plot area:** use generous whitespace. Left and bottom spines only,
    ink-colored, ~1.2px at a ~1200px page. Small outward ticks. **No
    gridlines.** No top/right spines.
-4. Axis titles UPPERCASE mono; tick labels mono. Percent signs attach to the
+4. **Axes:** titles are UPPERCASE mono and tick labels are mono. Percent signs attach to the
    number (`38.1%`).
 
 Original artboards are 596pt wide with light/dark and desktop/mobile variants;
@@ -103,3 +103,5 @@ the default.
 - A number on every data point, or rainbow multi-series palettes.
 - The OpenAI logo or wordmark - the originals carry one top-right; charts
   produced with this skill must not (see Brand safety in SKILL.md).
+- Subtitle stacks, takeaway bands, source footers, badges, or decorative insets
+  added only to occupy whitespace.
