@@ -10,17 +10,18 @@ layout judgment, model prompting, and verification, this local overlay and
 verification from older vendored agent instructions.
 
 **Known upstream trap:** the "Automatic edge routing" section of the vendored
-`references/fetched/xml-reference.md` says an ELK pass cleans up edges after
-render and that you can "write edges naively". That pass exists only in the
-drawio-mcp viewer pipeline. The `.drawio` files this skill writes are opened in
-draw.io desktop or app.diagrams.net, where **no cleanup pass runs** - the same
-upstream file admits the built-in router has "no awareness of other shapes".
-Route edges yourself per `references/local/edge-routing.md`.
+`references/fetched/xml-reference.md` describes a drawio-mcp viewer pass, not a
+cleanup that runs whenever a `.drawio` file is opened. New files should use the
+explicit layout routes in `references/local/auto-layout.md`; the saved result
+must already be acceptable. Use `references/local/edge-routing.md` only for
+routes that remain ambiguous after that pass.
 
 ## Required XML structure
 
-- Use native `.drawio` XML
-- Include `mxfile > diagram > mxGraphModel`
+- Use native `.drawio` XML.
+- Prefer a bare `mxGraphModel` for a single-page generated diagram. Wrap it in
+  `mxfile > diagram` when multiple pages, file variables, or metadata require
+  the full document form.
 - Include root cells:
   - `id="0"`
   - `id="1" parent="0"`
