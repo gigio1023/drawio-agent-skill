@@ -19,10 +19,26 @@ whose content is *measured data* (real numbers, many points, true scales)
 belongs to the sibling `data-chart` skill, which renders the same visual
 language programmatically with matplotlib.
 
+## Content discipline
+
+Start with the smallest set of shapes and labels that communicates the requested
+structure. Every title, subtitle, legend, caption, callout, rail, strip, badge,
+icon, inset, and mini-diagram must earn its place: if removing it does not make
+the required meaning harder to understand, remove it. Empty space is acceptable;
+never add content merely to fill or balance the page.
+
+Represent real complexity when the subject requires it, but do not invent
+takeaways, categories, provenance, or explanatory scaffolding absent from the
+input. Prefer direct labels beside the shapes they explain. Add one compact
+supporting element only when direct labeling cannot keep a necessary distinction
+clear. Use the simplest familiar shape that fits each semantic role; a different
+shape must encode a real distinction, not visual variety.
+
 ## Quick Start
 
-1. Confirm the message, components/arrows, page constraint, and artifacts. Only
-   semantic nodes may receive connectors; supporting text may not.
+1. Confirm the message, minimum required components/arrows, page constraint,
+   and artifacts. Only semantic nodes may receive connectors; supporting text
+   may not.
 2. Read `references/local/upstream-drawio-rules.md` and
    `references/local/edge-routing.md`. Read
    `references/local/figure-grammars.md` when choosing or changing composition.
@@ -79,11 +95,13 @@ Use this as a starting heuristic, not a content limit:
 
 - 3-5 primary framed components
 - 1 dominant path and 0-2 secondary paths
-- at most one side rail and one compact bottom strip
+- no supporting region by default; at most one legend, rail, or callout when
+  required meaning cannot be carried by direct labels
 
 Do not omit required content to satisfy the heuristic. If one page cannot remain
 readable, split it when allowed. Otherwise shorten labels and simplify hierarchy,
-then report any remaining density risk.
+then report any remaining density risk. Do not reserve canvas space for optional
+content before the content has earned it.
 
 ### 3. Author native XML
 
@@ -95,8 +113,9 @@ Required baseline:
 - `html=1;` in cell styles and no XML comments
 
 Use draw.io primitives directly: `swimlane` for titled panels, `group;` for
-invisible grouping, `container=1;pointerEvents=0;` for decorative containers, and
-`object` / `UserObject` only when metadata or placeholders improve editability.
+invisible grouping, `container=1;pointerEvents=0;` for visual grouping, and
+`object` / `UserObject` only when metadata improves editability. Never add
+placeholders or containers just to occupy space.
 
 ### 4. Make meaning and routes explicit
 
@@ -173,6 +192,7 @@ Naming: source `<name>.drawio`; exports `<name>.drawio.png`,
 - `\n` in a value attribute renders as literal text; use `&lt;br&gt;` or `&#xa;`.
 - Page budgets guide composition but never authorize dropping required content.
 - Keep implementation choices and external dependencies semantically separate.
+- Empty space does not need a title, legend, note, strip, icon, or mini-diagram.
 - Do not add tools, formats, pages, or a diagram-wide restyle outside the request.
 - This skill intentionally keeps `.drawio` after export even if an upstream CLI
   workflow treats it as intermediate output.

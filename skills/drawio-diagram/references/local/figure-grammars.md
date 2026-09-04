@@ -2,6 +2,14 @@
 
 Only use one grammar per page on the first pass.
 
+## Content gate
+
+Choose a grammar to organize required information, never to fill a page. Begin
+with the core geometry. A title, subtitle, legend, caption, rail, callout,
+process strip, inset, or mini-visual is optional and may be added only when its
+removal would make the requested meaning materially less clear. Empty space is
+preferable to invented supporting content.
+
 ## 1. flow-canvas
 
 Use when:
@@ -12,11 +20,10 @@ Use when:
 
 Structure:
 
-- top title stack
-- one main swimlane
-- optional right rail
-- optional bottom strip for terse source/takeaway only, not a legend that explains the whole diagram
-- 3-5 primary components in left-to-right order
+- optional one-line title when standalone context requires it
+- one main path or swimlane
+- required primary components in left-to-right order, commonly 3-5
+- no rail, strip, or footer unless it represents a required semantic relationship
 
 ## 2. report-split
 
@@ -27,10 +34,9 @@ Use when:
 
 Structure:
 
-- top title stack
-- left narrative panel
-- right evidence panel
-- bottom takeaway/source strip only when it stays compact; otherwise move explanation outside the diagram
+- optional one-line title when standalone context requires it
+- left narrative panel and right evidence panel only when both content types are required
+- no takeaway or source strip; keep supporting prose outside the diagram unless explicitly required
 
 ## 3. system-map
 
@@ -42,8 +48,8 @@ Use when:
 
 Structure:
 
-- top title stack
-- 2-3 titled zones only
+- optional one-line title when standalone context requires it
+- required titled zones, commonly 2-3
 - arrows mostly between zones, not between every box
 - minimal cross-links
 
@@ -70,9 +76,9 @@ Use when:
 
 Structure:
 
-- top title stack
-- optional top process strip
-- 2-4 adjacent panels
+- optional one-line title when standalone context requires it
+- process strip only when a required sequence governs every panel
+- required adjacent panels, commonly 2-4
 - each panel communicates one claim only
 
 ## 5. annotated-chart-card
@@ -85,8 +91,8 @@ Use when:
 
 Structure:
 
-- top title stack
+- optional one-line title when standalone context requires it
 - one dominant chart card
-- one or more inset callout cards
-- optional compact legend or direct labels
-- bottom takeaway/source strip only for terse provenance or one-line takeaway
+- only callouts needed to interpret a specific feature
+- direct labels before a compact legend
+- no bottom takeaway or source strip unless the user explicitly requests it

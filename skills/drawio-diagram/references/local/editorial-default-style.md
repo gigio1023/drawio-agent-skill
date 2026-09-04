@@ -4,9 +4,9 @@ This is the default visual style for every figure this skill produces when the
 user does not name a different style. It reproduces the figure language used on
 openai.com engineering and research posts from the February 2025 rebrand onward,
 rebuilt from measured SVG sources (local corpus:
-`notes/openai-figure-style/` in the maintainer workspace). Apply it fully;
-do not mix it with Scheme A or Scheme B from `color-palettes.md` on the same
-page.
+`notes/openai-figure-style/` in the maintainer workspace). Apply its visual
+tokens consistently, but let the content determine the composition; do not mix
+it with Scheme A or Scheme B from `color-palettes.md` on the same page.
 
 ## Contents
 
@@ -14,15 +14,15 @@ page.
 - Tokens: color
 - Tokens: typography
 - Tokens: shape and stroke
-- Page skeleton (title, legend, canvas)
+- Content-led page composition
 - Node recipes (copy-paste styles)
 - Edge recipes
 - Charts in the same language
 - Boundaries (brand safety)
 
-`assets/editorial-default-template.drawio` implements this style end to end
-(header, legend chips, both voices, solid/dashed/coral edges); seed new figures
-from it when convenient.
+`assets/editorial-default-template.drawio` demonstrates the core node and edge
+recipes without a default header or legend. Seed new figures from it when
+convenient, then add only content the requested diagram actually needs.
 
 ## Non-negotiables
 
@@ -40,6 +40,7 @@ from it when convenient.
 5. Thin open arrowheads, never filled triangles.
 6. Whitespace is the grouping mechanism. Gap between sibling nodes is at least
    half a node width; when in doubt, add space instead of a container box.
+   Whitespace may remain empty and never needs decorative content.
 
 ## Tokens: color
 
@@ -78,8 +79,8 @@ Rules:
 - Textured zone: the corpus uses a fine dot-grid fill as a first-class surface
   treatment (39 of 58 measured files). `fillStyle=dots;` on the family light
   fill reproduces it and survives desktop-CLI export (verified; `sketch=1` is
-  not required - `sketch=1` turns it into hachure). Use it on zones and
-  highlighted actors freely; the pale fill alone also carries the role.
+  not required - `sketch=1` turns it into hachure). Prefer the plain pale fill;
+  use dots only when texture carries a required semantic distinction.
 - A family mid value (`#5477C4`, `#71B436`, `#FF9365`) may fill one small
   emphasized node; give it ink or white text, whichever passes contrast.
   Large containers never take saturated fills.
@@ -89,16 +90,16 @@ Rules:
 | Voice | Font stack | Case | Use |
 | --- | --- | --- | --- |
 | mono-label | `IBM Plex Mono, Menlo, monospace` | UPPERCASE | entity names, edge labels, legend labels, axis/series names |
-| sans-title | `Inter, Helvetica Neue, Helvetica, sans-serif` | Mixed, bold | page title only |
+| sans-title | `Inter, Helvetica Neue, Helvetica, sans-serif` | Mixed, bold | optional page title only |
 | sans-body | `Inter, Helvetica Neue, Helvetica, sans-serif` | Mixed, regular | node sublines, captions, annotations |
 
 Sizes on a ~1200px-wide page: title 30-32 bold; mono-label 13-14; sans-body
 12-13; legend 12. Three sizes per page is still the ceiling.
 
-Precedence: while this style is active, its header rules (top-left title,
-these sizes, the corner radius below) override the generic defaults in
-`text-and-labels.md` and `quality-gates.md`. Those files still govern
-mechanics - escaping, wrapping, padding, edge-label backgrounds.
+Precedence: while this style is active, its typography and corner-radius rules
+override the generic defaults in `text-and-labels.md` and `quality-gates.md`.
+When a title is necessary, use the top-left title recipe below. Those files
+still govern mechanics - escaping, wrapping, padding, edge-label backgrounds.
 
 Mechanics:
 
@@ -133,24 +134,24 @@ Mechanics:
 Emphasis comes from fill (blue-fill) or the coral role, never from thicker
 strokes or bigger fonts.
 
-## Page skeleton
+## Content-led page composition
 
-Every figure page carries the same header, left-aligned to the content frame:
+The canvas and its required semantic shapes are the default. Add page-level
+text only when it changes how the figure is understood:
 
-1. **Title** (sans-title, bold, ink) at top-left. One line, sentence case,
-   states the figure's claim or name: `GPT-Live system architecture`.
-2. **Legend row** directly under the title, only when 2+ roles need naming:
-   small circles (10-12px, `ellipse;` white fill + ink stroke, or blue-chip
-   fill for the accent role) followed by mono-label text. Chips sit in one
-   horizontal row, never a boxed legend panel.
-3. **Canvas**: nodes on a loose grid below. First node row starts at least
-   60px under the legend.
+1. **Title, optional**: add a one-line, sentence-case sans-title at top-left
+   only when the figure must stand alone and its subject or claim is not already
+   clear from the surrounding artifact. Do not add a subtitle by default.
+2. **Legend, optional**: prefer direct labels. Add a compact horizontal legend
+   only when two or more visual encodings cannot be understood directly; the
+   mere presence of multiple roles does not require one.
+3. **Canvas**: fit the content frame to the actual nodes and routes. Do not keep
+   an empty header, footer, or side region in case optional material is added.
 
-No logo, no footer strip, no caption band by default. Exception: when the
-chosen grammar in `figure-grammars.md` calls for a terse source/takeaway
-strip and the user's content requires one, the grammar wins - style it in
-this page's voices. Otherwise provenance belongs in the document that embeds
-the figure.
+Do not add logos, footer strips, caption bands, takeaways, source lines, chips,
+or decorative mini-diagrams to fill whitespace or make the page look finished.
+If provenance is explicitly required, keep it terse and place it in the
+embedding document when possible.
 
 ## Node recipes
 
@@ -182,8 +183,9 @@ and a sans bold zone name at top-left inside
 Helvetica Neue, Helvetica, sans-serif;fontStyle=1;`). Zones never take
 saturated fills.
 
-Icon use stays minimal: at most one small line-art glyph per node, ink-colored,
-above the label. Skip icons entirely rather than mixing icon styles.
+Icons are opt-in: use a small line-art glyph only when it carries meaning the
+label does not or the user requests it. Never add icons merely to make nodes
+feel less empty, and skip them entirely rather than mixing styles.
 
 ## Edge recipes
 
@@ -213,13 +215,13 @@ unchanged.
 ## Charts in the same language
 
 When the figure is a chart (drawn natively in draw.io), keep the identical
-header pattern and voices: title sans bold, legend chips + mono labels, axis
-labels mono uppercase, gridless or minimal ink axes with `strokeWidth=1.2`.
+voices and content gate: use a sans bold title or legend chips only when the
+chart needs them, axis labels mono uppercase, and gridless or minimal ink axes
+with `strokeWidth=1.2`.
 Series colors come from the page's accent family ramp; the corpus also uses
 purpose-built palettes for special forms (perceptual scales on heatmaps), so
 multi-hue series are allowed when the data demands them. What must not
-change is the header, voices, and axis treatment - there is no separate
-"chart theme".
+change is the voices and axis treatment - there is no separate "chart theme".
 
 Native draw.io charts are for *schematic* charts only - a few illustrative
 bars or a sketched trend inside a larger figure. A chart of measured data
