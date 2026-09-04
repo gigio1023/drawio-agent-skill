@@ -16,45 +16,70 @@ and editability; a generic technical diagram belongs to `technical-diagram`.
 
 ## Quick path
 
-1. Record the required nodes, edges, groups, and annotations. Read
+1. Form the reader brief in the content contract below. Reduce the source to
+   one question and one answer before choosing cells.
+2. Derive the required nodes, edges, groups, and annotations from that brief.
+   Read
    `references/local/editorial-principles.md` and
    `references/local/editorial-default-style.md` unless the user supplied a
    different style or an existing file already establishes one.
-2. Read `references/local/upstream-drawio-rules.md`. Start with uncompressed
+3. Read `references/local/upstream-drawio-rules.md`. Start with uncompressed
    bare `mxGraphModel` XML unless pages or file metadata require `<mxfile>`.
-3. Read `references/local/auto-layout.md` and apply the simplest suitable
+4. Read `references/local/auto-layout.md` and apply the simplest suitable
    automatic layout. Preserve explicit semantic grouping.
-4. Run both validators from the skill root:
+5. Run both validators from the skill root:
 
    ```bash
    python3 scripts/validate_drawio_xml.py <file>.drawio
    python3 scripts/validate_drawio_layout.py <file>.drawio
    ```
 
-5. Export and inspect SVG or PNG when an export is requested or the layout is
-   visually uncertain. If automatic layout leaves a collision or ambiguous
-   route, read `references/local/edge-routing.md`, fix only those routes, and
-   validate again.
+6. For every new diagram or substantial visual edit, export and inspect SVG or
+   PNG when an exporter is available. Apply
+   `references/local/review-loop.md`. If automatic layout leaves a collision or
+   ambiguous route, read
+   `references/local/edge-routing.md`, fix only those routes, and validate
+   again.
 
-## Content contract
+## Communication and content contract
 
-Use the minimum semantic inventory:
+Before authoring, form this small working brief:
+
+```text
+reader: <who must understand it>
+question: <the one question this figure answers>
+answer: <one sentence the reader should leave with>
+surrounding_context: <what the document or conversation already explains>
+```
+
+If no audience is supplied, write for a technically literate reader who has no
+private project context. Then derive the minimum semantic inventory:
 
 ```text
 required_nodes: [...]
 required_edges: [...]
 required_groups: [...]
-required_annotations: [...]
+required_annotations: [{text: ..., purpose: ...}]
+deferred_to_prose: [...]
 ```
 
-If `required_annotations` is empty, do not add a title, subtitle, legend,
-caption, callout, footer, badge, icon, inset, or mini-diagram. Empty canvas is
-acceptable. Complexity in the subject must be represented, but visual balance
-never justifies invented content.
+The brief and inventory need not become separate files. Raw source items are
+candidates, not requirements. An annotation needs a named purpose: it was
+requested, or without it the reader cannot recover the answer from the figure
+and its surrounding context. If `required_annotations` is empty, do not add a
+title, subtitle, legend, caption, callout, footer, badge, icon, inset, or
+mini-diagram. Empty canvas is acceptable.
 
 Only semantic nodes receive connectors. Supporting text and decorative
-containers do not. Prefer direct labels and familiar shapes; a different shape
-must encode a real distinction.
+containers do not. Prefer reader-facing roles and familiar shapes. If an exact
+internal name matters, label it as `role (exact name)`. Show endpoints, fields,
+versions, and implementation steps only when the question is about them.
+
+Represent the complexity needed for the answer, not every available fact.
+Remove details that answer another question, combine repeated peers only when
+their distinctions are irrelevant, and split different abstraction levels
+before enlarging the canvas. Never reduce type size to preserve an overfull
+composition.
 
 ## Native XML baseline
 
@@ -92,11 +117,15 @@ reported. Validators do not detect every clipped label or visual collision.
 
 Before finishing, confirm:
 
-1. the required semantic inventory matches the diagram;
-2. no component, label, or unrelated edge overlaps;
-3. the dominant path and secondary paths are distinguishable;
-4. every visible element earns its place; and
-5. the export, when requested, was actually opened or rendered for inspection.
+1. the intended reader can identify the subject and answer without private
+   vocabulary or missing chat context;
+2. the required semantic inventory matches the diagram;
+3. every label is readable at the intended delivery size and no component,
+   label, or unrelated edge overlaps;
+4. the dominant path and secondary paths are distinguishable;
+5. every visible element earns its place; and
+6. a render was inspected for every new diagram or substantial visual edit, or
+   the missing exporter was reported.
 
 ## Exports
 
@@ -125,6 +154,7 @@ accepted warning or unverified rendering.
 | draw.io translation of the editorial tokens | `references/local/editorial-default-style.md` |
 | Required XML structure and export rules | `references/local/upstream-drawio-rules.md` |
 | Automatic layout and current CLI routes | `references/local/auto-layout.md` |
+| Communication, density, and rendered visual audit | `references/local/review-loop.md` |
 | Manual ports, waypoints, and crossings after auto-layout | `references/local/edge-routing.md` |
 | Multiline, HTML, metadata, or edge labels | `references/local/text-and-labels.md` |
 | Deep official syntax lookup | `references/local/upstream-docs-map.md` |
@@ -141,3 +171,5 @@ Read only the rows needed for the current artifact. Vendored files under
 - Edges between different containers normally belong to the root layer or they
   can clip inside one parent.
 - Empty space does not need a title, legend, footer, rail, icon, or inset.
+- Do not reproduce every term found in source material. A crowded but complete
+  inventory is not a clear explanation.

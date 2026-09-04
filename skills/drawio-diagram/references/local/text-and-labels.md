@@ -6,7 +6,7 @@
 - Wrapping and fit
 - Positioning keys
 - Edge labels
-- Titles, captions, and bottom strips
+- Context and supporting text
 - Detail vs compactness
 - Fonts
 
@@ -82,58 +82,51 @@ Set `value` on the edge cell. Position with the edge geometry:
   clearer shape label carry the meaning.
 - Keep edge labels to 1-3 words (`ack`, `on failure`, `HTTP 429`).
 
-## Titles, captions, and bottom strips
+## Context and supporting text
 
-Give every free-standing text block exactly one role before placing it:
+Free-standing text is exceptional. Give each block a named purpose tied to the
+reader brief before placing it:
 
-- **Title/subtitle:** frames the whole page; no connector.
-- **Caption/callout:** explains a nearby region; align it to that region and do
-  not connect it as though it were a component.
-- **Semantic node/rail:** participates in the model; give it a precise noun or
-  claim and connect only the relationship the diagram actually asserts.
-- **Decoration:** delete it.
+- A short title may identify the question when the figure is standalone. Omit
+  it when the surrounding heading already supplies the same context.
+- A callout may point to one specific feature that is part of the answer and
+  cannot be labeled directly. It must not become a second narrative.
+- A semantic node participates in the model and may receive only relationships
+  the diagram actually asserts.
+- Versions, sources, excluded scope, implementation notes, and decorative text
+  belong in surrounding prose or file metadata unless the question is about
+  them.
 
-Do not fill the top or bottom with a dot-separated keyword garland merely to
-balance whitespace. A list belongs there only when its items form a named set,
-sequence, legend, or constraint that the reader needs. Write that relationship
-explicitly instead of relying on proximity.
-
-Center a page-level title on the page's actual content frame. Center a shared
-bottom strip beneath the components it governs; if it belongs to one component,
-size and align it under that component. A semantic center-to-center relation
-should use a straight centerline connector. Do not attach a connector at the far
-left or right and add a cosmetic dogleg, which makes the composition look
-off-center even when the boxes are numerically aligned.
+Delete subtitles, keyword garlands, bottom strips, and explanatory footers that
+repeat the diagram or compensate for an unclear composition. Do not create a
+free-standing text region merely because there is room above, below, or beside
+the main path.
 
 ## Detail vs compactness: pick a level deliberately
 
-Choose per element how much the reader needs at first glance, and use the
-matching mechanism instead of stuffing prose into boxes:
+Choose the least detail the reader needs to reach the answer:
 
-1. **Name only** - one short noun phrase. Default for secondary components.
-2. **Title + one line** - `&lt;b&gt;Title&lt;/b&gt;&lt;br&gt;short qualifier`.
-   Default for primary components.
+1. **Role only** - one familiar noun phrase. Default for secondary components.
+2. **Role + exact name** - `&lt;b&gt;Policy gateway&lt;/b&gt;&lt;br&gt;(Bastion)` when
+   an unfamiliar identity matters.
 3. **Structured label** - an HTML `&lt;table&gt;` or `&lt;hr&gt;`-separated
-   sections inside one shape (UML-class style) when the reader needs fields or
-   attributes. Use sparingly; one structured shape per page region.
-4. **Side rail / callout card** - explanation that supports the figure but is
-   not a component. Keep it out of the flow corridors.
-5. **Hover metadata** - wrap the cell in `<object>` and put long detail in
-   attributes (shown via Edit Data / tooltips) instead of on the canvas. The
-   canvas stays clean; the detail survives in the file.
-6. **Another page** - when detail is a different abstraction level (context vs
-   component vs deployment), add a named `<diagram>` page rather than
-   cramming levels together.
+   shape only when fields or attributes are the subject of the figure.
+4. **Hover metadata** - use `<object>` attributes for exact detail that helps
+   future editing but is not needed on the canvas.
+5. **Another page** - use a named `<diagram>` page when another required
+   abstraction level deserves its own view.
 
-Rule of thumb: the page tells the story with levels 1-2; levels 3-6 hold the
-depth. A page where every box uses level 3 has no hierarchy.
+Move everything else to surrounding prose. A page where most boxes use
+structured labels is an implementation inventory, not an explanatory figure.
 
 ## Fonts
 
-- One `fontSize` for peer components (12-14), one for titles (24-28 in a title
-  stack), one for captions (10-11). Three sizes per page is the ceiling.
+- Use one readable `fontSize` for peer components and, only when required, one
+  larger size for a standalone title. Do not create a tiny caption tier.
 - Whole-label bold via `fontStyle=1`; partial bold via `&lt;b&gt;` - never
   both for the same effect.
 - Wide-character scripts (Korean, Japanese, Chinese) run wider than the same
   letter count in Latin; size boxes for the rendered width, and widen early
   instead of accepting mid-word breaks.
+- Inspect at the intended delivery size. If text needs zoom, reduce content or
+  split the view instead of lowering the font size.

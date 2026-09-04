@@ -16,41 +16,64 @@ beside the render so the diagram remains reproducible without a GUI.
 
 ## Quick path
 
-1. Record the required nodes, edges, groups, and annotations from the request.
-   Do not turn optional context into visible content.
-2. Read `references/editorial-principles.md` and
+1. Form the reader brief in the content contract below. Reduce the source to
+   one question and one answer before choosing nodes.
+2. Derive the required nodes, edges, groups, and annotations from that brief.
+   Source facts that do not support the answer stay outside the figure.
+3. Read `references/editorial-principles.md` and
    `references/d2-authoring.md`.
-3. Copy `assets/editorial-theme.d2` beside the new source and import it. Author
+4. Copy `assets/editorial-theme.d2` beside the new source and import it. Author
    only the semantic structure in the main `.d2` file.
-4. Format the source with `d2 fmt <file>.d2`, then render it with:
+5. Format the source with `d2 fmt <file>.d2`, then render it with:
 
    ```bash
    bash scripts/render_d2.sh <file>.d2 <file>.svg
    ```
 
-5. Inspect the rendered SVG, using a temporary PNG proof when the available
+6. Inspect the rendered SVG, using a temporary PNG proof when the available
    viewer cannot display SVG. Apply `references/review.md`, remove any
    unrequired content, and render again after each fix.
 
-## Content contract
+## Communication and content contract
 
-Before authoring, use this inventory:
+Before authoring, form this small working brief:
+
+```text
+reader: <who must understand it>
+question: <the one question this figure answers>
+answer: <one sentence the reader should leave with>
+surrounding_context: <what the document or conversation already explains>
+```
+
+If no audience is supplied, write for a technically literate reader who has no
+private project context. Then derive the semantic inventory:
 
 ```text
 required_nodes: [...]
 required_edges: [...]
 required_groups: [...]
-required_annotations: [...]
+required_annotations: [{text: ..., purpose: ...}]
+deferred_to_prose: [...]
 ```
 
-The inventory need not become a separate file. It is the comparison set for the
-finished source. If `required_annotations` is empty, do not add a title,
-subtitle, legend, caption, callout, footer, badge, icon, or mini-diagram.
+The brief and inventory need not become separate files. They are the comparison
+set for the finished source. Raw source items are candidates, not requirements.
+An annotation needs a named purpose: it was requested, or without it the reader
+cannot recover the answer from the figure and its surrounding context. If
+`required_annotations` is empty, add no title, subtitle, legend, caption,
+callout, footer, badge, icon, or mini-diagram.
+
+Use reader-facing roles instead of unexplained internal terms. If an exact name
+matters, introduce it as `role (exact name)` rather than making the reader infer
+the role. Show endpoints, field names, versions, and implementation steps only
+when the question is specifically about them.
 
 Represent real complexity when the request requires it. Minimality never
-authorizes dropping a component or relationship. When one page is too dense,
-split by abstraction level if the requested artifact allows multiple figures;
-otherwise shorten labels and simplify grouping before enlarging the canvas.
+authorizes dropping a component or relationship needed for the answer. Remove
+details that answer another question, combine repeated peers only when their
+differences are irrelevant, and split by abstraction level when one page is too
+dense. Shorten role-first labels and simplify grouping before enlarging the
+canvas; never reduce type size to preserve an overfull composition.
 
 ## Backend decision
 
@@ -81,13 +104,15 @@ The bundled render script checks D2 formatting, validates D2 syntax, renders
 with ELK and 16px outer padding, and validates the SVG root, viewBox, and IDs.
 It does not prove that the figure is readable.
 
-Before finishing, confirm all three:
+Before finishing, confirm all four:
 
-1. **Meaning:** every required node, edge, direction, group, and annotation is
+1. **Communication:** the intended reader can identify the subject and the
+   one-sentence answer without private vocabulary or missing chat context.
+2. **Meaning:** every required node, edge, direction, group, and annotation is
    present and no relationship was invented.
-2. **Render:** no label is clipped, no edge crosses unrelated content, and the
-   dominant reading path is obvious.
-3. **Minimality:** every visible element changes the reader's understanding;
+3. **Render:** at the intended delivery size, every label is readable, no edge
+   crosses unrelated content, and the dominant reading path is obvious.
+4. **Minimality:** every visible element changes the reader's understanding;
    empty top, bottom, or side space remains empty.
 
 ## Output
@@ -121,3 +146,5 @@ Read only the route needed for the current artifact.
 - Do not turn an awkward automatic layout into an excuse for a title, legend,
   spacer node, or decorative container. Fix the existing geometry or use the
   narrow SVG fallback.
+- Do not reproduce every term found in source material. A crowded but complete
+  inventory is not a clear explanation.

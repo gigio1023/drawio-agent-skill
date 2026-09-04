@@ -7,6 +7,7 @@ The goal is not maximum density. The goal is that the first human who opens the 
 - what the components are
 - which arrows matter
 - what is primary vs secondary
+- what question the figure answers, without private project vocabulary
 
 ## Overlap rules
 
@@ -31,24 +32,25 @@ The goal is not maximum density. The goal is that the first human who opens the 
 - Labels should usually be title + one short line
 - Avoid paragraphs inside component boxes
 - Avoid vertical labels on the first pass
-- Move short notes and sources to a side rail or external caption when needed
-- Avoid bottom legends or footer explanations inside the diagram; use semantic labels or split the page instead
+- Move notes, sources, versions, and excluded scope to surrounding prose or file
+  metadata unless they are the subject
+- Avoid bottom legends or footer explanations inside the diagram; use direct
+  semantic labels or split the page instead
 - For multilingual or wide-character text, widen early instead of accepting accidental breaks
+- Check text at the intended delivery size and never shrink it to preserve an
+  overfull page
 
-## Supporting-band rules
+## Supporting-text rules
 
-- A title/subtitle frames the page, a caption explains a region, and a semantic
-  rail participates in the model. Choose one role; do not connect supporting
-  prose as though it were a component.
+- A short title may frame a standalone page when surrounding context is absent.
+  A callout may identify one required feature. A semantic node participates in
+  the model. Choose one role; do not connect supporting prose as though it were
+  a component.
 - Delete top/bottom keyword lists whose removal would not change the reader's
   interpretation. If the list is a real legend, sequence, ownership boundary,
   or constraint set, name that role explicitly.
-- Align page-level supporting text to the full content frame. Align region-level
-  text to its region. Shared bottom rails sit centered beneath the components
-  they govern, not shifted toward whichever component happened to connect last.
-- Prefer a straight centerline for a whole-strip relationship. A far-edge
-  attachment with a shallow two-bend dogleg is both harder to read and visually
-  unbalanced.
+- Remove subtitles, footer summaries, and separate explanatory regions when the
+  surrounding document or direct labels already carry the same meaning.
 
 ## Human-editability rule
 
@@ -66,7 +68,8 @@ Before finishing:
 6. The diagram is still understandable with no chat context
 7. No edge crosses a title, caption strip, or dense label cluster without a strong reason
 8. Arrow corridors remain clear after any layout tightening
-9. Every top/bottom text band has a named information role or has been removed
+9. Every free-standing text block has a named, answer-relevant purpose or has
+   been removed
 10. Edge labels have opaque backgrounds matching the surface behind them
 
 Then run:
