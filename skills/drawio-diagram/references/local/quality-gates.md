@@ -4,6 +4,11 @@ This file turns repeated review pain into hard finishing gates.
 
 ## Meaning
 
+- The figure answers one stated question for one intended reader. Do not mix
+  separate questions or abstraction levels because the source mentions them.
+- Replace private names with roles, or use `role (exact name)` when identity
+  matters. Expand acronyms once and omit code-level strings that are not the
+  subject.
 - Do not mix implementation choices and external dependencies in one box.
 - Preserve semantic boundaries: callers, runtime/container, internal sections, implementation choices, and external dependencies are separate roles unless the user explicitly wants them merged.
 - If a label is not unambiguously correct, simplify it. Prefer `response` over a narrower word unless the narrower word is exact.
@@ -18,7 +23,9 @@ This file turns repeated review pain into hard finishing gates.
 - If a swimlane has a header, children must stay below the header band.
 - Tight layout is acceptable only after arrows have dedicated corridors and labels still breathe.
 - If a layout feels crowded, split the page or shorten labels before widening the canvas.
-- Avoid bottom legends or explanatory footers that restate the diagram. Prefer semantic labels, a side rail, or a second page.
+- Avoid bottom legends or explanatory footers that restate the diagram. Prefer
+  direct semantic labels, surrounding prose or metadata, or a separate page for
+  another required view.
 - Remove decorative keyword garlands. If a top/bottom band is meaningful, state
   whether it is a caption, legend, constraint, ownership boundary, or semantic
   rail and align it to the content it governs.
@@ -28,6 +35,9 @@ This file turns repeated review pain into hard finishing gates.
 - Do not use vertical text for main labels.
 - Component labels should usually fit in one or two lines.
 - Avoid paragraphs inside boxes.
+- Every label must remain readable without zoom at the intended delivery size.
+- Do not lower font size to preserve an overfull page; reduce content or split
+  the view.
 - If text comes close to the border, add spacing before resizing the box.
 - If the same type of component repeats, keep font size, alignment, and padding consistent.
 
