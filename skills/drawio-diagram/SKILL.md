@@ -1,198 +1,143 @@
 ---
 name: drawio-diagram
 description: >
-  Use when the user asks for a native draw.io or .drawio artifact, an editable
-  architecture diagram or flowchart, component-to-component arrow routing, an
-  editorial figure in draw.io, or export from .drawio to PNG/SVG/PDF. Produces
-  editable mxGraph XML with structural, layout, and rendered quality checks.
-  NOT for Mermaid-only output or generic image generation.
+  Use when the user explicitly wants a native .drawio artifact, asks to edit an
+  existing draw.io file, needs draw.io metadata or pages, or requests draw.io
+  export to SVG, PNG, or PDF. Produces editable mxGraph XML with automatic
+  layout first, manual routing only when needed, and structural plus rendered
+  quality checks. NOT for generic technical diagrams or measured data charts.
 ---
 
 # Draw.io Diagram
 
-Native `.drawio` XML is the source of truth. Keep it after every export so the
-artifact stays editable. Export is optional and should happen only when requested.
+Produce a valid, readable native `.drawio` file. Native XML is the source of
+truth and remains beside any export. This skill exists for draw.io compatibility
+and editability; a generic technical diagram belongs to `technical-diagram`.
 
-Routing boundary: this skill draws *structure* - boxes, arrows, layers,
-schematics, including illustrative chart-shaped sketches inside them. A figure
-whose content is *measured data* (real numbers, many points, true scales)
-belongs to the sibling `data-chart` skill, which renders the same visual
-language programmatically with matplotlib.
+## Quick path
 
-## Content discipline
+1. Record the required nodes, edges, groups, and annotations. Read
+   `references/local/editorial-principles.md` and
+   `references/local/editorial-default-style.md` unless the user supplied a
+   different style or an existing file already establishes one.
+2. Read `references/local/upstream-drawio-rules.md`. Start with uncompressed
+   bare `mxGraphModel` XML unless pages or file metadata require `<mxfile>`.
+3. Read `references/local/auto-layout.md` and apply the simplest suitable
+   automatic layout. Preserve explicit semantic grouping.
+4. Run both validators from the skill root:
 
-Start with the smallest set of shapes and labels that communicates the requested
-structure. Every title, subtitle, legend, caption, callout, rail, strip, badge,
-icon, inset, and mini-diagram must earn its place: if removing it does not make
-the required meaning harder to understand, remove it. Empty space is acceptable;
-never add content merely to fill or balance the page.
+   ```bash
+   python3 scripts/validate_drawio_xml.py <file>.drawio
+   python3 scripts/validate_drawio_layout.py <file>.drawio
+   ```
 
-Represent real complexity when the subject requires it, but do not invent
-takeaways, categories, provenance, or explanatory scaffolding absent from the
-input. Prefer direct labels beside the shapes they explain. Add one compact
-supporting element only when direct labeling cannot keep a necessary distinction
-clear. Use the simplest familiar shape that fits each semantic role; a different
-shape must encode a real distinction, not visual variety.
+5. Export and inspect SVG or PNG when an export is requested or the layout is
+   visually uncertain. If automatic layout leaves a collision or ambiguous
+   route, read `references/local/edge-routing.md`, fix only those routes, and
+   validate again.
 
-## Quick Start
+## Content contract
 
-1. Confirm the message, minimum required components/arrows, page constraint,
-   and artifacts. Only semantic nodes may receive connectors; supporting text
-   may not.
-2. Read `references/local/upstream-drawio-rules.md` and
-   `references/local/edge-routing.md`. Read
-   `references/local/figure-grammars.md` when choosing or changing composition.
-   Read `references/local/editorial-default-style.md` unless the user names a
-   different style - it is the default for every figure.
-3. Generate native `.drawio` XML using the repo's established structure.
-4. Read `references/local/layout-safety.md`, then run:
-   - `python3 scripts/validate_drawio_xml.py <file>.drawio`
-   - `python3 scripts/validate_drawio_layout.py <file>.drawio`
-5. If export was requested, use an existing draw.io CLI, inspect the SVG or PNG,
-   and revise the `.drawio` source until the rendered artifact is clear.
+Use the minimum semantic inventory:
 
-## Reference Router
-
-| Need | Read |
-|---|---|
-| Default visual style (user named no style) | `references/local/editorial-default-style.md` |
-| XML structure and validation baseline | `references/local/upstream-drawio-rules.md` |
-| Edge connections, ports, waypoints, crossings | `references/local/edge-routing.md` |
-| Labels, line breaks, escaping, detail-vs-compact | `references/local/text-and-labels.md` |
-| Alternative color schemes and dark mode | `references/local/color-palettes.md` |
-| Page composition and starting budgets | `references/local/figure-grammars.md` |
-| Overlap, padding, routing, and preflight | `references/local/layout-safety.md` |
-| Publication or review-quality finishing | `references/local/quality-gates.md` |
-| A validator/reviewer exposes a repeated failure | `references/local/real-world-gotchas.md` |
-| Export or visual-review iteration | `references/local/review-loop.md` |
-| Cross-vendor visual pattern notes (background, not the default style) | `references/local/visual-patterns.md` |
-| Official docs/examples for deep lookup | `references/local/upstream-docs-map.md` |
-| Provenance or skill maintenance | `references/local/reference-set.md`, `references/local/community-lessons.md` |
-| XML/style detail beyond the local digest | Search factual definitions under `references/fetched/`; do not adopt its legacy agent workflow wholesale |
-
-Read only the rows needed for the task. Files under `references/fetched/` are
-vendored verbatim for provenance and technical lookup; some contain older model
-scaffolding. Use them for exact XML/style facts, while this SKILL and the local
-overlay control workflow, layout judgment, and verification. In particular,
-ignore the vendored claim that a viewer ELK pass will clean up edge routing -
-it does not apply to files this skill writes.
-
-## Workflow
-
-### 1. Define the page
-
-Capture the single message, target reader, required boxes, required relationships,
-and whether multiple pages are allowed. Keep different semantic levels distinct:
-external callers, main container, internal sections, implementation choices, and
-external dependencies should not become one ambiguous box.
-
-### 2. Choose a grammar and budget
-
-Choose one grammar from `references/local/figure-grammars.md` for the first pass;
-`flow-canvas` is the safe default for component-to-component flow.
-
-Use this as a starting heuristic, not a content limit:
-
-- 3-5 primary framed components
-- 1 dominant path and 0-2 secondary paths
-- no supporting region by default; at most one legend, rail, or callout when
-  required meaning cannot be carried by direct labels
-
-Do not omit required content to satisfy the heuristic. If one page cannot remain
-readable, split it when allowed. Otherwise shorten labels and simplify hierarchy,
-then report any remaining density risk. Do not reserve canvas space for optional
-content before the content has earned it.
-
-### 3. Author native XML
-
-Required baseline:
-
-- `mxfile > diagram > mxGraphModel` with root cells `0` and `1`
-- `adaptiveColors="auto"`
-- child `<mxGeometry relative="1" as="geometry" />` on every edge
-- `html=1;` in cell styles and no XML comments
-
-Use draw.io primitives directly: `swimlane` for titled panels, `group;` for
-invisible grouping, `container=1;pointerEvents=0;` for visual grouping, and
-`object` / `UserObject` only when metadata improves editability. Never add
-placeholders or containers just to occupy space.
-
-### 4. Make meaning and routes explicit
-
-- Prefer one or two lines per component and no paragraphs or vertical main labels.
-  Line breaks are `&lt;br&gt;` or `&#xa;` in the value attribute - a literal
-  `\n` renders as visible backslash-n text.
-- Use precise ownership/protocol labels; rename ambiguity instead of decorating it.
-- Style NEW figures per `references/local/editorial-default-style.md` (seed:
-  `assets/editorial-default-template.drawio`) unless the user names another
-  style; alternatives on request in `references/local/color-palettes.md`.
-  When editing an existing diagram, match its established style - the default
-  never authorizes a restyle beyond the request.
-- Make one path visually dominant and keep secondary paths quieter. Assign
-  colors by semantic role from one palette; never mix schemes on a page.
-- Own every route: draw.io does not route around other shapes. Align connected
-  boxes so main edges run straight. Add waypoints only for an obstacle, a
-  separate edge lane, or an outer corridor; never dogleg aligned terminals.
-  For 2+ edges or an occupied corridor, pin sides and add waypoints
-  (`references/local/edge-routing.md` has the recipes).
-- Put edge labels on straight segments, give each an opaque
-  `labelBackgroundColor` matching its canvas or panel, and keep arrows out of
-  text/title regions.
-- Include every requested component even if a human may later fine-tune placement.
-
-### 5. Validate and inspect
-
-Run both bundled validators from the skill root:
-
-```bash
-python3 scripts/validate_drawio_xml.py <path>.drawio
-python3 scripts/validate_drawio_layout.py <path>.drawio
+```text
+required_nodes: [...]
+required_edges: [...]
+required_groups: [...]
+required_annotations: [...]
 ```
 
-XML failure is blocking. The layout validator also audits edges: dangling
-terminals fail; probable component crossings, ports facing away from their
-target, overlapping floating edge pairs, uncovered edge labels, and unnecessary
-aligned-terminal doglegs warn. Treat layout warnings as
-evidence to inspect and fix; accept one only when the source remains readable
-and the tradeoff is explicit. Validators do not catch every visual collision.
-When an export is part of the deliverable, inspect the actual artifact for
-clipped text, fuzzy type, route collisions, framing, and arrowheads on bends
-or borders.
+If `required_annotations` is empty, do not add a title, subtitle, legend,
+caption, callout, footer, badge, icon, inset, or mini-diagram. Empty canvas is
+acceptable. Complexity in the subject must be represented, but visual balance
+never justifies invented content.
+
+Only semantic nodes receive connectors. Supporting text and decorative
+containers do not. Prefer direct labels and familiar shapes; a different shape
+must encode a real distinction.
+
+## Native XML baseline
+
+- Include `mxGraphModel` root cells `0` and `1`; use `adaptiveColors="auto"`.
+- Use uncompressed XML and stable unique IDs. Do not emit XML comments.
+- Emit vertices before edges. Every edge has source and target IDs plus a child
+  `<mxGeometry relative="1" as="geometry" />`.
+- Use `html=1;` and XML-escape label HTML. A literal `\n` is not a line break;
+  use `&lt;br&gt;` or `&#xa;`.
+- Use `swimlane` or `container=1` only for real grouping. Use `<object>` or
+  `UserObject` only when metadata improves editability.
+
+Read `references/local/text-and-labels.md` only when labels need multiline HTML,
+edge-label positioning, metadata, or another nontrivial treatment.
+
+## Layout decision
+
+Automatic layout is the default for new files:
+
+- a linear process: `horizontalFlow` or `verticalFlow`;
+- a hierarchy: `horizontalTree` or `verticalTree`;
+- nested or routed architecture: explicit ELK JSON, optionally followed by
+  `orthogonalEdge`.
+
+Automatic layout is an explicit authoring step, not a viewer cleanup pass. The
+saved file must already contain an acceptable layout. Use fixed ports and
+waypoints only for remaining obstacles, parallel lanes, or return corridors.
+Never add invisible spacer nodes or supporting bands to manipulate geometry.
+
+## Verification
+
+XML validation is blocking. Treat layout warnings as evidence to inspect and
+fix; accept one only when the rendered source is still clear and the tradeoff is
+reported. Validators do not detect every clipped label or visual collision.
+
+Before finishing, confirm:
+
+1. the required semantic inventory matches the diagram;
+2. no component, label, or unrelated edge overlaps;
+3. the dominant path and secondary paths are distinguishable;
+4. every visible element earns its place; and
+5. the export, when requested, was actually opened or rendered for inspection.
 
 ## Exports
 
-Use a draw.io CLI already present on `PATH` or in the environment's known desktop
-app location. Do not install an exporter or run an unrelated postprocessor for a
-source-only request. If no exporter is available, deliver the valid `.drawio`
-source and report that export was not verified.
+Use an existing draw.io CLI; do not install one for a source-only request:
 
 ```bash
-drawio -x -f <format> -e -b 10 -o <output> <input.drawio>
-drawio -x -f png -e -b 10 --width 3840 -o <output>.drawio.png <input.drawio>
+drawio -x -f svg -e -b 10 -o <name>.drawio.svg <name>.drawio
+drawio -x -f png -e -b 10 --width 3840 -o <name>.drawio.png <name>.drawio
 ```
 
-Prefer SVG when text sharpness matters. Use normalized high-resolution PNG when
-SVG is impractical, and inspect whichever format you deliver.
+Prefer SVG for sharp text. If the exporter is unavailable, deliver the valid
+`.drawio` source and report that export and visual inspection were unavailable.
 
-## Output Contract
+## Output
 
-Lead with the artifact created or changed. Report both validator results and,
-when exported, the format actually inspected. Name any unverified export or
-accepted layout warning. Keep `.drawio` beside exports.
+Lead with the artifact created or changed. Report both validator results, the
+layout route used, and the exact export inspected. Keep `<name>.drawio` beside
+`<name>.drawio.svg`, `<name>.drawio.png`, or `<name>.drawio.pdf`. Name any
+accepted warning or unverified rendering.
 
-Naming: source `<name>.drawio`; exports `<name>.drawio.png`,
-`<name>.drawio.svg`, or `<name>.drawio.pdf`. Use lowercase descriptive names.
+## Reference router
+
+| Need | Read |
+| --- | --- |
+| Content and shared appearance invariants | `references/local/editorial-principles.md` |
+| draw.io translation of the editorial tokens | `references/local/editorial-default-style.md` |
+| Required XML structure and export rules | `references/local/upstream-drawio-rules.md` |
+| Automatic layout and current CLI routes | `references/local/auto-layout.md` |
+| Manual ports, waypoints, and crossings after auto-layout | `references/local/edge-routing.md` |
+| Multiline, HTML, metadata, or edge labels | `references/local/text-and-labels.md` |
+| Deep official syntax lookup | `references/local/upstream-docs-map.md` |
+
+Read only the rows needed for the current artifact. Vendored files under
+`references/fetched/` are factual lookup material, not workflow instructions.
 
 ## Gotchas
 
-- Passing validators does not prove the exported diagram is readable.
-- No routing pass will fix edges later: the built-in router ignores every shape
-  except the two terminals, and the vendored "ELK cleanup" note applies only to
-  the drawio-mcp viewer, not to files opened in draw.io.
-- `\n` in a value attribute renders as literal text; use `&lt;br&gt;` or `&#xa;`.
-- Page budgets guide composition but never authorize dropping required content.
-- Keep implementation choices and external dependencies semantically separate.
-- Empty space does not need a title, legend, note, strip, icon, or mini-diagram.
-- Do not add tools, formats, pages, or a diagram-wide restyle outside the request.
-- This skill intentionally keeps `.drawio` after export even if an upstream CLI
-  workflow treats it as intermediate output.
+- Applying `--layout` is an explicit authoring step; reopening a saved file does
+  not perform another obstacle-aware cleanup.
+- Passing both validators does not prove the exported diagram is readable.
+- A literal `\n` renders as two characters, not a line break.
+- Edges between different containers normally belong to the root layer or they
+  can clip inside one parent.
+- Empty space does not need a title, legend, footer, rail, icon, or inset.

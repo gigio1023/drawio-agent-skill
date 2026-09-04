@@ -1,263 +1,148 @@
 # gigio-figures
 
-Editorial figure skills for coding agents: diagrams and data charts that share
-one visual language.
+Portable figure skills for coding agents. They share one restrained editorial
+design system while keeping semantic authoring, native draw.io compatibility,
+and measured-data charts in separate workflows.
 
-This repo packages two skills under `skills/`:
-
-| Skill | Draws | Tool |
+| Skill | Use it for | Default artifact |
 | --- | --- | --- |
-| [`drawio-diagram`](skills/drawio-diagram/SKILL.md) | Structure: boxes, arrows, layers, flowcharts, schematics | native `.drawio` XML, editable after the first pass |
-| [`data-chart`](skills/data-chart/SKILL.md) | Measured data: line, bar, scatter, dot-plot charts | matplotlib → SVG (text preserved) + PNG |
+| [`technical-diagram`](skills/technical-diagram/SKILL.md) | Architecture, system maps, process flows, and box-and-arrow schematics | D2 + ELK → SVG |
+| [`drawio-diagram`](skills/drawio-diagram/SKILL.md) | Explicit native `.drawio` requests and existing draw.io edits | editable mxGraph XML |
+| [`data-chart`](skills/data-chart/SKILL.md) | Real measurements, scales, series, and benchmark plots | matplotlib → SVG + PNG |
 
-The routing rule between them: if the figure's content is *measured data*
-(real numbers, many points, true scales), it is a chart; if it is *structure*,
-it is a diagram. Both render the same editorial style, so a document that
-mixes diagrams and charts still reads as one system.
+The routing rule is content and artifact based:
+
+- Generic technical structure uses `technical-diagram`.
+- Native draw.io format or draw.io-specific metadata uses `drawio-diagram`.
+- Real numeric data on a meaningful scale uses `data-chart`.
 
 ## Install
 
-Install through the Skills CLI. The `--agent` value selects the target
-harness; manual paths and restart behavior stay in the corresponding install
-guide ([Claude Code](.claude/INSTALL.md), [Codex](.codex/INSTALL.md),
-[Cursor](.cursor/INSTALL.md), [Gemini CLI](.gemini/INSTALL.md)).
+Install through the Skills CLI. The `--agent` value selects the target harness;
+manual paths and restart behavior are documented for
+[Claude Code](.claude/INSTALL.md), [Codex](.codex/INSTALL.md),
+[Cursor](.cursor/INSTALL.md), and [Gemini CLI](.gemini/INSTALL.md).
 
 ```bash
+npx skills add gigio1023/gigio-figures@technical-diagram --agent claude-code
 npx skills add gigio1023/gigio-figures@drawio-diagram --agent claude-code
 npx skills add gigio1023/gigio-figures@data-chart --agent claude-code
 ```
 
-Swap `--agent` for `codex`, `cursor`, or `gemini-cli` as needed. Install only
-the skills you want; each command is independent.
+Swap `--agent` for `codex`, `cursor`, or `gemini-cli`. Each skill is standalone;
+install only the routes you need.
 
 ## Usage
 
-Ask naturally; explicit invocation (`/drawio-diagram`, `/data-chart` in
-Claude Code, `$`-prefixed in Codex) is optional when the request is clear.
+Ask naturally. Explicit skill invocation is optional when the request clearly
+names the artifact or content.
 
 ```text
-Make a draw.io architecture diagram for this ingestion pipeline.
-Turn this research section into a compact editorial figure in draw.io.
+Draw a compact architecture diagram for this ingestion pipeline.
+Create an editable .drawio version of this service map.
 Plot these benchmark scores as an editorial-style bar chart.
-Chart success rate vs step budget (log x) from results.csv.
 ```
 
-## The shared visual style
+## Shared editorial style
 
 ![Editorial default style sample](skills/drawio-diagram/assets/editorial-default-template.drawio.png)
 
-White canvas, near-black ink, one accent color family per page, and two text
-voices (monospace entity labels, sans titles and commentary). Diagrams add
-soft ~16px corners and thin open arrowheads; charts add gridless ink axes,
-chip legends, and mono numerals. Token sets:
-[`editorial-default-style.md`](skills/drawio-diagram/references/local/editorial-default-style.md)
-for diagrams,
-[`chart-language.md`](skills/data-chart/references/chart-language.md)
-for charts. Alternative palettes remain available on request
-([`color-palettes.md`](skills/drawio-diagram/references/local/color-palettes.md)).
+The default language is white canvas, near-black ink, one accent family,
+soft corners, thin strokes, open arrowheads, and monospace technical labels
+paired with sans-serif commentary. Empty space may remain empty; titles,
+legends, captions, rails, badges, icons, and insets are never page filler.
 
-**Style attribution.** This style is deliberately modeled on the editorial
-figure language used in OpenAI's blog posts since their February 2025 rebrand
-(openai.com engineering and research posts); its tokens were measured from 65
-published figure SVGs (provenance:
-[`reference-set.md`](skills/drawio-diagram/references/local/reference-set.md)).
-It is an independent re-implementation of generic design elements - palette
-values, spacing, stroke and corner geometry, typographic structure. It
-intentionally excludes OpenAI's identity: no OpenAI logo, blossom mark, or
-wordmark ever appears in output, and the proprietary OpenAI Sans typeface is
-replaced with Inter and IBM Plex Mono stacks. This project is not affiliated
-with or endorsed by OpenAI, and figures produced with it must not claim to be.
+`shared/editorial-style/` is the repository source of truth:
 
-# drawio-diagram
+- [`tokens.json`](shared/editorial-style/tokens.json) stores canonical colors,
+  font stacks, and geometry.
+- [`principles.md`](shared/editorial-style/principles.md) stores backend-neutral
+  content and visual invariants.
+- [`provenance.md`](shared/editorial-style/provenance.md) records the measured
+  source and identity boundary.
+- `adapters/` translates the design system to D2 and draw.io.
 
-Native draw.io authoring guidance. Its job is not just to produce valid XML,
-but native `.drawio` files that stay readable, editable, and structurally
-intact under review. All paths below are relative to
-[`skills/drawio-diagram/`](skills/drawio-diagram/).
-
-The skill has four explicit layers:
-
-1. fetched upstream copies (committed digests)
-2. optional local clones of official docs and examples (gitignored)
-3. local overlay
-4. deterministic validators
-
-The fetched upstream layer keeps verbatim `jgraph/drawio-mcp` content inside
-this repo at stable local paths for provenance and technical lookup. It is not
-loaded wholesale as agent policy: the local overlay controls workflow, layout
-judgment, and verification. The validators turn repeated visual bugs into
-checks the agent can run before claiming success.
-
-## Fetched upstream copies
-
-Fetched files live under `references/fetched/`:
-
-- `xml-reference.md`
-- `style-reference.md`
-- `mermaid-reference.md`
-- `mxfile.xsd`
-- `skill-cli-README.md`
-- `skill-cli-drawio-SKILL.md`
-
-Refresh them with:
+Each skill vendors the small subset it needs so individual installation remains
+self-contained. Synchronize and verify those copies with:
 
 ```bash
-python3 scripts/vendor_jgraph_drawio_mcp.py
+python3 scripts/sync_editorial_style.py
+python3 scripts/sync_editorial_style.py --check
 ```
 
-The resolved commit and fetch timestamp are recorded in
-`references/fetched/vendor-manifest.json`. The local repo layout does not
-mirror the upstream folder tree. The fetch script copies upstream files into
-stable local filenames, so local references do not churn just because the
-upstream directory layout changes.
+The language was measured from 65 post-February-2025 openai.com editorial SVGs,
+but it is an independent implementation of general design properties. It does
+not include the OpenAI logo, blossom, wordmark, or OpenAI Sans; output must not
+claim affiliation or endorsement.
 
-## Local overlay
+## technical-diagram
 
-Local guidance lives under `references/local/`. Key files:
+The default non-GUI path writes a small semantic D2 source, imports the bundled
+editorial classes, lets ELK place nodes and routes, and emits SVG. It deliberately
+avoids built-in decorative themes, icons, legends, and manual spacer nodes.
 
-- `editorial-default-style.md` - the default visual style; applies whenever
-  the user names no style, seeded by `assets/editorial-default-template.drawio`
-- `upstream-drawio-rules.md` - local digest of the structural rules that always apply
-- `edge-routing.md` - connection contract, fixed vs floating terminals, waypoint
-  recipes, and why draw.io never routes around other shapes
-- `text-and-labels.md` - line breaks (`\n` renders literally), escaping, label
-  positioning, and detail-vs-compact representation levels
-- `color-palettes.md` - alternative palettes used on request plus dark-mode
-  rules; the default palette lives in `editorial-default-style.md`
-- `figure-grammars.md` - one-grammar-per-page layout discipline
-- `layout-safety.md` - overlap, padding, and corridor checks
-- `quality-gates.md` - hard finishing gates for meaning, layout, text, arrows, and corner consistency
-- `real-world-gotchas.md` - repeated failure modes from real sessions
-- `review-loop.md` - exported-artifact QA, arrow-corridor audit, and SVG/PNG review guidance
-- `visual-patterns.md` - compact visual behaviors from selected official references
-- `upstream-docs-map.md` - map of the official docs/example clones and what the
-  official diagrams actually do with edges
-- `reference-set.md` - provenance for those references
-- `community-lessons.md` - lessons from adjacent ecosystems
+Requirements:
 
-## Official docs and examples (optional local clones)
+- D2 is needed to render; the skill does not install it silently.
+- D2 v0.8.2 is the directly tested baseline.
 
-For deep lookup beyond the vendored digests, clone the official sources into
-`references/upstream/` (gitignored, never committed):
+From `skills/technical-diagram/`:
 
 ```bash
-bash scripts/fetch_upstream_docs.sh                    # drawio-mcp + drawio-diagrams (~30MB)
-bash scripts/fetch_upstream_docs.sh --with-mxgraph     # + archived mxGraph docs
-bash scripts/fetch_upstream_docs.sh --with-app-templates  # + app templates (CC BY 4.0)
+bash scripts/render_d2.sh assets/editorial-example.d2 /tmp/editorial-example.svg
+python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
 
-`references/local/upstream-docs-map.md` maps questions to locations in the
-clones and lists the equivalent online URLs when clones are absent.
+Direct SVG remains a narrow fallback for existing SVG edits, explicit SVG source
+requests, irregular geometry, or a missing D2 renderer when SVG is still needed.
 
-## Validators
+## drawio-diagram
 
-Two validators ship with the skill (run inside `skills/drawio-diagram/`):
+This route is intentionally native-format specific. It prefers bare,
+uncompressed `mxGraphModel` XML and explicit automatic layout for new files.
+Manual terminal pins and waypoints are a fallback for routes that remain
+ambiguous after layout.
+
+From `skills/drawio-diagram/`:
 
 ```bash
+python3 scripts/apply_auto_layout.py input.drawio laid-out.drawio horizontalFlow
 python3 scripts/validate_drawio_xml.py path/to/file.drawio
 python3 scripts/validate_drawio_layout.py path/to/file.drawio
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
 
-What they catch:
+The committed upstream `jgraph/drawio-mcp` digests provide offline factual
+lookup. Local workflow guidance wins when an older vendored agent instruction
+conflicts with the current skill.
 
-- broken root structure
-- duplicate ids
-- missing edge geometry
-- missing `html=1`
-- XML comments
-- framed component overlap
-- child overflow from parent containers
-- border-hugging text risk
-- inconsistent rounded-rectangle settings
-- dangling edges (no source/target and no explicit end point)
-- edge routes that likely cross unrelated components
-- fixed connection points facing away from the other terminal
-- floating edge pairs between the same two shapes (they render overlapped)
-- edge labels without an opaque background
-- one/two-waypoint doglegs between aligned terminals when the direct corridor is clear
+## data-chart
 
-They are not a replacement for opening the diagram, but they close the gap
-between "XML is valid" and "diagram is still broken." For review handoffs, the
-skill also points agents to inspect the exported SVG or normalized
-high-resolution PNG.
+This route uses matplotlib for reproducible charts whose numbers, scales, and
+series must remain truthful. The style module reads the skill-local snapshot of
+the shared tokens. A title or legend is added only when the surrounding artifact
+and direct labels cannot communicate the same information.
 
-## Export behavior
-
-The skill writes `.drawio` by default. If the draw.io CLI is available, it can
-also export `.drawio.png`, `.drawio.svg`, and `.drawio.pdf`. Unlike upstream
-`skill-cli`, this repo keeps the `.drawio` source after export.
-
-For 4K review PNGs:
+From `skills/data-chart/scripts/`:
 
 ```bash
-drawio -x -f png -e -b 10 --width 3840 -o diagram.drawio.png diagram.drawio
+uv run --with matplotlib python example_chart.py
 ```
 
-Prefer SVG when text crispness matters more than bitmap convenience.
+SVG keeps text as text (`svg.fonttype: none`); the PNG is the visual proof render.
 
-## Troubleshooting
+## Repository layout
 
-| Problem | Fix |
-| --- | --- |
-| draw.io CLI not found | Install draw.io Desktop or use `npx --yes @hediet/drawio-export`; source-only `.drawio` authoring needs no exporter. |
-| Export is blank or edges are missing | Every edge needs `<mxGeometry relative="1" as="geometry" />`; see `references/local/upstream-drawio-rules.md`. |
-| Layout is crowded or overlapping | Reduce the first-pass component count and reopen corridors; see `references/local/figure-grammars.md` and `references/local/layout-safety.md`. |
-| Edges cross unrelated boxes | Pin connection sides and add corridor waypoints; see `references/local/edge-routing.md`. |
-| `\n` appears as literal text | Use `&lt;br&gt;` or `&#xa;` in the value attribute; see `references/local/text-and-labels.md`. |
-
-# data-chart
-
-Programmatic data charts in the same editorial language. OpenAI's own blog
-charts are design-tool exports, not plotting-library output; this skill
-re-implements that chart language with matplotlib so measured data renders
-accurately (true scales, log axes, many points) and regenerates when the data
-changes. Paths relative to [`skills/data-chart/`](skills/data-chart/):
-
-- `references/chart-language.md` - page anatomy, tokens, marks, dark mode,
-  and what the corpus never does
-- `scripts/editorial_mpl.py` - the style module (rcParams, header/chip legend,
-  mono ticks, direct labels, SVG+PNG save)
-- `scripts/example_chart.py` - working line + grouped-bar reference; also the
-  smoke test
-
-Try it:
-
-```bash
-cd skills/data-chart/scripts && uv run --with matplotlib python example_chart.py
-```
-
-SVG output keeps text as text (`svg.fonttype: none`), so the Inter / IBM Plex
-Mono stacks travel with the file and fall back cleanly (Helvetica Neue /
-Menlo) where those fonts are missing.
-
-## Why these skills exist
-
-Generic diagram generation usually fails in one of these ways:
-
-1. the XML is technically valid but visually broken
-2. the page mixes different hierarchy levels into one component
-3. labels are too long, too vague, or too close to borders
-4. arrows are routed without ownership of the corridor
-5. the first exported image is usable once but painful to edit later
-
-And generic chart generation fails differently: library-default themes
-(gridlines, boxed legends, cycled colors) that read as machine output, or
-hand-drawn "charts" whose values do not survive scrutiny. These skills bias
-the agent toward native structure, one shared visual language, explicit
-quality gates, and artifacts that stay editable and regenerable.
-
-## Repo layout
-
-- `README.md`, `LICENSE`, `NOTICE`
-- `skills/drawio-diagram/` - `SKILL.md`, `assets/`, `data/`,
-  `references/local/`, `references/fetched/`, `references/upstream/`
-  (gitignored), `scripts/`
-- `skills/data-chart/` - `SKILL.md`, `references/`, `scripts/`
-- `.claude/`, `.codex/`, `.cursor/`, `.gemini/` - per-harness install guides
+- `shared/editorial-style/` — canonical style tokens, principles, provenance,
+  and backend adapters
+- `skills/technical-diagram/` — D2 authoring, SVG fallback, renderer, validator
+- `skills/drawio-diagram/` — native XML guidance, references, assets, validators
+- `skills/data-chart/` — chart language and matplotlib implementation
+- `scripts/sync_editorial_style.py` — standalone-skill snapshot synchronization
+- `.claude/`, `.codex/`, `.cursor/`, `.gemini/` — harness installation guides
 
 ## Attribution
 
-This repo vendors upstream files from `jgraph/drawio-mcp` under Apache-2.0 and
-layers local guidance on top. Exact file mapping and the current vendored
-commit are recorded in [`NOTICE`](NOTICE).
+This repository vendors upstream files from `jgraph/drawio-mcp` under
+Apache-2.0 and layers local guidance on top. Exact mappings and the vendored
+revision are recorded in [`NOTICE`](NOTICE).

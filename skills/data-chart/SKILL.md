@@ -6,16 +6,17 @@ description: >
   data, produced programmatically with matplotlib and exported to SVG/PNG.
   Trigger on "chart", "graph", "plot", benchmark-score figures, and requests
   for minimal blog-style data graphics. NOT for flowcharts, architecture
-  diagrams, or box-and-arrow figures (use drawio-diagram), and NOT for
+  diagrams, or box-and-arrow figures (use technical-diagram), and NOT for
   interactive dashboards or web-embedded live charts.
 ---
 
 # Data Chart
 
-Render measured data as static charts in the editorial figure language: bold
-sans title top-left, chip legend with uppercase mono labels, gridless ink
-axes, one accent family per page. SVG is the primary artifact (text preserved
-as text); a PNG proof render is mandatory before claiming success.
+Render measured data as static charts in the shared editorial figure language:
+gridless ink axes, restrained direct labels, and one accent family per page.
+Titles and legends are optional content, not a fixed page frame. SVG is the
+primary artifact (text preserved as text); inspect a PNG proof before claiming
+success.
 
 ## Routing: chart or diagram?
 
@@ -24,11 +25,11 @@ Decide by the figure's content, not its name:
 - **Measured data** - real numbers, many points, true scales (log axes,
   distributions, time series) - this skill.
 - **Structure** - boxes, arrows, layers, pipelines, or a few illustrative
-  values inside a larger schematic - the sibling `drawio-diagram` skill, which
-  shares the same visual tokens.
+  values inside a larger schematic - the sibling `technical-diagram` skill.
+  Use `drawio-diagram` only when native draw.io format is part of the request.
 - Borderline (3-8 bars): real measurements that may change → this skill (the
   chart regenerates from data); a decorative sketch inside a diagram →
-  drawio-diagram.
+  technical-diagram.
 
 ## Quick start
 
@@ -36,8 +37,10 @@ Decide by the figure's content, not its name:
    full rule set (anatomy, tokens, marks, dark mode).
 2. Write a small script that imports the style module
    [`scripts/editorial_mpl.py`](scripts/editorial_mpl.py):
-   `ed.use()` → plot with family colors → `ed.mono_ticks` / `ed.axis_label` /
-   `ed.header` → `ed.save(fig, stem)` (writes `stem.svg` + `stem.png`).
+   `ed.use()` → plot with family colors → `ed.mono_ticks` / `ed.axis_label` →
+   optional `ed.header` → `ed.save(fig, stem)` (writes `stem.svg` +
+   `stem.png`). The module reads the vendored canonical values from
+   [`assets/editorial-tokens.json`](assets/editorial-tokens.json).
    [`scripts/example_chart.py`](scripts/example_chart.py) is a working
    reference for both a line chart and grouped bars; copy its margin setup
    (`subplots_adjust` with `top≈0.80` clears the header row).
@@ -47,8 +50,8 @@ Decide by the figure's content, not its name:
    machines without those fonts; fallbacks carry the voice and the SVG keeps
    the full stack.
 4. **Look at the PNG before finishing.** Check: no clipped direct labels or
-   tick text (widen margins, not the font), legend row fits on one line, one
-   accent family, no gridlines, title states a claim.
+   tick text (widen margins, not the font), any required legend fits on one
+   line, one accent family, and no gridlines or unrequested supporting text.
 
 ## Non-negotiables
 
@@ -60,6 +63,10 @@ Decide by the figure's content, not its name:
   point. Axis and tick text stays ink.
 - One y-scale per chart. Two measures of different scale become two charts.
 - Deterministic scripts: no RNG, no timestamps in output filenames.
+- Do not add a title when the embedding document already names the chart. Do
+  not add a legend when direct labels make every series clear. Never add a
+  subtitle, takeaway strip, source footer, badge, or decorative inset merely
+  to fill the canvas.
 
 ## Brand safety
 

@@ -1,10 +1,9 @@
 """Editorial chart style for matplotlib.
 
 Implements the chart language measured from post-2025 openai.com editorial
-figures: bold sans title top-left, legend as circle chips + uppercase mono
-labels, thin ink axes with left/bottom spines only, no grid, mono numerals,
-one accent family per page. Token values match the sibling drawio-diagram
-skill's editorial-default-style.md.
+figures: optional sans title and chip legend, thin ink axes with left/bottom
+spines only, no grid, mono numerals, and one accent family per page. Token
+values come from the package's vendored editorial design-system snapshot.
 
 Usage:
     import editorial_mpl as ed
@@ -16,35 +15,41 @@ Usage:
     ed.save(fig, "chart_name")   # writes chart_name.svg + chart_name.png
 """
 
+import json
+from pathlib import Path
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-INK = "#0D0D0D"
-CANVAS = "#FFFFFF"
-GRAY_TEXT = "#929591"
-GRAY_LINE = "#CCCCCC"
+_TOKENS_PATH = Path(__file__).resolve().parents[1] / "assets" / "editorial-tokens.json"
+_TOKENS = json.loads(_TOKENS_PATH.read_text(encoding="utf-8"))
+_COLORS = _TOKENS["colors"]
+
+INK = _COLORS["ink"]
+CANVAS = _COLORS["canvas"]
+GRAY_TEXT = _COLORS["gray_text"]
+GRAY_LINE = _COLORS["gray_line"]
 
 # Accent families: light fill / chip / mid / deep. One family per page; a
 # second appears only to contrast two systems.
-BLUE = {"light": "#EAF1FE", "chip": "#A3BEFA", "mid": "#5477C4", "deep": "#2E4780"}
-GREEN = {"light": "#D8ECBD", "chip": "#BEEB96", "mid": "#71B436", "deep": "#386411"}
-CORAL = {"light": "#FFEDDE", "chip": "#FFBDA1", "mid": "#FF9365", "deep": "#CC6F47",
-         "text": "#804126"}
+BLUE = _COLORS["blue"]
+GREEN = _COLORS["green"]
+CORAL = _COLORS["coral"]
 
 # Measured dark-mode series colors (OSWorld chart, dark variant). In dark mode
 # prefer chip-step colors or these; mids sink into the dark surface.
-DARK_BLUE = "#8386EB"
-DARK_MAGENTA = "#CE55D3"
+DARK_BLUE = _COLORS["dark"]["blue"]
+DARK_MAGENTA = _COLORS["dark"]["magenta"]
 
-SANS = ["Inter", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"]
-MONO = ["IBM Plex Mono", "Menlo", "monospace"]
+SANS = _TOKENS["typography"]["sans"]
+MONO = _TOKENS["typography"]["mono"]
 
 
 def use(dark=False):
     """Activate the style. Call before creating figures."""
-    ink = "#FFFFFF" if dark else INK
-    canvas = INK if dark else CANVAS
+    ink = _COLORS["dark"]["ink"] if dark else INK
+    canvas = _COLORS["dark"]["canvas"] if dark else CANVAS
     mpl.rcParams.update({
         "figure.facecolor": canvas,
         "axes.facecolor": canvas,
@@ -90,18 +95,20 @@ def axis_label(ax, xlabel=None, ylabel=None, size=11.5):
         ax.set_ylabel(ylabel.upper(), fontfamily=MONO, fontsize=size, labelpad=10)
 
 
-def header(fig, title, entries=(), title_size=17, y=0.955):
-    """Bold sans title top-left, then one row of chip+label legend pairs.
+def header(fig, title=None, entries=(), title_size=17, y=0.955):
+    """Optionally draw a title and one row of chip+label legend pairs.
 
     entries: iterable of (label, chip_facecolor, chip_edgecolor). Labels are
-    uppercased mono. No boxed legend panel; skip entries for a single series.
+    uppercased mono. Call only when the surrounding artifact does not already
+    supply the title or direct labels cannot distinguish the series.
     """
-    fig.text(0.04, y, title, ha="left", va="top",
-             fontsize=title_size, fontweight="bold", fontfamily=SANS,
-             color=_ink())
+    if title:
+        fig.text(0.04, y, title, ha="left", va="top",
+                 fontsize=title_size, fontweight="bold", fontfamily=SANS,
+                 color=_ink())
     if not entries:
         return
-    ly = y - 0.075
+    ly = y - 0.075 if title else y
     x = 0.045
     for label, face, edge in entries:
         fig.add_artist(Line2D([x], [ly], marker="o", markersize=7.5,

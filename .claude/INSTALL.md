@@ -3,6 +3,7 @@
 ## Preferred
 
 ```bash
+npx skills add gigio1023/gigio-figures@technical-diagram --agent claude-code
 npx skills add gigio1023/gigio-figures@drawio-diagram --agent claude-code
 npx skills add gigio1023/gigio-figures@data-chart --agent claude-code
 ```
@@ -14,6 +15,7 @@ Install only the skills you want; each command is independent.
 ```bash
 git clone https://github.com/gigio1023/gigio-figures.git ~/.claude/gigio-figures
 mkdir -p ~/.claude/skills
+ln -s ~/.claude/gigio-figures/skills/technical-diagram ~/.claude/skills/technical-diagram
 ln -s ~/.claude/gigio-figures/skills/drawio-diagram ~/.claude/skills/drawio-diagram
 ln -s ~/.claude/gigio-figures/skills/data-chart ~/.claude/skills/data-chart
 ```
