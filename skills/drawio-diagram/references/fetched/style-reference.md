@@ -1,8 +1,6 @@
 # draw.io Style Reference for AI File Generation
 
-This document is a companion to [`mxfile.xsd`](https://github.com/jgraph/drawio-mcp/blob/main/shared/mxfile.xsd) and provides all information
-needed to programmatically generate valid draw.io (.drawio) files. All data
-was extracted from the draw.io source code.
+This document is a companion to [`mxfile.xsd`](https://github.com/jgraph/drawio-mcp/blob/main/shared/mxfile.xsd) and provides all information needed to programmatically generate valid draw.io (.drawio) files. All data was extracted from the draw.io source code.
 
 See also: [Generate and validate draw.io diagrams with AI](https://www.drawio.com/doc/faq/ai-drawio-generation)
 
@@ -191,8 +189,7 @@ These are registered via `mxCellRenderer.registerShape()`:
 
 ### 3.4 Stencil Libraries
 
-Additional shapes are available via stencil libraries in the `stencils/` directory.
-Use with: `shape=stencil(<library>.<shape>)` or `shape=mxgraph.<library>.<shape>`.
+Additional shapes are available via stencil libraries in the `stencils/` directory. Use with: `shape=stencil(<library>.<shape>)` or `shape=mxgraph.<library>.<shape>`.
 
 Major libraries:
 - `mxgraph.flowchart.*` — Flowchart shapes
@@ -632,9 +629,7 @@ A group/container is a vertex that other cells reference as their parent:
 
 ### Collapsible Containers and Alternate Bounds
 
-When a container (e.g. swimlane) is collapsible, draw.io stores alternate bounds
-in an `mxRectangle` child element inside `mxGeometry`. When the container is
-collapsed/expanded, the geometry swaps between the normal and alternate bounds:
+When a container (e.g. swimlane) is collapsible, draw.io stores alternate bounds in an `mxRectangle` child element inside `mxGeometry`. When the container is collapsed/expanded, the geometry swaps between the normal and alternate bounds:
 
 ```xml
 <mxCell id="class1" value="ClassName" style="swimlane;fontStyle=1;childLayout=stackLayout;startSize=26;collapsible=1;" vertex="1" parent="1">
@@ -644,9 +639,7 @@ collapsed/expanded, the geometry swaps between the normal and alternate bounds:
 </mxCell>
 ```
 
-The `alternateBounds` typically has the same x/y but a smaller height (just the header).
-AI generators generally do not need to produce `mxRectangle` elements — draw.io adds
-them automatically when the user collapses a container.
+The `alternateBounds` typically has the same x/y but a smaller height (just the header). AI generators generally do not need to produce `mxRectangle` elements — draw.io adds them automatically when the user collapses a container.
 
 ---
 
@@ -891,8 +884,7 @@ Edge labels are usually encoded in the edge cell's `value`. The label position i
 
 ## 14. Additional mxGraphModel Attributes
 
-These optional attributes on `<mxGraphModel>` are less commonly used but appear
-in real-world files:
+These optional attributes on `<mxGraphModel>` are less commonly used but appear in real-world files:
 
 | Attribute | Values | Description |
 |---|---|---|

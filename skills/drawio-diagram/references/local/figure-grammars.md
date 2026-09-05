@@ -4,11 +4,7 @@ Only use one grammar per page on the first pass.
 
 ## Content gate
 
-Choose a grammar to organize required information, never to fill a page. Begin
-with the core geometry. A title, subtitle, legend, caption, rail, callout,
-process strip, inset, or mini-visual is optional and may be added only when its
-removal would make the requested meaning materially less clear. Empty space is
-preferable to invented supporting content.
+Choose a grammar to organize required information, never to fill a page. Begin with the core geometry. A title, subtitle, legend, caption, rail, callout, process strip, inset, or mini-visual is optional and may be added only when its removal would make the requested meaning materially less clear. Empty space is preferable to invented supporting content.
 
 ## 1. flow-canvas
 

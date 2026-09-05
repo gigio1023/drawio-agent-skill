@@ -1,27 +1,15 @@
 # Upstream draw.io rules (local digest)
 
-This file is the workflow-facing digest the skill enforces. Technical XML and
-style references from `jgraph/drawio-mcp` (Apache-2.0) remain vendored verbatim
-under `references/fetched/` for provenance and exact syntax lookup.
+This file is the workflow-facing digest the skill enforces. Technical XML and style references from `jgraph/drawio-mcp` (Apache-2.0) are vendored under `references/fetched/` for provenance and exact syntax lookup. Only Markdown prose line wrapping has been adjusted locally in some files; upstream content and code examples remain unchanged.
 
-For an exact XML/style definition, upstream technical facts win. For workflow,
-layout judgment, model prompting, and verification, this local overlay and
-`SKILL.md` win; do not inherit rigid grids, reasoning narration, or skipped
-verification from older vendored agent instructions.
+For an exact XML/style definition, upstream technical facts win. For workflow, layout judgment, model prompting, and verification, this local overlay and `SKILL.md` win; do not inherit rigid grids, reasoning narration, or skipped verification from older vendored agent instructions.
 
-**Known upstream trap:** the "Automatic edge routing" section of the vendored
-`references/fetched/xml-reference.md` describes a drawio-mcp viewer pass, not a
-cleanup that runs whenever a `.drawio` file is opened. New files should use the
-explicit layout routes in `references/local/auto-layout.md`; the saved result
-must already be acceptable. Use `references/local/edge-routing.md` only for
-routes that remain ambiguous after that pass.
+**Known upstream trap:** the "Automatic edge routing" section of the vendored `references/fetched/xml-reference.md` describes a drawio-mcp viewer pass, not a cleanup that runs whenever a `.drawio` file is opened. New files should use the explicit layout routes in `references/local/auto-layout.md`; the saved result must already be acceptable. Use `references/local/edge-routing.md` only for routes that remain ambiguous after that pass.
 
 ## Required XML structure
 
 - Use native `.drawio` XML.
-- Prefer a bare `mxGraphModel` for a single-page generated diagram. Wrap it in
-  `mxfile > diagram` when multiple pages, file variables, or metadata require
-  the full document form.
+- Prefer a bare `mxGraphModel` for a single-page generated diagram. Wrap it in `mxfile > diagram` when multiple pages, file variables, or metadata require the full document form.
 - Include root cells:
   - `id="0"`
   - `id="1" parent="0"`

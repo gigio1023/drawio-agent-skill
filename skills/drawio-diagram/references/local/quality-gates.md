@@ -4,11 +4,8 @@ This file turns repeated review pain into hard finishing gates.
 
 ## Meaning
 
-- The figure answers one stated question for one intended reader. Do not mix
-  separate questions or abstraction levels because the source mentions them.
-- Replace private names with roles, or use `role (exact name)` when identity
-  matters. Expand acronyms once and omit code-level strings that are not the
-  subject.
+- The figure answers one stated question for one intended reader. Do not mix separate questions or abstraction levels because the source mentions them.
+- Replace private names with roles, or use `role (exact name)` when identity matters. Expand acronyms once and omit code-level strings that are not the subject.
 - Do not mix implementation choices and external dependencies in one box.
 - Preserve semantic boundaries: callers, runtime/container, internal sections, implementation choices, and external dependencies are separate roles unless the user explicitly wants them merged.
 - If a label is not unambiguously correct, simplify it. Prefer `response` over a narrower word unless the narrower word is exact.
@@ -23,12 +20,8 @@ This file turns repeated review pain into hard finishing gates.
 - If a swimlane has a header, children must stay below the header band.
 - Tight layout is acceptable only after arrows have dedicated corridors and labels still breathe.
 - If a layout feels crowded, split the page or shorten labels before widening the canvas.
-- Avoid bottom legends or explanatory footers that restate the diagram. Prefer
-  direct semantic labels, surrounding prose or metadata, or a separate page for
-  another required view.
-- Remove decorative keyword garlands. If a top/bottom band is meaningful, state
-  whether it is a caption, legend, constraint, ownership boundary, or semantic
-  rail and align it to the content it governs.
+- Avoid bottom legends or explanatory footers that restate the diagram. Prefer direct semantic labels, surrounding prose or metadata, or a separate page for another required view.
+- Remove decorative keyword garlands. If a top/bottom band is meaningful, state whether it is a caption, legend, constraint, ownership boundary, or semantic rail and align it to the content it governs.
 
 ## Text
 
@@ -36,8 +29,7 @@ This file turns repeated review pain into hard finishing gates.
 - Component labels should usually fit in one or two lines.
 - Avoid paragraphs inside boxes.
 - Every label must remain readable without zoom at the intended delivery size.
-- Do not lower font size to preserve an overfull page; reduce content or split
-  the view.
+- Do not lower font size to preserve an overfull page; reduce content or split the view.
 - If text comes close to the border, add spacing before resizing the box.
 - If the same type of component repeats, keep font size, alignment, and padding consistent.
 
@@ -48,18 +40,14 @@ This file turns repeated review pain into hard finishing gates.
 - Put edge labels on straight segments, not on bends.
 - Give every edge label an opaque background matching the surface behind it.
 - If the orchestrator and interface can be aligned for a straight request/response pair, do that.
-- If fixed terminals already align and the straight corridor is clear, remove
-  waypoints that introduce a dogleg.
+- If fixed terminals already align and the straight corridor is clear, remove waypoints that introduce a dogleg.
 - Do not let arrows or arrowheads sit on top of labels, component bodies, titles, boundary names, or box borders.
 - If auto-routing crosses text or components, add waypoints or move boxes before accepting the route.
 
 ## Shape consistency
 
 - Use one rounded-rectangle recipe per page.
-- Under the editorial default style, the node recipe is
-  `rounded=1;absoluteArcSize=1;arcSize=32;` (absolute arcSize renders at half
-  its value). For other styles' small-radius boxes, prefer
-  `rounded=1;absoluteArcSize=1;arcSize=12;`.
+- Under the editorial default style, the node recipe is `rounded=1;absoluteArcSize=1;arcSize=32;` (absolute arcSize renders at half its value). For other styles' small-radius boxes, prefer `rounded=1;absoluteArcSize=1;arcSize=12;`.
 - Do not mix heavily rounded boxes with lightly rounded boxes unless the distinction carries meaning.
 
 ## Verification
@@ -75,7 +63,4 @@ If either validator complains, fix the diagram or explicitly accept the tradeoff
 
 When an export is part of the deliverable, inspect the exported SVG or high-resolution PNG before finishing. The validators are necessary but not sufficient for visual quality.
 
-When the editorial default style is active, also spot-check the export against
-its tokens: soft ~16px corners, two text voices, thin open arrowheads, one
-accent family, no shadows. Style drift is a finishing defect even when every
-validator passes.
+When the editorial default style is active, also spot-check the export against its tokens: soft ~16px corners, two text voices, thin open arrowheads, one accent family, no shadows. Style drift is a finishing defect even when every validator passes.

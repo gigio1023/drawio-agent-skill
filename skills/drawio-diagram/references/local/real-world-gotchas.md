@@ -53,7 +53,5 @@ These come from repeated iteration failures in real diagram sessions.
 ## Footer explanation trap
 
 - A large bottom legend or footer often means the diagram did not communicate the main idea visually.
-- Use short semantic labels, surrounding prose, or a second page for another
-  required view instead of explaining the whole figure at the bottom.
-- Keep sources, versions, exclusions, and provenance notes outside the main
-  geometry unless the figure's question is specifically about them.
+- Use short semantic labels, surrounding prose, or a second page for another required view instead of explaining the whole figure at the bottom.
+- Keep sources, versions, exclusions, and provenance notes outside the main geometry unless the figure's question is specifically about them.
