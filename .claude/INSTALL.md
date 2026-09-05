@@ -20,6 +20,4 @@ ln -s ~/.claude/gigio-figures/skills/drawio-diagram ~/.claude/skills/drawio-diag
 ln -s ~/.claude/gigio-figures/skills/data-chart ~/.claude/skills/data-chart
 ```
 
-Claude Code normally detects `SKILL.md` changes live. Restart only if the new
-top-level skills directory was created after the session started or a skill
-does not appear.
+Claude Code normally detects `SKILL.md` changes live. Restart only if the new top-level skills directory was created after the session started or a skill does not appear.
