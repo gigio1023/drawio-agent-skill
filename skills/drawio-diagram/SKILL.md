@@ -97,6 +97,11 @@ edge-label positioning, metadata, or another nontrivial treatment.
 
 ## Layout decision
 
+For a bounded edit to an existing file, retain cell IDs, pages, metadata, and
+unaffected geometry. Apply layout only to the changed region when needed;
+rebuilding the whole diagram is not a prerequisite for correcting one label
+or connection.
+
 Automatic layout is the default for new files:
 
 - a linear process: `horizontalFlow` or `verticalFlow`;
@@ -126,6 +131,9 @@ Before finishing, confirm:
 5. every visible element earns its place; and
 6. a render was inspected for every new diagram or substantial visual edit, or
    the missing exporter was reported.
+
+Deliver after these checks pass. Revalidate for a relevant edit or defect;
+do not add formats or redraw unaffected pages to extend verification.
 
 ## Exports
 
@@ -166,8 +174,6 @@ Read only the rows needed for the current artifact. Vendored files under
 
 - Applying `--layout` is an explicit authoring step; reopening a saved file does
   not perform another obstacle-aware cleanup.
-- Passing both validators does not prove the exported diagram is readable.
-- A literal `\n` renders as two characters, not a line break.
 - Edges between different containers normally belong to the root layer or they
   can clip inside one parent.
 - Empty space does not need a title, legend, footer, rail, icon, or inset.

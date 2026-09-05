@@ -56,7 +56,10 @@ Decide by the figure's content, not its name:
 ## Non-negotiables
 
 - Data values come from the user or their files - never invent or "smooth"
-  numbers. If a value is unknown, ask or leave the series out.
+  numbers. Inspect the supplied data before asking. Preserve missing values as
+  gaps when that representation is valid; if omission would change the requested
+  comparison, ask about that series while preparing the supported chart parts.
+  Disclose an omitted series rather than silently dropping it.
 - Emphasis comes from color and direct labels, never thicker strokes or
   bigger fonts.
 - Direct value labels on endpoints or one emphasized point only - never every
@@ -82,6 +85,10 @@ the approved substitutes.
 2. You rendered and actually viewed the PNG (step 4 above).
 3. The SVG contains `<text` elements (fonts preserved), not outlined paths.
 4. Every number in the chart traces to user-provided data.
+
+Once these checks pass at the intended display size, deliver the script, SVG,
+and PNG. Rerender after a data, label, or layout correction; do not create
+additional chart types or style variants merely to prolong visual review.
 
 ## Gotchas
 

@@ -56,6 +56,10 @@ required_annotations: [{text: ..., purpose: ...}]
 deferred_to_prose: [...]
 ```
 
+Infer the brief from the request and supplied material; it is a working aid,
+not a questionnaire to send before drawing. Ask only when a missing relation
+or conflicting fact would change the answer, and continue the supported parts.
+
 The brief and inventory need not become separate files. They are the comparison
 set for the finished source. Raw source items are candidates, not requirements.
 An annotation needs a named purpose: it was requested, or without it the reader
@@ -114,6 +118,10 @@ Before finishing, confirm all four:
    crosses unrelated content, and the dominant reading path is obvious.
 4. **Minimality:** every visible element changes the reader's understanding;
    empty top, bottom, or side space remains empty.
+
+When these checks and any required project checks pass, deliver. Repeat the
+affected checks after a semantic or layout fix; do not keep rerendering for
+equally valid aesthetic alternatives.
 
 ## Output
 
