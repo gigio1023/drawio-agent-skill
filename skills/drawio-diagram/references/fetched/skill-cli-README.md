@@ -68,8 +68,7 @@ The `.drawio.*` double extension signals that the file contains embedded diagram
 
 ## XML Reference
 
-The skill references the shared XML generation guide (edge routing, containers, layers, tags, metadata, dark mode, etc.) from GitHub at runtime:
-[`shared/xml-reference.md`](../shared/xml-reference.md)
+The skill references the shared XML generation guide (edge routing, containers, layers, tags, metadata, dark mode, etc.) from GitHub at runtime: [`shared/xml-reference.md`](../shared/xml-reference.md)
 
 This is the single source of truth for all draw.io MCP prompts across the repository. No extra files need to be copied during installation.
 

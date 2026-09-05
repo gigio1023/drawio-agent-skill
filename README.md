@@ -116,6 +116,8 @@ SVG keeps text as text (`svg.fonttype: none`); the PNG is the visual proof rende
 
 Keep each natural-language Markdown paragraph on one source line, including prose within list items and Markdown templates. Do not manually wrap prose to 80, 100, or any other column width; use editor soft wrapping for readability. Preserve paragraph boundaries, list structure, tables, fenced code, HTML, intentional hard breaks, frontmatter semantics, and literal examples. This convention does not change code or docstring line-length constraints.
 
+The upstream vendoring script copies source bytes. After refreshing `skills/drawio-diagram/references/fetched/`, apply this paragraph convention to its Markdown prose and update `NOTICE` to identify any locally adjusted files. Preserve upstream revision and fetch metadata.
+
 ## Attribution
 
 This repository vendors upstream files from `jgraph/drawio-mcp` under Apache-2.0 and layers local guidance on top. Exact mappings and the vendored revision are recorded in [`NOTICE`](NOTICE).

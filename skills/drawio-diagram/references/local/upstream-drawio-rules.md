@@ -1,6 +1,6 @@
 # Upstream draw.io rules (local digest)
 
-This file is the workflow-facing digest the skill enforces. Technical XML and style references from `jgraph/drawio-mcp` (Apache-2.0) remain vendored verbatim under `references/fetched/` for provenance and exact syntax lookup.
+This file is the workflow-facing digest the skill enforces. Technical XML and style references from `jgraph/drawio-mcp` (Apache-2.0) are vendored under `references/fetched/` for provenance and exact syntax lookup. Only Markdown prose line wrapping has been adjusted locally in some files; upstream content and code examples remain unchanged.
 
 For an exact XML/style definition, upstream technical facts win. For workflow, layout judgment, model prompting, and verification, this local overlay and `SKILL.md` win; do not inherit rigid grids, reasoning narration, or skipped verification from older vendored agent instructions.
 

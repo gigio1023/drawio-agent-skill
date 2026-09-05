@@ -165,8 +165,7 @@ Every diagram must have this structure:
 
 ## XML reference
 
-For the complete draw.io XML reference including common styles, edge routing, containers, layers, tags, metadata, dark mode colors, and XML well-formedness rules, fetch and follow the instructions at:
-https://raw.githubusercontent.com/jgraph/drawio-mcp/main/shared/xml-reference.md
+For the complete draw.io XML reference including common styles, edge routing, containers, layers, tags, metadata, dark mode colors, and XML well-formedness rules, fetch and follow the instructions at: https://raw.githubusercontent.com/jgraph/drawio-mcp/main/shared/xml-reference.md
 
 ## Troubleshooting
 
